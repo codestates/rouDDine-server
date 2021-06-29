@@ -88,7 +88,7 @@ module.exports = { //루틴 생성 - post
     
   },
 
-  update_Routine: async(req, res) => { //루틴 수정하기 - patch  ---------share만 수정할 수 있음.
+  update_Routine: async(req, res) => { //루틴 수정하기 - patch  ---------share만 수정할 수 있음. 운동카드도 수정하게 하기 필요
     if( !(req.body.routine_name && req.body.userid)){
       res.status(405).send({
         "message" : "invalid request"
