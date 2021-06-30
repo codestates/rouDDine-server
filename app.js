@@ -8,6 +8,7 @@ const http = require('http');
 const signcontroller = require("./controller/signcontroller");
 const excontroller = require("./controller/excontroller");
 const routinecontroller = require("./controller/routinecontroller");
+const sharecontroller = require("./controller/sharecontroller");
 const app = express();
 
 app.use(express.json());
@@ -32,6 +33,8 @@ app.post("/routine", routinecontroller.create_Routine); //루틴 생성
 app.get("/routine", routinecontroller.info_Routine); //루틴 하나 불러오기
 app.delete("/routine", routinecontroller.delete_Routine); //루틴삭제
 app.patch("/routine", routinecontroller.update_Routine); //루틴 수정
+
+app.get("/share", sharecontroller.getSharedRoutines); //공유된 루틴 불러오기
 
 app.get('/', (req, res) => {
   res.status(201).send('Hello World 🇰🇷');
