@@ -1,6 +1,7 @@
 const { routinepart } = require("../../models");
 const { routine } = require("../../models");
-const { exercise } = require("../../models")
+const { exercise } = require("../../models");
+const { user } = require("../../models");
 
 module.exports = { //루틴 생성 - post
   create_Routine: async (req, res) => {
@@ -40,12 +41,37 @@ module.exports = { //루틴 생성 - post
     }
   },
 
-  info_Routine: async(req, res) => { //루틴 불러오기 - get 방식
-    if( !(req.query.routine_name && req.query.userid)){
+  info_Routine: async (req, res) => { //루틴 불러오기 - get 방식
+    if( !(req.query.userid)){
       res.status(405).send({
         "message" : "invalid request"
       });
     }
+    //루틴 이름이 없는 경우 유저 한 사람의 모든 루틴을 보냄
+    else if ( !(req.query.routine_name) ){
+      const finduser = await user.findOne({ where : { email : req.query.userid } });
+      if(finduser){
+        const userRoutine = await routine.findAll({ where : { userid : req.query.userid } });
+        if(userRoutine.length === 0){ //생성된 루틴이 없는 경우
+          res.status(200).send({
+            "message" : "please create routine"
+          });
+        }
+        else{
+          console.log(userRoutine);
+          res.status(200).send({
+            "message" : "search success",
+            "result" : userRoutine
+          });
+        }
+      }
+      else{ //없는 유저일 경우
+        res.status(409).send({
+          "message" : "cannot find user"
+        });
+      }
+    }
+    //루틴 이름이 있는 경우 하나를 클릭한 경우 -> 받은 이름의 루틴을 검색하여 보냄.
     else{
       const routineCard = await routine.findOne({
         where : { userid : req.query.userid, name : req.query.routine_name}
@@ -161,6 +187,36 @@ module.exports = { //루틴 생성 - post
         });
       }
     }
-  }
+  },
+  /*
+  user_Routine: async(req, res) => { //한 사람의 모든 루틴 가져오기
+    if(!(req.query.userid)){
+      res.status(405).send({
+        "message" : "invalid request1"
+      });
+    }
+    else{
+      const finduser = user.findOne({ where : { email : req.query.userid } });
+      if(finduser){
+        const userRoutine = routine.findAll({ where : { userid : req.query.userid } });
+        if(userRoutine.length === 0){ //생성된 루틴이 없는 경우
+          res.status(200).send({
+            "message" : "please create routine"
+          });
+        }
+        else{
+          res.status(200).send({
+            "message" : "search success",
+            "result" : userRoutine
+          });
+        }
+      }
+      else{ //없는 유저일 경우
+        res.status(409).send({
+          "message" : "cannot find user"
+        });
+      }
+    }
+  }*/
 };
 
