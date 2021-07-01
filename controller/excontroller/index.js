@@ -1,4 +1,3 @@
-const { Op } = require("sequelize");
 const { exercise } = require("../../models")
 
 module.exports = {

@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const jwt = require('jsonwebtoken');
-// const { Op } = require("sequelize");
+
 const { user } = require("../../models");
 const bcrypt = require("bcrypt");
 const salt = process.env.DATABASE_SALT
@@ -58,7 +58,6 @@ module.exports = {
       });
     }
     else{
-      //토큰 기반으로 수정해야 함
 
       const userInfo = await user.findOne({
         where: {
