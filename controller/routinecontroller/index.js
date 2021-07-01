@@ -5,7 +5,7 @@ const { user } = require("../../models");
 
 module.exports = { //루틴 생성 - post
   create_Routine: async (req, res) => {
-    let findcard = routine.findOne({
+    let findcard = await routine.findOne({
       where : { userid : req.body.userid, name : req.body.routine_name }
     })
     console.log(findcard);
@@ -14,6 +14,19 @@ module.exports = { //루틴 생성 - post
         "message" : "invalid request"
       });
     }
+    else if(!findcard){
+      const newRoutine = await routine.create({
+        name : req.body.routine_name,
+        userid : req.body.userid,
+        finished_time : 0,
+        share : req.body.share,
+      })
+      
+      res.status(201).send({
+        "message" : "created"
+      });
+    }
+    
     else if( findcard.name === req.body.routine_name ){ //루틴 이름 중복확인
       res.status(409).send({
         "message" : "samename is already exist"
@@ -114,7 +127,7 @@ module.exports = { //루틴 생성 - post
     }
   },
 
-  update_Routine: async(req, res) => { //루틴 수정하기 - patch
+  update_Routine: async (req, res) => { //루틴 수정하기 - patch
     if( !(req.body.routine_name && req.body.userid)){
       res.status(405).send({
         "message" : "invalid request"
@@ -126,28 +139,31 @@ module.exports = { //루틴 생성 - post
         where : { userid : req.body.userid, name : req.body.routine_name }
       })
       if( routinecard ){
-        if( req.body.exercise_array.length !==0 ){
-          //기존에 운동 데이터가 있었다면 삭제
-          const parts = await routinepart.findAll({
-            where : { userid : req.query.userid, routinename : req.query.routine_name }
-          })
-          if(parts){
-            for(let i = 0; i<parts.length; i++){
-              parts[i].destroy();
+        if( req.body.exercise_array ){
+          if( req.body.exercise_array.length !==0 ){
+            //기존에 운동 데이터가 있었다면 삭제
+            const parts = await routinepart.findAll({
+              where : { userid : req.body.userid, routinename : req.body.routine_name }
+            })
+            if(parts){
+              for(let i = 0; i<parts.length; i++){
+                parts[i].destroy();
+              }
+            }
+            //새로운 운동카드 루틴에 입력
+            for(let i = 0; i<req.body.exercise_array.length; i++){
+              const newPart = await routinepart.create({
+                userid : req.body.userid,
+                routinename : req.body.routine_name,
+                exercise_name : req.body.exercise_array[i],
+                order : (i+1)
+              })
             }
           }
-          //새로운 운동카드 루틴에 입력
-          for(let i = 0; i<req.body.exercise_array.length; i++){
-            const newPart = await routinepart.create({
-              userid : req.body.userid,
-              routinename : req.body.routine_name,
-              exercise_name : req.body.exercise_array[i],
-              order : (i+1)
-            })
-          }
         }
-
-        routinecard.share = req.body.share;
+        if(req.body.share){
+          await routinecard.update({ share : req.body.share });
+        }
         res.status(200).send({
           "message" : "success",
           "result" : routinecard

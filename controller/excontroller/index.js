@@ -3,10 +3,10 @@ const { exercise } = require("../../models")
 module.exports = {
   //운동카드 생성 - post 방식
   create_exercise: async (req, res) => {
-    let samename = await exercise.findAll({
+    let samename = await exercise.findOne({
       where : { userid : req.body.userid, name : req.body.name }
     })
-    if(samename.length !== 0){
+    if(samename){
       res.status(409).send({
         "message" : "exercise name is already exist"
       })
@@ -63,19 +63,17 @@ module.exports = {
       where : { userid : req.body.userid, name : req.body.name }
     })
     if(ex_card){
-      if(req.body.set_time){
-        ex_card.set_time = req.body.set_time;
-      }
-      if(req.body.rest_time){
-        ex_card.rest_time = req.body.rest_time;
-      }
-      if(req.body.memo){
-        ex_card.memo = req.body.memo;
-      }
+
+      await ex_card.update({
+        set_time : req.body.set_time,
+        rest_time : req.body.rest_time,
+        memo : req.body.memo
+      });
       res.status(200).send({
         "message" : "update exersice card",
         "result" : ex_card
       })
+      
     }
     else{
       res.status(409).send({
