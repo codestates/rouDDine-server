@@ -24,6 +24,8 @@ app.use(
 app.post("/login",signcontroller.login) // 토큰 로그인
 app.post("/user", signcontroller.signUpController); //회원가입
 app.delete("/user", signcontroller.WithdrawalConstroller); //회원탈퇴
+app.get("/user", signcontroller.userInfo); //유저 정보 불러오기
+app.patch("/user", signcontroller.updateUser); //유저 정보 수정하기
 
 app.post("/exercise", excontroller.create_exercise); //운동카드 생성
 app.get("/exercise", excontroller.info_exercise); //운동카드 불러오기

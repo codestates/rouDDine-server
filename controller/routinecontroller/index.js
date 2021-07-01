@@ -26,12 +26,12 @@ module.exports = { //루틴 생성 - post
         "message" : "created"
       });
     }
-    
+    /*
     else if( findcard.name === req.body.routine_name ){ //루틴 이름 중복확인
       res.status(409).send({
         "message" : "samename is already exist"
       });
-    }
+    }*/
     else{
       /*
       for(let i = 0; i<req.body.exercise_array.length; i++){
@@ -62,7 +62,7 @@ module.exports = { //루틴 생성 - post
       });
     }
     //루틴 이름이 없는 경우 유저 한 사람의 모든 루틴을 보냄
-    else if ( !(req.query.routine_name) ){
+    else if ( !(req.query.routine_id) ){
       const finduser = await user.findOne({ where : { id : req.query.userid } }); //id수정
       if(finduser){
         const userRoutine = await routine.findAll({ where : { userid : req.query.userid } });
@@ -85,13 +85,13 @@ module.exports = { //루틴 생성 - post
         });
       }
     }
-    //루틴 이름이 있는 경우 하나를 클릭한 경우 -> 받은 이름의 루틴을 검색하여 보냄.
+    //루틴 이름이 있는 경우 하나를 클릭한 경우 -> 받은 루틴의 id를 검색하여 보냄.
     else{
       const routineCard = await routine.findOne({
-        where : { userid : req.query.userid, name : req.query.routine_name}
+        where : { id : req.query.routine_id}
       });
       const routineparts = await routinepart.findAll({
-        where : { userid : req.query.userid, routinename : req.query.routine_name}
+        where : { routinename : req.query.routine_id}
       });
       if(!routineCard){ //루틴 있는지 검사
         res.status(409).send({
@@ -115,6 +115,7 @@ module.exports = { //루틴 생성 - post
         }
     
         const responseCard = {
+          id : routineCard.id,
           name : routineCard.name,
           userid : routineCard.userid,
           finished_time : routineCard.finished_time,
@@ -128,22 +129,22 @@ module.exports = { //루틴 생성 - post
   },
 
   update_Routine: async (req, res) => { //루틴 수정하기 - patch
-    if( !(req.body.routine_name && req.body.userid)){
+    if( !(req.body.routine_id)){
       res.status(405).send({
         "message" : "invalid request"
       });
     }
     else{
-      //루틴이름으로 찾기
+      //루틴아이디로 찾기
       const routinecard = await routine.findOne({
-        where : { userid : req.body.userid, name : req.body.routine_name }
+        where : { id : req.body.routine_id }
       })
       if( routinecard ){
         if( req.body.exercise_array ){
           if( req.body.exercise_array.length !==0 ){
             //기존에 운동 데이터가 있었다면 삭제
             const parts = await routinepart.findAll({
-              where : { userid : req.body.userid, routinename : req.body.routine_name }
+              where : { routinename : req.body.routine_id }
             })
             if(parts){
               for(let i = 0; i<parts.length; i++){
@@ -153,17 +154,17 @@ module.exports = { //루틴 생성 - post
             //새로운 운동카드 루틴에 입력
             for(let i = 0; i<req.body.exercise_array.length; i++){
               const newPart = await routinepart.create({
-                userid : req.body.userid,
-                routinename : req.body.routine_name,
+                userid : routinecard.userid,
+                routinename : routinecard.id,
                 exercise_name : req.body.exercise_array[i],
                 order : (i+1)
               })
             }
           }
         }
-        if(req.body.share){
-          await routinecard.update({ share : req.body.share });
-        }
+        
+        await routinecard.update({ share : req.body.share, name : req.body.routine_name });
+        
         res.status(200).send({
           "message" : "success",
           "result" : routinecard
@@ -177,18 +178,18 @@ module.exports = { //루틴 생성 - post
     }
   },
   delete_Routine: async(req, res) => { //루틴 삭제하기 - delete
-    if( !(req.query.routine_name && req.query.userid)){
+    if( !(req.query.routine_id)){
       res.status(405).send({
         "message" : "invalid request1"
       });
     }
     else{
       const card = await routine.findOne({
-        where : { userid : req.query.userid, name : req.query.routine_name }
+        where : { id : req.query.routine_id }
       })
       if( card ){
         const parts = await routinepart.findAll({
-          where : { userid : req.query.userid, routinename : req.query.routine_name }
+          where : { routinename : req.query.routine_id }
         })
         for(let i = 0; i<parts.length; i++){
           parts[i].destroy();
