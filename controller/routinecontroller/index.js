@@ -5,7 +5,7 @@ const { user } = require("../../models");
 
 module.exports = { //루틴 생성 - post
   create_Routine: async (req, res) => {
-    let findcard = routine.findOne({
+    let findcard = await routine.findOne({
       where : { userid : req.body.userid, name : req.body.routine_name }
     })
     console.log(findcard);
