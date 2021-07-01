@@ -44,7 +44,6 @@ module.exports = {
       });
     }
     else{
-      //토큰 기반으로 수정해야 함
       const userInfo = await user.findOne({
         where: {
               email: req.body.email,
