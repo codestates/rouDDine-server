@@ -20,6 +20,7 @@ module.exports = { //루틴 생성 - post
       });
     }
     else{
+      /*
       for(let i = 0; i<req.body.exercise_array.length; i++){
         const newPart = await routinepart.create({
           userid : req.body.userid,
@@ -27,7 +28,7 @@ module.exports = { //루틴 생성 - post
           exercise_name : req.body.exercise_array[i],
           order : (i+1)
         })
-      }
+      }*/
       const newRoutine = await routine.create({
         name : req.body.routine_name,
         userid : req.body.userid,
@@ -49,7 +50,7 @@ module.exports = { //루틴 생성 - post
     }
     //루틴 이름이 없는 경우 유저 한 사람의 모든 루틴을 보냄
     else if ( !(req.query.routine_name) ){
-      const finduser = await user.findOne({ where : { email : req.query.userid } });
+      const finduser = await user.findOne({ where : { id : req.query.userid } }); //id수정
       if(finduser){
         const userRoutine = await routine.findAll({ where : { userid : req.query.userid } });
         if(userRoutine.length === 0){ //생성된 루틴이 없는 경우
