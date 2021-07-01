@@ -21,6 +21,7 @@ app.use(
   })
 );
 
+app.post("/login",signcontroller.login) // 토큰 로그인
 app.post("/user", signcontroller.signUpController); //회원가입
 app.delete("/user", signcontroller.WithdrawalConstroller); //회원탈퇴
 
