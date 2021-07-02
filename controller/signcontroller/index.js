@@ -52,6 +52,7 @@ module.exports = {
         }
     }
   },
+  //회원탈퇴
   WithdrawalConstroller : async (req, res) => {
     if( !(req.query.user_id) ){
       res.status(405).send({
@@ -105,7 +106,7 @@ module.exports = {
     }
   },
 
-  userInfo : async (req, res) => {
+  userInfo : async (req, res) => { //유저정보
     if(!(req.query.user_id)){
       res.status(405).send({
         "message" : "invalid request"
@@ -123,7 +124,7 @@ module.exports = {
       }
     }
   },
-  updateUser : async (req, res) => {
+  updateUser : async (req, res) => { //유저정보수정
     if(!(req.body.user_id)){
       res.status(405).send({
         "message" : "invalid request"
