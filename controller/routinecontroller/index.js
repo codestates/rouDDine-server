@@ -99,28 +99,68 @@ module.exports = { //루틴 생성 - post
         })
       }
       else{
-        let temparray = [];
+        //let temparray = [];
+        let workout = {};
+        let columns = {
+          "column-1" : {
+            id : "column-1",
+            title : "저장된 운동",
+            taskIds : []
+          },
+          "column-2": {
+            id: "column-2",
+            title: "오늘 할 운동",
+            taskIds: []
+          }
+        };
+        let temparr = [];
+        let temparr2 = [];
+        const tempex = await exercise.findAll({where : {userid : req.query.userid}});
+        for(let i = 0; i<tempex.length; i++){
+          columns["column-1"].taskIds.push(tempex[i].id);
+          workout[tempex[i].id] = { id: tempex[i].id, name: tempex[i].name, set_time : tempex[i].set_time, rest_time : tempex[i].rest_time}
+        }
+        
+
         for(let i = 0; i<routineparts.length; i++){
           let temp = await exercise.findOne({
             where : { userid : req.query.userid, name : routineparts[i].exercise_name }
           })
-          
+          columns["column-2"].taskIds.push(temp.id);
+          temparr2.push(temp.id);
+          temparr.push(routineparts[i].order);
+
+          for(let i = 0; i < columns["column-1"].taskIds.length; i++) {
+            if(columns["column-1"].taskIds[i] === temp.id)  {
+              columns["column-1"].taskIds.splice(i, 1);
+              i--;
+            }
+          }
+          //columns["column-1"].taskIds.push(tempex[i].id);
+          /*
           temparray.push( {
             name : routineparts[i].exercise_name,
             set_time : temp.set_time,
             rest_time : temp.rest_time,
             memo : temp.memo,
             order : routineparts[i].order,
-          })
+          });
+          */
         }
-    
+        for(let i = 0; i<temparr.length; i++){
+          columns["column-2"].taskIds[temparr[i]-1] = temparr2[i];
+        }
+
         const responseCard = {
           id : routineCard.id,
           name : routineCard.name,
           userid : routineCard.userid,
           finished_time : routineCard.finished_time,
           share : routineCard.share,
-          exercise_cards : temparray
+          //exercise_cards : temparray,
+          workout : workout,
+          columns : columns,
+          columnOrder: ["column-1", "column-2"]
         }
     
         res.status(200).send(responseCard);

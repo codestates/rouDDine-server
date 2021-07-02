@@ -33,7 +33,7 @@ app.delete("/exercise", excontroller.delete_exercise); //운동카드 삭제
 app.patch("/exercise", excontroller.update_exercise); //운동카드 수정
 
 app.post("/routine", routinecontroller.create_Routine); //루틴 생성
-app.get("/routine", routinecontroller.info_Routine); //루틴 불러오기 - routine_name이 없으면 모든루틴의 간단한 정보들을, 있으면 루틴 하나의 상세 정보를 반환
+app.get("/routine", routinecontroller.info_Routine); //루틴 불러오기 - routine_id가 없으면 모든루틴의 간단한 정보들을, 있으면 루틴 하나의 상세 정보를 반환
 app.delete("/routine", routinecontroller.delete_Routine); //루틴삭제
 app.patch("/routine", routinecontroller.update_Routine); //루틴 수정
 
