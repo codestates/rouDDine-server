@@ -8,7 +8,6 @@ module.exports = { //루틴 생성 - post
     let findcard = await routine.findOne({
       where : { userid : req.body.userid, name : req.body.routine_name }
     })
-    console.log(findcard);
     if( !(req.body.routine_name && req.body.userid && req.body.share) ){
       res.status(405).send({
         "message" : "invalid request"
@@ -113,12 +112,12 @@ module.exports = { //루틴 생성 - post
             taskIds: []
           }
         };
-        let temparr = [];
-        let temparr2 = [];
+        let temparr = []; //순서
+        let temparr2 = [];//값비교용
         const tempex = await exercise.findAll({where : {userid : req.query.userid}});
-        for(let i = 0; i<tempex.length; i++){
-          columns["column-1"].taskIds.push(tempex[i].id);
-          workout[tempex[i].id] = { id: tempex[i].id, name: tempex[i].name, set_time : tempex[i].set_time, rest_time : tempex[i].rest_time}
+        for (let i = 0; i<tempex.length; i++){
+          columns["column-1"].taskIds.push(String(tempex[i].id));
+          workout[String(tempex[i].id)] = { id: String(tempex[i].id), name: tempex[i].name, set_time : tempex[i].set_time, rest_time : tempex[i].rest_time}
         }
         
 
@@ -126,8 +125,9 @@ module.exports = { //루틴 생성 - post
           let temp = await exercise.findOne({
             where : { userid : req.query.userid, name : routineparts[i].exercise_name }
           })
-          columns["column-2"].taskIds.push(temp.id);
-          temparr2.push(temp.id);
+          columns["column-2"].taskIds.push(String(temp.id));
+
+          temparr2.push(String(temp.id));
           temparr.push(routineparts[i].order);
 
           for(let i = 0; i < columns["column-1"].taskIds.length; i++) {
@@ -158,7 +158,7 @@ module.exports = { //루틴 생성 - post
           finished_time : routineCard.finished_time,
           share : routineCard.share,
           //exercise_cards : temparray,
-          workout : workout,
+          tasks : workout,
           columns : columns,
           columnOrder: ["column-1", "column-2"]
         }
