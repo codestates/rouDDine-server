@@ -13,7 +13,7 @@ module.exports = {
   signUpController: async (req, res) => {
   
     const { username, email, password} = req.body;
-    console.log('salt :', salt)
+    //console.log('salt :', salt)
     if( !(username && email && password) ){
       res.status(405).send({
         "message" : "invalid request"
@@ -145,32 +145,57 @@ module.exports = {
   },
 
   login : async(req,res)=>{
-    const { email, password } = req.body;
+    if(req.body.social === null){
+      const { email, password } = req.body;
 
-    const userInfo = await user.findOne({
-      where: {
-            email
+      const userInfo = await user.findOne({
+        where: {
+              email
+        }
+      });
+      // console.log("req: ", req)
+      if(!userInfo) {
+        await res.status(400).send({data : null, message : 'not authorized'})
       }
-    });
-    // console.log("req: ", req)
-    if(!userInfo) {
-      await res.status(400).send({data : null, message : 'not authorized'})
+        else {
+            const data = {...userInfo.dataValues}
+            // console.log('password:', checkMail.password)
+            bcrypt.compareSync(password, data.password) ;  
+  
+            delete data.password
+  
+            const accessToken = jwt.sign(data, process.env.ACCESS_SECRET, {expiresIn : '3h'}) // create jwt 
+            const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
+         
+          res.cookie("refreshToken", refreshToken) 
+          res.status(200).send({data:{"accessToken": accessToken}, message:'ok'})
+      }
     }
-      else {
-          const data = {...userInfo.dataValues}
-          // console.log('password:', checkMail.password)
-          bcrypt.compareSync(password, data.password) ;  
-
-          delete data.password
-
-          const accessToken = jwt.sign(data, process.env.ACCESS_SECRET, {expiresIn : '3h'}) // create jwt 
-          const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
-       
+    else{ //소셜로그인 - 구글
+      const userInfo = await user.findOne({
+        where: { email: req.body.email, social: 'google'}
+      })
+      if(userInfo){
+        const data = {...userInfo.dataValues}
+        const accessToken = jwt.sign(data, process.env.ACCESS_SECRET, {expiresIn : '3h'}) // create jwt 
+        const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
+         
         res.cookie("refreshToken", refreshToken) 
         res.status(200).send({data:{"accessToken": accessToken}, message:'ok'})
+      }
+      else{
+        const newUser = await user.create({ 
+          username : req.body.username,
+          email : req.body.email,
+          social : 'google',
+          socialid : req.body.socialid,
+          profileimage : req.body.profileimage
+        });
+        res.status(201).send({message:'created'})
+
+      }
     }
   }
-  
 };
 
 
