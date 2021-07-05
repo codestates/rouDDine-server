@@ -3,12 +3,9 @@ const { exercise } = require("../../models")
 module.exports = {
   //운동카드 생성 - post 방식
   create_exercise: async (req, res) => {
-    let samename = await exercise.findOne({
-      where : { userid : req.body.userid, name : req.body.name }
-    })
-    if(samename){
+    if(!req.body.userid){
       res.status(409).send({
-        "message" : "exercise name is already exist"
+        "message" : "invalid request"
       })
     }
     else{
@@ -26,7 +23,7 @@ module.exports = {
   //운동카드 삭제 - delete 방식
   delete_exercise: async (req, res) => {
     const card = await exercise.findOne({
-      where : { userid : req.query.userid, name : req.query.name }
+      where : { id : req.query.id }
     })
     if(card){
       card.destroy();
@@ -65,6 +62,7 @@ module.exports = {
     if(ex_card){
 
       await ex_card.update({
+        name : req.body.name,
         set_time : req.body.set_time,
         rest_time : req.body.rest_time,
         memo : req.body.memo

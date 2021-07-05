@@ -5,47 +5,18 @@ const { user } = require("../../models");
 
 module.exports = { //루틴 생성 - post
   create_Routine: async (req, res) => {
-    let findcard = await routine.findOne({
-      where : { userid : req.body.userid, name : req.body.routine_name }
-    })
-    if( !(req.body.routine_name && req.body.userid && req.body.share) ){
+
+    if( !(req.body.userid) ){
       res.status(405).send({
         "message" : "invalid request"
       });
     }
-    else if(!findcard){
-      const newRoutine = await routine.create({
-        name : req.body.routine_name,
-        userid : req.body.userid,
-        finished_time : 0,
-        share : req.body.share,
-      })
-      
-      res.status(201).send({
-        "message" : "created"
-      });
-    }
-    /*
-    else if( findcard.name === req.body.routine_name ){ //루틴 이름 중복확인
-      res.status(409).send({
-        "message" : "samename is already exist"
-      });
-    }*/
     else{
-      /*
-      for(let i = 0; i<req.body.exercise_array.length; i++){
-        const newPart = await routinepart.create({
-          userid : req.body.userid,
-          routinename : req.body.routine_name,
-          exercise_name : req.body.exercise_array[i],
-          order : (i+1)
-        })
-      }*/
       const newRoutine = await routine.create({
-        name : req.body.routine_name,
+        name : '새 루틴',
         userid : req.body.userid,
         finished_time : 0,
-        share : req.body.share,
+        share : 'false',
       })
       
       res.status(201).send({
@@ -116,14 +87,14 @@ module.exports = { //루틴 생성 - post
         let temparr2 = [];//값비교용
         const tempex = await exercise.findAll({where : {userid : req.query.userid}});
         for (let i = 0; i<tempex.length; i++){
-          columns["column-1"].taskIds.push(String(tempex[i].id));
+          columns["column-1"].taskIds.push(String(tempex[i].id)); //모든 운동카드 입력
           workout[String(tempex[i].id)] = { id: String(tempex[i].id), name: tempex[i].name, set_time : tempex[i].set_time, rest_time : tempex[i].rest_time}
         }
         
 
         for(let i = 0; i<routineparts.length; i++){
           let temp = await exercise.findOne({
-            where : { userid : req.query.userid, name : routineparts[i].exercise_name }
+            where : { userid : req.query.userid, id : routineparts[i].exercise_name }
           })
           columns["column-2"].taskIds.push(String(temp.id));
 
@@ -131,7 +102,7 @@ module.exports = { //루틴 생성 - post
           temparr.push(routineparts[i].order);
 
           for(let i = 0; i < columns["column-1"].taskIds.length; i++) {
-            if(columns["column-1"].taskIds[i] === temp.id)  {
+            if(columns["column-1"].taskIds[i] === String(temp.id))  {
               columns["column-1"].taskIds.splice(i, 1);
               i--;
             }
@@ -175,13 +146,13 @@ module.exports = { //루틴 생성 - post
       });
     }
     else{
-      //루틴아이디로 찾기
+      //루틴아이디로 생성된 루틴 찾기
       const routinecard = await routine.findOne({
         where : { id : req.body.routine_id }
       })
       if( routinecard ){
         if( req.body.exercise_array ){
-          if( req.body.exercise_array.length !==0 ){
+          if( req.body.exercise_array.length !==0 ){ //운동수정하는경우
             //기존에 운동 데이터가 있었다면 삭제
             const parts = await routinepart.findAll({
               where : { routinename : req.body.routine_id }
@@ -193,7 +164,7 @@ module.exports = { //루틴 생성 - post
             }
             //새로운 운동카드 루틴에 입력
             for(let i = 0; i<req.body.exercise_array.length; i++){
-              const newPart = await routinepart.create({
+              const newPart = await routinepart.create({ 
                 userid : routinecard.userid,
                 routinename : routinecard.id,
                 exercise_name : req.body.exercise_array[i],

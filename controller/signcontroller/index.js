@@ -39,7 +39,6 @@ module.exports = {
           let response = {  
             username: newUser.username,
             email: newUser.email,
-            username: newUser.username,
             password : newUser.password
           }
        
@@ -52,7 +51,7 @@ module.exports = {
         }
     }
   },
-  //회원탈퇴
+  //회원탈퇴 - 프로필이미지 삭제 나중에 추가
   WithdrawalConstroller : async (req, res) => {
     if( !(req.query.user_id) ){
       res.status(405).send({
