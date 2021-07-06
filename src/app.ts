@@ -19,5 +19,3 @@ app.listen(port, function () {
 function add (num1:[] , num2:number ){
 
 }
-
-add("hi", 1)

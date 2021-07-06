@@ -154,12 +154,16 @@ module.exports = {
   login : async(req,res)=>{
     if(req.body.social === null){
       const { email, password } = req.body;
-
+      console.log('password :', password)
+      const aa = await bcrypt.hashSync(password, salt)
+      // 해싱해주는것을 추가해줌 . 
+      console.log('hashed :', aa)
       const userInfo = await user.findOne({
         where: {
               email, social : null
         }
       });
+      console.log(userInfo)
       // console.log("req: ", req)
       if(!userInfo) {
         await res.status(400).send({data : null, message : 'not authorized'})
@@ -167,8 +171,13 @@ module.exports = {
         else {
             const data = {...userInfo.dataValues}
             // console.log('password:', checkMail.password)
-            bcrypt.compareSync(password, data.password) ;  
-  
+            // 해쉬,
+            const bool = bcrypt.compareSync(password, data.password) ;  
+            // console.log('bool :', bool)
+          // 결과값을 저장해주는곳이 없엇음. 비밀번호가 맞는지 틀린지 
+          // 비밀번호 검사코드는 있는데 결과에 따라 나뉘는것이없음. 
+          // 조건문을 해줘야함. 
+          if(bool) {
             delete data.password
   
             const accessToken = jwt.sign(data, process.env.ACCESS_SECRET, {expiresIn : '3h'}) // create jwt 
@@ -180,6 +189,7 @@ module.exports = {
               password: userInfo.password
             }
           res.cookie("refreshToken", refreshToken) 
+
           res.status(200).send({data:{"accessToken": accessToken}, 'userinfo' : response, message:'ok'})
       }
     }
