@@ -57,7 +57,7 @@ module.exports = {
   //운동카드 수정하기 - patch방식
   update_exercise: async (req, res) => {
     const ex_card = await exercise.findOne({
-      where : { userid : req.body.userid, name : req.body.name }
+      where : { id : req.body.workoutid }
     })
     if(ex_card){
 
