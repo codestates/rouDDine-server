@@ -137,7 +137,15 @@ module.exports = {
         });
       }
       else{
-        await userinfo.update({ username : req.body.username, password : req.body.password });
+        await userinfo.update({
+          username : req.body.username,
+          password : req.body.password,
+          gender : req.body.gender,
+          age : req.body.age,
+          height : req.body.height,
+          weigt : req.body.weigt,
+          profileimage : req.body.profileimage
+        });
         res.status(200).send( userinfo );
       }
     }
