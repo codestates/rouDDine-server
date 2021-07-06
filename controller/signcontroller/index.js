@@ -149,7 +149,7 @@ module.exports = {
 
       const userInfo = await user.findOne({
         where: {
-              email
+              email, social : null
         }
       });
       // console.log("req: ", req)
@@ -165,9 +165,14 @@ module.exports = {
   
             const accessToken = jwt.sign(data, process.env.ACCESS_SECRET, {expiresIn : '3h'}) // create jwt 
             const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
-         
+            let response = {  
+              id: userInfo.id,
+              username: userInfo.username,
+              email: userInfo.email,
+              password: userInfo.password
+            }
           res.cookie("refreshToken", refreshToken) 
-          res.status(200).send({data:{"accessToken": accessToken}, message:'ok'})
+          res.status(200).send({data:{"accessToken": accessToken}, 'userinfo' : response, message:'ok'})
       }
     }
     else{ //소셜로그인 - 구글
@@ -178,9 +183,15 @@ module.exports = {
         const data = {...userInfo.dataValues}
         const accessToken = jwt.sign(data, process.env.ACCESS_SECRET, {expiresIn : '3h'}) // create jwt 
         const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
-         
+        let response = {  
+          id: userInfo.id,
+          username: userInfo.username,
+          email: userInfo.email,
+          password: userInfo.password,
+          social : userInfo.social
+        }
         res.cookie("refreshToken", refreshToken) 
-        res.status(200).send({data:{"accessToken": accessToken}, message:'ok'})
+        res.status(200).send({data:{"accessToken": accessToken}, 'userinfo' : response, message:'ok'})
       }
       else{
         const newUser = await user.create({ 
