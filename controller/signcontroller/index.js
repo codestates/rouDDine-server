@@ -39,7 +39,6 @@ module.exports = {
           let response = {  
             username: newUser.username,
             email: newUser.email,
-            username: newUser.username,
             password : newUser.password
           }
        
@@ -52,7 +51,7 @@ module.exports = {
         }
     }
   },
-  //회원탈퇴
+  //회원탈퇴 - 프로필이미지 삭제 나중에 추가
   WithdrawalConstroller : async (req, res) => {
     if( !(req.query.user_id) ){
       res.status(405).send({
@@ -138,7 +137,15 @@ module.exports = {
         });
       }
       else{
-        await userinfo.update({ username : req.body.username, password : req.body.password });
+        await userinfo.update({
+          username : req.body.username,
+          password : req.body.password,
+          gender : req.body.gender,
+          age : req.body.age,
+          height : req.body.height,
+          weigt : req.body.weigt,
+          profileimage : req.body.profileimage
+        });
         res.status(200).send( userinfo );
       }
     }
@@ -153,7 +160,7 @@ module.exports = {
       console.log('hashed :', aa)
       const userInfo = await user.findOne({
         where: {
-              email
+              email, social : null
         }
       });
       console.log(userInfo)
@@ -175,13 +182,15 @@ module.exports = {
   
             const accessToken = jwt.sign(data, process.env.ACCESS_SECRET, {expiresIn : '3h'}) // create jwt 
             const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
-         
+            let response = {  
+              id: userInfo.id,
+              username: userInfo.username,
+              email: userInfo.email,
+              password: userInfo.password
+            }
           res.cookie("refreshToken", refreshToken) 
-          res.status(200).send({data:{"accessToken": accessToken}, message:'ok'})
-          } else {
-            res.status(400).send({data : null, message : 'not authorized'})
-          }
-            
+
+          res.status(200).send({data:{"accessToken": accessToken}, 'userinfo' : response, message:'ok'})
       }
     }
     else{ //소셜로그인 - 구글
@@ -192,9 +201,15 @@ module.exports = {
         const data = {...userInfo.dataValues}
         const accessToken = jwt.sign(data, process.env.ACCESS_SECRET, {expiresIn : '3h'}) // create jwt 
         const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
-         
+        let response = {  
+          id: userInfo.id,
+          username: userInfo.username,
+          email: userInfo.email,
+          password: userInfo.password,
+          social : userInfo.social
+        }
         res.cookie("refreshToken", refreshToken) 
-        res.status(200).send({data:{"accessToken": accessToken}, message:'ok'})
+        res.status(200).send({data:{"accessToken": accessToken}, 'userinfo' : response, message:'ok'})
       }
       else{
         const newUser = await user.create({ 
