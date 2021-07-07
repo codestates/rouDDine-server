@@ -23,7 +23,8 @@ module.exports = {
       const userInfo = await user.findOne({
         where: {
               email: email,
-              username : username
+              username : username,
+              social : req.body.social
         }
       });
 
@@ -119,6 +120,7 @@ module.exports = {
         });
       }
       else{
+        
         res.status(200).send( userinfo );
       }
     }
@@ -191,6 +193,7 @@ module.exports = {
           res.cookie("refreshToken", refreshToken) 
 
           res.status(200).send({data:{"accessToken": accessToken}, 'userinfo' : response, message:'ok'})
+       }
       }
     }
     else{ //소셜로그인 - 구글
@@ -225,6 +228,3 @@ module.exports = {
     }
   }
 };
-
-
-
