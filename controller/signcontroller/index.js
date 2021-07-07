@@ -195,6 +195,7 @@ module.exports = {
           res.status(200).send({data:{"accessToken": accessToken}, 'userinfo' : response, message:'ok'})
       }
     }
+    }
     else{ //소셜로그인 - 구글
       const userInfo = await user.findOne({
         where: { email: req.body.email, social: 'google'}
