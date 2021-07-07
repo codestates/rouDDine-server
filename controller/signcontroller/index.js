@@ -23,7 +23,8 @@ module.exports = {
       const userInfo = await user.findOne({
         where: {
               email: email,
-              username : username
+              username : username,
+              social : req.body.social
         }
       });
 
@@ -119,6 +120,7 @@ module.exports = {
         });
       }
       else{
+        
         res.status(200).send( userinfo );
       }
     }
