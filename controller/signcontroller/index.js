@@ -194,6 +194,7 @@ module.exports = {
           //res.cookie("refreshToken", refreshToken) 
             res.cookie("accessToken", accessToken)
           res.status(200).send({message:'ok'})
+       }
       }
     }
     }
@@ -235,4 +236,5 @@ module.exports = {
       }
     }
   }
+
 };
