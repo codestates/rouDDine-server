@@ -197,7 +197,7 @@ module.exports = {
        }
       }
     }
-    }
+    
     else{ //소셜로그인 - 구글
       const userInfo = await user.findOne({
         where: { email: req.body.email, social: 'google'}
@@ -235,6 +235,9 @@ module.exports = {
 
       }
     }
-  }
-
+  },
+  logout : async(req,res)=>{
+    res.cookie("accessToken", "")
+    res.status(200).send({message:'logout ok'})
+  },
 };
