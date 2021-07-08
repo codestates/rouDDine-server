@@ -24,6 +24,8 @@ app.use(
 app.use(express.static('uploadedFiles'));
 
 app.post("/login",signcontroller.login) // 토큰 로그인
+app.post("/logout",signcontroller.logout) //로그아웃
+
 app.post("/user", signcontroller.signUpController); //회원가입
 app.delete("/user", signcontroller.WithdrawalConstroller); //회원탈퇴
 app.get("/user", signcontroller.userInfo); //유저 정보 불러오기

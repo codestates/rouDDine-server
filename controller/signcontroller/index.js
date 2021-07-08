@@ -234,5 +234,9 @@ module.exports = {
 
       }
     }
-  }
+  },
+  logout : async(req,res)=>{
+    res.cookie("accessToken", "")
+    res.status(200).send({message:'logout ok'})
+  },
 };
