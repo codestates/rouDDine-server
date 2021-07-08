@@ -54,27 +54,24 @@ module.exports = {
   },
   //회원탈퇴 - 프로필이미지 삭제 나중에 추가
   WithdrawalConstroller : async (req, res) => {
-    if( !(req.query.user_id) ){
+    if( !(req.cookies.accessToken) ){
       res.status(405).send({
         "message" : "invalid request"
       });
     }
     else{
-
-      const userInfo = await user.findOne({
-        where: {
-              id: req.query.user_id
-        }
-      });
+      const token = req.cookies.accessToken
+      const data = jwt.verify(token, process.env.ACCESS_SECRET);
+      const userInfo = await user.findOne({ where : { id : data.id } });
       
       if(userInfo){
         //루틴 삭제하기
         let card = await routine.findOne({
-          where : { userid : req.query.user_id }
+          where : { userid : userInfo.id }
         })
         while(card){
             const parts = await routinepart.findAll({
-              where : { userid : req.query.user_id }
+              where : { userid : userInfo.id }
             })
             for(let i = 0; i<parts.length; i++){
               parts[i].destroy();
@@ -82,12 +79,12 @@ module.exports = {
             card.destroy();
 
             card = await routine.findOne({
-              where : { userid : req.query.user_id }
+              where : { userid : userInfo.id }
             })
         }
         //운동 삭제하기
         const excard = await exercise.findAll({
-          where : { userid : req.query.user_id }
+          where : { userid : userInfo.id }
         })
         for(let i = 0; i<excard.length; i++){
           excard[i].destroy();
@@ -107,13 +104,15 @@ module.exports = {
   },
 
   userInfo : async (req, res) => { //유저정보
-    if(!(req.query.user_id)){
+    if(!(req.cookies.accessToken)){
       res.status(405).send({
         "message" : "invalid request"
       });
     }
     else{
-      const userinfo = await user.findOne({ where : { id : req.query.user_id } });
+      const token = req.cookies.accessToken
+      const data = jwt.verify(token, process.env.ACCESS_SECRET);
+      const userinfo = await user.findOne({ where : { id : data.id } });
       if(!userinfo){
         res.status(409).send({
           "message" : "not exist user"
@@ -126,13 +125,15 @@ module.exports = {
     }
   },
   updateUser : async (req, res) => { //유저정보수정
-    if(!(req.body.user_id)){
+    if(!(req.cookies.accessToken)){
       res.status(405).send({
         "message" : "invalid request"
       });
     }
     else{
-      const userinfo = await user.findOne({ where : { id : req.body.user_id } });
+      const token = req.cookies.accessToken
+      const data = jwt.verify(token, process.env.ACCESS_SECRET);
+      const userinfo = await user.findOne({ where : { id : data.id } });
       if(!userinfo){
         res.status(409).send({
           "message" : "not exist user"
@@ -141,7 +142,6 @@ module.exports = {
       else{
         await userinfo.update({
           username : req.body.username,
-          password : req.body.password,
           gender : req.body.gender,
           age : req.body.age,
           height : req.body.height,
@@ -156,33 +156,34 @@ module.exports = {
   login : async(req,res)=>{
     if(req.body.social === null){
       const { email, password } = req.body;
-      console.log('password :', password)
       const aa = await bcrypt.hashSync(password, salt)
       // 해싱해주는것을 추가해줌 . 
-      console.log('hashed :', aa)
       const userInfo = await user.findOne({
         where: {
               email, social : null
         }
       });
-      console.log(userInfo)
-      // console.log("req: ", req)
       if(!userInfo) {
         await res.status(400).send({data : null, message : 'not authorized'})
       }
         else {
             const data = {...userInfo.dataValues}
-            // console.log('password:', checkMail.password)
             // 해쉬,
             const bool = bcrypt.compareSync(password, data.password) ;  
-            // console.log('bool :', bool)
           // 결과값을 저장해주는곳이 없엇음. 비밀번호가 맞는지 틀린지 
           // 비밀번호 검사코드는 있는데 결과에 따라 나뉘는것이없음. 
           // 조건문을 해줘야함. 
           if(bool) {
             delete data.password
   
-            const accessToken = jwt.sign(data, process.env.ACCESS_SECRET, {expiresIn : '3h'}) // create jwt 
+            const accessToken = jwt.sign({
+              id:userInfo.id,
+              email : userInfo.email,
+              social : userInfo.social,
+              createdAt:userInfo.createdAt,
+            }, process.env.ACCESS_SECRET,
+            {expiresIn:"2hr"});
+
             const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
             let response = {  
               id: userInfo.id,
@@ -190,9 +191,9 @@ module.exports = {
               email: userInfo.email,
               password: userInfo.password
             }
-          res.cookie("refreshToken", refreshToken) 
-
-          res.status(200).send({data:{"accessToken": accessToken}, 'userinfo' : response, message:'ok'})
+          //res.cookie("refreshToken", refreshToken) 
+            res.cookie("accessToken", accessToken)
+          res.status(200).send({message:'ok'})
        }
       }
     }
@@ -203,17 +204,24 @@ module.exports = {
       })
       if(userInfo){
         const data = {...userInfo.dataValues}
-        const accessToken = jwt.sign(data, process.env.ACCESS_SECRET, {expiresIn : '3h'}) // create jwt 
+        const accessToken = jwt.sign({
+          id:userInfo.id,
+          email : userInfo.email,
+          social : userInfo.social,
+          createdAt:userInfo.createdAt,
+        }, process.env.ACCESS_SECRET,
+        {expiresIn:"2hr"});
+
         const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
         let response = {  
           id: userInfo.id,
           username: userInfo.username,
           email: userInfo.email,
-          password: userInfo.password,
-          social : userInfo.social
+          password: userInfo.password
         }
-        res.cookie("refreshToken", refreshToken) 
-        res.status(200).send({data:{"accessToken": accessToken}, 'userinfo' : response, message:'ok'})
+      //res.cookie("refreshToken", refreshToken) 
+        res.cookie("accessToken", accessToken)
+      res.status(200).send({message:'ok'})
       }
       else{
         const newUser = await user.create({ 
@@ -228,4 +236,5 @@ module.exports = {
       }
     }
   }
+
 };

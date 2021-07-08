@@ -20,6 +20,7 @@ app.use(
     credentials: true
   })
 );
+
 app.use(express.static('uploadedFiles'));
 
 app.post("/login",signcontroller.login) // 토큰 로그인
