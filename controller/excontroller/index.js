@@ -37,8 +37,12 @@ module.exports = {
       })
       if(card){
         card.destroy();
+        const token = req.cookies.accessToken
+        const data = jwt.verify(token, process.env.ACCESS_SECRET);
+        const remainexercises = await exercise.findAll({ where : { userid : data.id } });
         res.status(200).send({
-          "message" : "delete card"
+          "message" : "delete card",
+          result : remainexercises
         })
       }
       else{
