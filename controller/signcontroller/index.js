@@ -194,9 +194,10 @@ module.exports = {
           //res.cookie("refreshToken", refreshToken) 
             res.cookie("accessToken", accessToken)
           res.status(200).send({message:'ok'})
+       }
       }
     }
-    }
+    
     else{ //소셜로그인 - 구글
       const userInfo = await user.findOne({
         where: { email: req.body.email, social: 'google'}
