@@ -14,6 +14,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      set_number: {
+      	type: Sequelize.INTEGER
+      },
       set_time: {
         type: Sequelize.INTEGER
       },

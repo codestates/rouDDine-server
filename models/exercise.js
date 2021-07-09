@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   exercise.init({
     userid: DataTypes.STRING,
     name: DataTypes.STRING,
+    set_number: DataTypes.INTEGER,
     set_time: DataTypes.INTEGER,
     rest_time: DataTypes.INTEGER,
     memo: DataTypes.STRING
