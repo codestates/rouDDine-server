@@ -12,7 +12,8 @@ const sharecontroller = require("./controller/sharecontroller");
 const app = express();
 
 app.use(express.json());
-const port = 5000;
+const port = 8000;
+
 app.use(cookieParser());
 app.use(
   cors({
