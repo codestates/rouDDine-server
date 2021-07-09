@@ -1,4 +1,5 @@
 const { exercise } = require("../../models")
+const { routineparts } = require("../../models")
 const jwt = require('jsonwebtoken');
 
 module.exports = {
@@ -32,12 +33,20 @@ module.exports = {
       })
     }
     else{
-      const card = await exercise.findOne({
+      const card = await exercise.findOne({ //워크아웃 찾기
         where : { id : req.query.workoutid }
       })
-      if(card){
-        card.destroy();
-        const token = req.cookies.accessToken
+      if(card){//워크아웃 삭제 전 루틴에서 워크아웃 삭제
+        const parts = await routineparts.findAll({
+          where : { exercise_name : req.query.workoutid }
+        })
+        for(let i=0; i<parts.length; i++){
+          parts[i].destroy();
+        }
+
+        card.destroy();//운동카드 삭제
+        //삭제 후 남은 운동카드 보내기
+        const token = req.cookies.accessToken1
         const data = jwt.verify(token, process.env.ACCESS_SECRET);
         const remainexercises = await exercise.findAll({ where : { userid : data.id } });
         res.status(200).send({
@@ -54,7 +63,7 @@ module.exports = {
   },
   //운동카드 불러오기 - get방식
   info_exercise: async (req, res) => {
-    if(req.cookies.accessToken){
+    if(req.cookies.accessToken !== ''){
       const token = req.cookies.accessToken
       const data = jwt.verify(token, process.env.ACCESS_SECRET);
       let every_card = await exercise.findAll({

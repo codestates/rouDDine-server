@@ -28,7 +28,7 @@ module.exports = { //루틴 생성 - post
   },
 
   info_Routine: async (req, res) => { //루틴 불러오기 - get 방식
-    if( !(req.cookies.accessToken)){ //기본 생성된 루틴 불러오기
+    if( !(req.cookies.accessToken) || req.cookies.accessToken === ''){ //기본 생성된 루틴 불러오기 - 한번도 로그인안했거나 로그아웃 한 상태
       const finduser = await user.findOne({ where : { id : 1 } }); 
       if(finduser){
         const userRoutine = await routine.findAll({ where : { userid : req.query.userid } });
@@ -130,15 +130,6 @@ module.exports = { //루틴 생성 - post
             }
           }
           //columns["column-1"].taskIds.push(tempex[i].id);
-          /*
-          temparray.push( {
-            name : routineparts[i].exercise_name,
-            set_time : temp.set_time,
-            rest_time : temp.rest_time,
-            memo : temp.memo,
-            order : routineparts[i].order,
-          });
-          */
         }
         for(let i = 0; i<temparr.length; i++){
           columns["column-2"].taskIds[temparr[i]-1] = temparr2[i];

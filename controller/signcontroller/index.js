@@ -192,7 +192,7 @@ module.exports = {
               password: userInfo.password
             }
           //res.cookie("refreshToken", refreshToken) 
-            res.cookie("accessToken", accessToken)
+            res.cookie("accessToken", accessToken);
           res.status(200).send({message:'ok'})
        }
       }
