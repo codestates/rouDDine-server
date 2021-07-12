@@ -16,7 +16,8 @@ module.exports = {
       //const userinfo = await user.findOne({ where : { id : data.id } });
       const newCard = await exercise.create({ 
         userid: data.id, 
-        name : req.body.name, 
+        name : req.body.name,
+        set_number: req.body.set_number,
         set_time: req.body.set_time,
         rest_time: req.body.rest_time,
         memo : req.body.memo
@@ -113,6 +114,7 @@ module.exports = {
         await ex_card.update({
           name : req.body.name,
           set_time : req.body.set_time,
+          set_number: req.body.set_number,
           rest_time : req.body.rest_time,
           memo : req.body.memo
         });
