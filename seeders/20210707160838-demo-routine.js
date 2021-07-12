@@ -83,6 +83,22 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
+    {
+      name: "헬스초보자&바쁜직장인",
+      userid: 5,
+      finished_time: 0,
+      share: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "짧고 굵게 지옥루틴",
+      userid: 6,
+      finished_time: 0,
+      share: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
   ]);
   },
   down: (queryInterface, Sequelize) => {
