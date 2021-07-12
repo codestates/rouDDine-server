@@ -10,7 +10,7 @@ module.exports = {
       set_time: 10,
       rest_time: 5,
       memo: " 내일 145키로 도전! ",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -21,7 +21,7 @@ module.exports = {
       set_time: 10,
       rest_time: 5,
       memo: "내일 165키로 도전!",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -32,7 +32,7 @@ module.exports = {
       set_time: 10,
       rest_time: 5,
       memo: "내일 190키로 도전!",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -43,7 +43,7 @@ module.exports = {
       set_time: 30,
       rest_time: 5,
       memo: "내일도 빡쎄게!",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -54,7 +54,7 @@ module.exports = {
       set_time: 20,
       rest_time: 5,
       memo: "부상방지!",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -65,7 +65,7 @@ module.exports = {
       set_time: 10,
       rest_time: 5,
       memo: "목말라..",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -76,7 +76,7 @@ module.exports = {
       set_time: 10,
       rest_time: 5,
       memo: "단백질이 필요해..",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -87,7 +87,7 @@ module.exports = {
       set_time: 2,
       rest_time: 5,
       memo: "2분에 60개.. 내일은 조금만더..",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -98,7 +98,7 @@ module.exports = {
       set_time: 2,
       rest_time: 5,
       memo: "헬린이 탈출 화이팅!",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -109,7 +109,7 @@ module.exports = {
       set_time: 2,
       rest_time: 5,
       memo: "현재 50개 .. 헬린이 탈출 화이팅!",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -120,7 +120,7 @@ module.exports = {
       set_time: 30,
       rest_time: 5,
       memo: "힘들다..",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -131,7 +131,7 @@ module.exports = {
       set_time: 20,
       rest_time: 5,
       memo: "힘들다..",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -142,7 +142,7 @@ module.exports = {
       set_time: 20,
       rest_time: 5,
       memo: "목말라..",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -153,7 +153,7 @@ module.exports = {
       set_time: 30,
       rest_time: 5,
       memo: "오늘은 어제보다 더 유연해졌다.",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -164,7 +164,7 @@ module.exports = {
       set_time: 10,
       rest_time: 5,
       memo: "코어운동!",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -175,7 +175,7 @@ module.exports = {
       set_time: 1,
       rest_time: 5,
       memo: "오늘 처음으로 철봉 1개 성공!",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -186,7 +186,7 @@ module.exports = {
       set_time: 30,
       rest_time: 5,
       memo: "휴.. 힘들다...",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -197,7 +197,7 @@ module.exports = {
       set_time: 20,
       rest_time: 5,
       memo: "휴....",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -208,7 +208,7 @@ module.exports = {
       set_time: 20,
       rest_time: 5,
       memo: "간식 땡기네..",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -219,7 +219,7 @@ module.exports = {
       set_time: 30,
       rest_time: 10,
       memo: "몸매관리, 다이어트",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -230,7 +230,7 @@ module.exports = {
       set_time: 30,
       rest_time: 15,
       memo: "죽겠다....",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -241,7 +241,7 @@ module.exports = {
       set_time: 30,
       rest_time: 15,
       memo: "힘들어..",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -252,7 +252,7 @@ module.exports = {
       set_time: 15,
       rest_time: 10,
       memo: "힘들어..",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -263,7 +263,7 @@ module.exports = {
       set_time: 20,
       rest_time: 5,
       memo: "휴...",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -274,7 +274,7 @@ module.exports = {
       set_time: 20,
       rest_time: 5,
       memo: "좋다..",
-      default: 1,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     }
