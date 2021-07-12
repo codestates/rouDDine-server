@@ -1,6 +1,7 @@
 const { exercise } = require("../../models")
 const { routineparts } = require("../../models")
 const jwt = require('jsonwebtoken');
+const { Op } = require("sequelize");
 
 module.exports = {
   //운동카드 생성 - post 방식
@@ -68,7 +69,12 @@ module.exports = {
       const token = req.cookies.accessToken
       const data = jwt.verify(token, process.env.ACCESS_SECRET);
       let every_card = await exercise.findAll({
-        where : { userid : data.id}
+        where : {
+          [Op.or] : [
+            {userid : data.id},
+            {default : "true"}
+          ]
+        }
       })
       if(every_card.length !== 0){
         res.status(200).send({
@@ -111,17 +117,25 @@ module.exports = {
         where : { id : req.body.workoutid }
       })
       if(ex_card){
-        await ex_card.update({
-          name : req.body.name,
-          set_time : req.body.set_time,
-          set_number: req.body.set_number,
-          rest_time : req.body.rest_time,
-          memo : req.body.memo
-        });
-        res.status(200).send({
-          "message" : "update exersice card",
-          "result" : ex_card
-        })
+        if(ex_card.default === true){
+          res.status(200).send({
+            "message" : "기본 운동은 수정 불가입니다.",
+            "result" : ex_card
+          })
+        }
+        else{
+          await ex_card.update({
+            name : req.body.name,
+            set_time : req.body.set_time,
+            set_number: req.body.set_number,
+            rest_time : req.body.rest_time,
+            memo : req.body.memo
+          });
+          res.status(200).send({
+            "message" : "update exersice card",
+            "result" : ex_card
+          })
+        }
       }
       else{
         res.status(409).send({
