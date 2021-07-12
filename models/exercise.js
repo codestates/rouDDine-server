@@ -15,10 +15,12 @@ module.exports = (sequelize, DataTypes) => {
   };
   exercise.init({
     userid: DataTypes.STRING,
+    category: DataTypes.STRING,
     name: DataTypes.STRING,
     set_number: DataTypes.INTEGER,
     set_time: DataTypes.INTEGER,
     rest_time: DataTypes.INTEGER,
+    default : DataTypes.BOOLEAN,
     memo: DataTypes.STRING
   }, {
     sequelize,
