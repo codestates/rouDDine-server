@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     age: DataTypes.INTEGER,
     height: DataTypes.STRING,
     weigt: DataTypes.STRING,
-    profileimage: DataTypes.STRING
+    profileimage: DataTypes.STRING,
+    total_time: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'user',

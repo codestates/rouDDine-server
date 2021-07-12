@@ -34,7 +34,7 @@ module.exports = {
             username,
             email, 
             password: bcrypt.hashSync(password, salt), 
-            
+            profileimage : 'default'
           });
 
           let response = {  
@@ -125,6 +125,7 @@ module.exports = {
     }
   },
   updateUser : async (req, res) => { //유저정보수정
+    console.log(req.cookies);
     if(!(req.cookies.accessToken)){
       res.status(405).send({
         "message" : "invalid request"
@@ -203,6 +204,7 @@ module.exports = {
         where: { email: req.body.email, social: 'google'}
       })
       if(userInfo){
+        userInfo.update({ profileimage : req.body.profileimage }); //구글 프로필 사진 바뀌었으면 반영
         const data = {...userInfo.dataValues}
         const accessToken = jwt.sign({
           id:userInfo.id,

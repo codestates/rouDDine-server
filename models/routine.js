@@ -17,6 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     userid: DataTypes.STRING,
     finished_time: DataTypes.INTEGER,
+    total_time: DataTypes.INTEGER,
+    finished_total_time:DataTypes.INTEGER,
     share: DataTypes.BOOLEAN
   }, {
     sequelize,

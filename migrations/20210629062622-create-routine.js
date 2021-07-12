@@ -17,6 +17,12 @@ module.exports = {
       finished_time: {
         type: Sequelize.INTEGER
       },
+      total_time: {
+        type: Sequelize.INTEGER
+      },
+      finished_total_time: {
+        type: Sequelize.INTEGER
+      },
       share: {
         type: Sequelize.BOOLEAN
       },

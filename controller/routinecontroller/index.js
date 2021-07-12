@@ -19,6 +19,7 @@ module.exports = { //루틴 생성 - post
         userid : data.id,
         finished_time : 0,
         share : 'false',
+        finished_total_time :0
       })
       
       res.status(201).send({
@@ -56,18 +57,42 @@ module.exports = { //루틴 생성 - post
       const data = jwt.verify(token, process.env.ACCESS_SECRET);
       const finduser = await user.findOne({ where : { id : data.id } }); //id수정
       if(finduser){
-        const userRoutine = await routine.findAll({ where : { userid : data.id } });
-        if(userRoutine.length === 0){ //생성된 루틴이 없는 경우
+        const routineCard = await routine.findAll({ where : { userid : data.id } });
+        if(routineCard.length === 0){ //생성된 루틴이 없는 경우
           res.status(200).send({
             "message" : "please create routine"
           });
         }
-        else{
-          console.log(userRoutine);
-          res.status(200).send({
-            "message" : "search success",
-            "result" : userRoutine
-          });
+        else{//루틴 찾은 경우
+          let initialData = [];
+          for(let i = 0; i<routineCard.length;  i++){
+            const routineparts = await routinepart.findAll({
+              where : { routinename : routineCard[i].id}
+            });
+            let routineData = {};
+            routineData.id = routineCard[i].id;
+            routineData.name = routineCard[i].name;
+            routineData.userid = routineCard[i].userid;
+            routineData.finished_time = routineCard[i].finished_time;
+            routineData.share = routineCard[i].share;
+            routineData.tasks = [];
+
+            
+            for(let j = 0; j<routineparts.length; j++){ //정렬된 순서대로 운동 정보 tasks 에 저장
+              let workout = await exercise.findOne( {where : { id : routineparts[j].exercise_name }} )
+              let temp = {
+                id : String(workout.id),
+                name : workout.name,
+                set_number : workout.set_number,
+                set_time : workout.set_time,
+                rest_time : workout.rest_time,
+                memo : workout.memo
+              };
+              routineData.tasks.push(temp);
+            }
+            initialData.push(routineData);
+          }
+          res.status(200).send(initialData);
         }
       }
       else{ //없는 유저일 경우
@@ -164,6 +189,7 @@ module.exports = { //루틴 생성 - post
         where : { id : req.body.routine_id }
       })
       if( routinecard ){
+        let time = 0;
         if( req.body.exercise_array ){
           if( req.body.exercise_array.length !==0 ){ //운동수정하는경우
             //기존에 운동 데이터가 있었다면 삭제
@@ -176,7 +202,11 @@ module.exports = { //루틴 생성 - post
               }
             }
             //새로운 운동카드 루틴에 입력
+            
             for(let i = 0; i<req.body.exercise_array.length; i++){
+              let ex = await exercise.findOne( { where : { id : req.body.exercise_array[i] } } )
+              time += (((ex.set_time + ex.rest_time) * ex.set_number)) //운동 총 시간 계산
+
               const newPart = await routinepart.create({ 
                 userid : routinecard.userid,
                 routinename : routinecard.id,
@@ -187,7 +217,7 @@ module.exports = { //루틴 생성 - post
           }
         }
         
-        await routinecard.update({ share : req.body.share, name : req.body.routine_name });
+        await routinecard.update({ share : req.body.share, name : req.body.routine_name, total_time : time});
         
         res.status(200).send({
           "message" : "success",
@@ -230,35 +260,16 @@ module.exports = { //루틴 생성 - post
       }
     }
   },
-  /*
-  user_Routine: async(req, res) => { //한 사람의 모든 루틴 가져오기
-    if(!(req.query.userid)){
-      res.status(405).send({
-        "message" : "invalid request1"
-      });
-    }
-    else{
-      const finduser = user.findOne({ where : { email : req.query.userid } });
-      if(finduser){
-        const userRoutine = routine.findAll({ where : { userid : req.query.userid } });
-        if(userRoutine.length === 0){ //생성된 루틴이 없는 경우
-          res.status(200).send({
-            "message" : "please create routine"
-          });
-        }
-        else{
-          res.status(200).send({
-            "message" : "search success",
-            "result" : userRoutine
-          });
-        }
-      }
-      else{ //없는 유저일 경우
-        res.status(409).send({
-          "message" : "cannot find user"
-        });
-      }
-    }
-  }*/
+  finish_Routine: async(req, res) => { //루틴 끝나기
+    const finish_routine = await routine.findOne({where : {id : req.body.routine_id }});
+    let temp = finish_routine.finished_time; //루틴 완료 횟수 1증가
+    temp += 1;
+    let finishtime = finish_routine.total_time  + finish_routine.finished_total_time; //루틴 운동시간 증가
+    await finish_routine.update( {finished_time : temp, finished_total_time : finishtime } ) 
+    res.status(200).send({
+      "message" : "finish ok",
+      result : finish_routine
+    })
+  },
 };
 
