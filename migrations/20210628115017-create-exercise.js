@@ -14,6 +14,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      category: {
+        type: Sequelize.STRING
+      },
       set_number: {
       	type: Sequelize.INTEGER
       },
@@ -25,6 +28,9 @@ module.exports = {
       },
       memo: {
         type: Sequelize.STRING
+      },
+      default: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
