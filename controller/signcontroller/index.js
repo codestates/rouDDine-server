@@ -34,7 +34,8 @@ module.exports = {
             username,
             email, 
             password: bcrypt.hashSync(password, salt), 
-            profileimage : 'default'
+            profileimage : 'default',
+            total_time : 0
           });
 
           let response = {  
