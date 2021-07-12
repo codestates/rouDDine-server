@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   exercise.init({
     userid: DataTypes.STRING,
-    category: DataTypes.STRING,
+    routine_id: DataTypes.STRING,
+    order: DataTypes.INTEGER,
     name: DataTypes.STRING,
     category: DataTypes.STRING,
     set_number: DataTypes.INTEGER,
