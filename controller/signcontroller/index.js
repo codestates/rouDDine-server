@@ -44,7 +44,7 @@ module.exports = {
             password : newUser.password
           }
        
-        res.status(201).json( response );
+        res.status(201).json( newUser );
       }
       else{
           res.status(409).send({
