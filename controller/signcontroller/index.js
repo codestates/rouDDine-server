@@ -184,7 +184,7 @@ module.exports = {
               social : userInfo.social,
               createdAt:userInfo.createdAt,
             }, process.env.ACCESS_SECRET,
-            {expiresIn:"2hr"});
+            {expiresIn:"12hr"});
 
             const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
             let response = {  
@@ -213,7 +213,7 @@ module.exports = {
           social : userInfo.social,
           createdAt:userInfo.createdAt,
         }, process.env.ACCESS_SECRET,
-        {expiresIn:"2hr"});
+        {expiresIn:"12hr"});
 
         const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
         let response = {  
