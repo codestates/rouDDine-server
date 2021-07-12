@@ -49,8 +49,8 @@ module.exports = {
     },
     {
       userid: 1,
-      category: "위밍업 체조",
-      name: "나만의 운동",
+      category: "나만의운동",
+      name: "위밍업 체조",
       set_time: 20,
       rest_time: 5,
       memo: "부상방지!",
