@@ -11,6 +11,12 @@ module.exports = {
       userid: {
         type: Sequelize.STRING
       },
+      routine_id: {
+        type: Sequelize.STRING
+      },
+      order: {
+        type: Sequelize.INTEGER
+      },
       name: {
         type: Sequelize.STRING
       },
