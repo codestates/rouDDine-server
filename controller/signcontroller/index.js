@@ -34,7 +34,8 @@ module.exports = {
             username,
             email, 
             password: bcrypt.hashSync(password, salt), 
-            profileimage : 'default'
+            profileimage : 'default',
+            total_time : 0
           });
 
           let response = {  
@@ -43,7 +44,7 @@ module.exports = {
             password : newUser.password
           }
        
-        res.status(201).json( response );
+        res.status(201).json( newUser );
       }
       else{
           res.status(409).send({
