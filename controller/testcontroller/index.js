@@ -65,8 +65,17 @@ module.exports = {
       //const token = req.cookies.accessToken
       //const data = jwt.verify(token, process.env.ACCESS_SECRET);
       if(!req.query.routine_id){
-        res.status(409).send({
-          "message" : "create routine first"
+        let every_card = await exercise.findAll({
+          where : {
+            [Op.or] : [
+              //{userid : data.id},
+              {default : true}
+            ]
+          }
+        })
+        res.status(200).send({
+          "message" : "default exercises",
+          "result" : every_card
         })
       }
       else{
