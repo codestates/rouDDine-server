@@ -279,7 +279,7 @@ module.exports = {
         where : { id : req.query.routine_id }
       })
       if( card ){
-        const parts = await exercise.findAll({
+        const parts = await exercise.findAll({ //루틴안의 운동들 삭제
           where : { routine_id : req.query.routine_id }
         })
         for(let i = 0; i<parts.length; i++){
