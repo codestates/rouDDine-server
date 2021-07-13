@@ -7,6 +7,8 @@ const { routinepart } = require("../../models");
 const { exercise } = require("../../models");
 const bcrypt = require("bcrypt");
 const salt = process.env.DATABASE_SALT
+const { Op } = require("sequelize");
+
 
 module.exports = {
   // 회원가입
@@ -240,6 +242,20 @@ module.exports = {
     }
   },
   logout : async(req,res)=>{
+    const token = req.cookies.accessToken
+    const data = jwt.verify(token, process.env.ACCESS_SECRET);
+    const notSave_excard = await exercise.findAll({
+      where : {
+        [Op.and] : [
+          {userid : data.id},
+          {routine_id : null}
+        ]
+      }
+    })
+    for(let i = 0; i<notSave_excard.length; i++){
+      notSave_excard[i].destroy();
+    }
+
     res.cookie("accessToken", "")
     res.status(200).send({message:'logout ok'})
   },
