@@ -72,7 +72,7 @@ module.exports = {
         where : {
           [Op.or] : [
             {userid : data.id},
-            {default : true}
+            //{default : true}
           ]
         }
       })

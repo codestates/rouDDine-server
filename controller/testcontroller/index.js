@@ -158,7 +158,7 @@ module.exports = {
         else{//루틴 찾은 경우
           let initialData = [];
           for(let i = 0; i<routineCard.length;  i++){
-            const routineparts = await exercise.findAll({
+            const routineparts = await exercise.findAll({ //루틴아이디가 리치하는 운동찾기
               where : { routine_id : routineCard[i].id}
             });
             let routineData = {};
@@ -172,13 +172,13 @@ module.exports = {
             
             for(let j = 0; j<routineparts.length; j++){ //정렬된 순서대로 운동 정보 tasks 에 저장
               let temp = {
-                id : String(routineparts[i].id),
-                name : routineparts[i].name,
-                set_number : routineparts[i].set_number,
-                set_time : routineparts[i].set_time,
-                rest_time : routineparts[i].rest_time,
-                memo : routineparts[i].memo,
-                order : routineparts[i].order
+                id : String(routineparts[j].id),
+                name : routineparts[j].name,
+                set_number : routineparts[j].set_number,
+                set_time : routineparts[j].set_time,
+                rest_time : routineparts[j].rest_time,
+                memo : routineparts[j].memo,
+                order : routineparts[j].order
               };
               routineData.tasks.push(temp);
             }
@@ -255,10 +255,12 @@ module.exports = {
         }
         
         await routinecard.update({ share : req.body.share, name : req.body.routine_name, total_time : time});
+        const excards = await exercise.findAll( { where : { routine_id : routinecard.id } } );
         
         res.status(200).send({
           "message" : "success",
-          "result" : routinecard
+          "result" : routinecard,
+          "exercises" : excards
         });
       }
       else{

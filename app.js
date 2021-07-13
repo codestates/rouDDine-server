@@ -13,7 +13,7 @@ const testcontroller = require("./controller/testcontroller")
 const app = express();
 
 app.use(express.json());
-const port = 8000;
+const port = 3000;
 
 app.use(cookieParser());
 app.use(
@@ -47,12 +47,12 @@ app.post("/finish", routinecontroller.finish_Routine); //루틴완료
 app.post("/testexercise", testcontroller.create_exercise);
 app.get("/testexercise", testcontroller.info_exercise);
 app.patch("/testexercise", testcontroller.update_exercise);
-app.get("/testexercise", testcontroller.delete_exercise);
+app.delete("/testexercise", testcontroller.delete_exercise);
 
 app.post("/testroutine", testcontroller.create_Routine);
 app.get("/testroutine", testcontroller.info_Routine);
 app.patch("/testroutine", testcontroller.update_Routine);
-app.get("/testroutine", testcontroller.delete_Routine);
+app.delete("/testroutine", testcontroller.delete_Routine);
 
 
 app.get("/share", sharecontroller.getSharedRoutines); //공유된 루틴 불러오기
