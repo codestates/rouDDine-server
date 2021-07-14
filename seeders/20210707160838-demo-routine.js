@@ -105,7 +105,7 @@ module.exports = {
     },	
     {
       name: "짧고 굵게 지옥루틴",
-      userid: 6,
+      userid: 5,
       finished_time: 0,
       share: true,
       createdAt: new Date(),
