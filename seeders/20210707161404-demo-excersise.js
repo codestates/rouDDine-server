@@ -288,6 +288,7 @@ module.exports = {
       memo: "팔꿈치가 어깨쪽으로 올라가거나 옆구리 쪽으로 떨어지는 것을 주의! 1세트당 12~15, 휴식시간 4분",
       default: 1,
       order:1,
+      workoutimage: 'defaultworkout',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -302,6 +303,7 @@ module.exports = {
       memo: "운동사이 휴식 3분",
       default: 1,
       order:2,
+      workoutimage: 'defaultworkout',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -316,6 +318,7 @@ module.exports = {
       memo: "허리를 너무 아치로 만들지 말고 1자로 유지! 1세트당 12~15회, 휴식시간 3분",
       default: 1,
       order:3,
+      workoutimage: 'defaultworkout',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -330,6 +333,7 @@ module.exports = {
       memo: "운동사이 휴식 3분",
       default: 1,
       order:4,
+      workoutimage: 'defaultworkout',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -344,6 +348,7 @@ module.exports = {
       memo: "전완을 항상 지면과 수직을 유지해야 팔꿈치와 어깨부상을 방지할 수 있습니다! 1세트당 12~15회, 휴식시간 5분",
       default: 1,
       order:5,
+      workoutimage: 'defaultworkout',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -358,6 +363,7 @@ module.exports = {
       memo: "운동사이 휴식 3분",
       default: 1,
       order:6,
+      workoutimage: 'defaultworkout',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -372,6 +378,7 @@ module.exports = {
       memo: "스쿼트는 허리가 꺾이지 않도록 주의! 1세트당 12~15회, 휴식시간 5분",
       default: 1,
       order:7,
+      workoutimage: 'defaultworkout',
       createdAt: new Date(),
       updatedAt: new Date()
     }

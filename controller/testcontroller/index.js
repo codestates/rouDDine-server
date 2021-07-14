@@ -183,6 +183,7 @@ module.exports = {
             routineData.userid = routineCard[i].userid;
             routineData.finished_time = routineCard[i].finished_time;
             routineData.share = routineCard[i].share;
+            routineData.routineimage
             routineData.tasks = [];
 
             

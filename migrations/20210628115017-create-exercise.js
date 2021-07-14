@@ -38,6 +38,9 @@ module.exports = {
       default: {
         type: Sequelize.BOOLEAN
       },
+      workoutimage: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
