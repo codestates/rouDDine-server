@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('exercises', [
@@ -50,7 +49,7 @@ module.exports = {
     },
     {
       userid: 1,
-      category: "나만의운동",
+      category: "유산소운동",
       name: "위밍업 체조",
       set_time: 20,
       rest_time: 5,
@@ -150,7 +149,7 @@ module.exports = {
     },
     {
       userid: 3,
-      category: "나만의운동",
+      category: "유산소운동",
       name: "요가",
       set_time: 30,
       rest_time: 5,
@@ -161,7 +160,7 @@ module.exports = {
     },
     {
       userid: 3,
-      category: "나만의운동",
+      category: "웨이트운동",
       name: "데드버그",
       set_time: 10,
       rest_time: 5,
@@ -238,7 +237,7 @@ module.exports = {
     },
     {
       userid: 4,
-      category: "나만의운동",
+      category: "웨이트운동",
       name: "필라테스",
       set_time: 30,
       rest_time: 15,
@@ -249,7 +248,7 @@ module.exports = {
     },
     {
       userid: 4,
-      category: "웨이트운동",
+      category: "유산소운동",
       name: "버핏",
       set_time: 15,
       rest_time: 10,
