@@ -8,6 +8,7 @@ module.exports = {
       userid: 1,
       finished_time: 0,
       share: false,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -16,6 +17,7 @@ module.exports = {
       userid: 1,
       finished_time: 0,
       share: false,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -24,6 +26,7 @@ module.exports = {
       userid: 1,
       finished_time: 0,
       share: false,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -40,6 +43,7 @@ module.exports = {
       userid: 2,
       finished_time: 0,
       share: false,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -48,6 +52,7 @@ module.exports = {
       userid: 3,
       finished_time: 0,
       share: false,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -56,6 +61,7 @@ module.exports = {
       userid: 3,
       finished_time: 0,
       share: false,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -64,6 +70,7 @@ module.exports = {
       userid: 4,
       finished_time: 0,
       share: false,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -72,6 +79,7 @@ module.exports = {
       userid: 4,
       finished_time: 0,
       share: false,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -80,6 +88,7 @@ module.exports = {
       userid: 4,
       finished_time: 0,
       share: false,
+      default: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -88,9 +97,12 @@ module.exports = {
       userid: 5,
       finished_time: 0,
       share: true,
+      total_time: 0,
+      finished_total_time: 0,
+      default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
-    },
+    },	
     {
       name: "짧고 굵게 지옥루틴",
       userid: 6,

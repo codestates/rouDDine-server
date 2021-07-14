@@ -29,6 +29,7 @@ module.exports = {
         memo : req.body.memo,
         default : false
       });
+      
 
       res.status(201).send(newCard);
     }
@@ -157,8 +158,14 @@ module.exports = {
       const token = req.cookies.accessToken
       const data = jwt.verify(token, process.env.ACCESS_SECRET);
       const finduser = await user.findOne({ where : { id : data.id } });
-      if(finduser){
-        const routineCard = await routine.findAll({ where : { userid : data.id } });
+      if(finduser){ //로그인 한 경우
+        const routineCard = await routine.findAll({
+          where : {
+            [Op.or] : [
+              {userid : data.id},
+              {default : true}
+            ]
+          }});
         if(routineCard.length === 0){ //생성된 루틴이 없는 경우
           res.status(200).send({
             "message" : "please create routine"
@@ -196,7 +203,7 @@ module.exports = {
           res.status(200).send(initialData);
         }
       }
-      else{ //없는 유저일 경우
+      else{ //로그인 안한 경우
         res.status(409).send({
           "message" : "cannot find user"
         });
@@ -254,7 +261,7 @@ module.exports = {
         if( req.body.exercise_array ){
           if( req.body.exercise_array.length !==0 ){ //운동수정하는경우            
             for(let i = 0; i<req.body.exercise_array.length; i++){
-              let ex = await exercise.findOne( { where : { id : req.body.exercise_array[i] } } )
+              let ex = await exercise.findOne( { where : { id : req.body.exercise_array[i].id } } )
               if(ex.set_time&&ex.set_number){
                 time += (ex.set_time * ex.set_number) //운동 총 시간 계산
               }
