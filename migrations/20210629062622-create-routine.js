@@ -29,6 +29,9 @@ module.exports = {
       default: {
         type: Sequelize.BOOLEAN
       },
+      routineimage: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

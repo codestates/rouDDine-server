@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     total_time: DataTypes.INTEGER,
     finished_total_time:DataTypes.INTEGER,
     default: DataTypes.BOOLEAN,
+    routineimage: DataTypes.STRING,
     share: DataTypes.BOOLEAN
   }, {
     sequelize,

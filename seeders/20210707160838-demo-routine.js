@@ -100,6 +100,7 @@ module.exports = {
       total_time: 0,
       finished_total_time: 0,
       default: 1,
+      routineimage: 'defaultroutine',
       createdAt: new Date(),
       updatedAt: new Date()
     },	
@@ -108,6 +109,10 @@ module.exports = {
       userid: 5,
       finished_time: 0,
       share: true,
+      total_time: 0,
+      finished_total_time: 0,
+      default: 1,
+      routineimage: 'defaultroutine',
       createdAt: new Date(),
       updatedAt: new Date()
     }
