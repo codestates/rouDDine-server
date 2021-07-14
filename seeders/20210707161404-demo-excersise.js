@@ -5,33 +5,34 @@ module.exports = {
     return queryInterface.bulkInsert('exercises', [
     {
       userid: 1,
+      category: "나만의 운동",
+      name: "체조",
+      set_time: 30,
+      rest_time: 5,
+      memo: "오늘도 화이팅!",
+      default: 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      userid: 1,
+      category: "유산소운동",
+      name: "조깅",
+      set_time: 30,
+      rest_time: 5,
+      memo: "오늘도 활기차게!",
+      default: 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+      
+    {
+      userid: 1,
       category: "유산소운동",
       name: "싸이클",
       set_time: 30,
       rest_time: 5,
-      memo: "내일도 오늘만큼!",
-      default: 1,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 1,
-      category: "웨이트운동",
-      name: "스쿼트",
-      set_time: 10,
-      rest_time: 5,
-      memo: "내일도 활기차게!",
-      default: 1,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 1,
-      category: "웨이트운동",
-      name: "푸쉬업",
-      set_time: 3,
-      rest_time: 5,
-      memo: "내일은 70개 채우자",
+      memo: "내일은 더 가보자!",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -39,21 +40,10 @@ module.exports = {
     {
       userid: 1,
       category: "유산소운동",
-      name: "줄넘기",
-      set_time: 30,
+      name: "배드민턴",
+      set_time: 40,
       rest_time: 5,
-      memo: "내일도 빡쎄게!",
-      default: 1,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 1,
-      category: "위밍업 체조",
-      name: "나만의 운동",
-      set_time: 20,
-      rest_time: 5,
-      memo: "부상방지!",
+      memo: "내일은 이겨보자!",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -83,21 +73,21 @@ module.exports = {
     {
       userid: 2,
       category: "웨이트운동",
-      name: "윗몸일으키기",
-      set_time: 2,
+      name: "아령",
+      set_time: 10,
       rest_time: 5,
-      memo: "2분에 60개.. 내일은 조금만더..",
+      memo: "내일은 조금만더..",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
       userid: 2,
-      category: "웨이트운동",
-      name: "풀업",
-      set_time: 3,
+      category: "유산소운동",
+      name: "계단오르기",
+      set_time: 30,
       rest_time: 5,
-      memo: "헬린이 탈출 화이팅!",
+      memo: "힘들다...",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -116,7 +106,7 @@ module.exports = {
     {
       userid: 2,
       category: "유산소운동",
-      name: "달리기",
+      name: "탁구",
       set_time: 30,
       rest_time: 5,
       memo: "힘들다..",
@@ -127,10 +117,10 @@ module.exports = {
     {
       userid: 2,
       category: "유산소운동",
-      name: "계단오르기",
+      name: "제자리 계단오르기",
       set_time: 20,
       rest_time: 5,
-      memo: "힘들다..",
+      memo: "은근 힘드네..",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -181,9 +171,9 @@ module.exports = {
     },
     {
       userid: 3,
-      category: "유산소운동",
-      name: "계단오르기",
-      set_time: 15,
+      category: "웨이트운동",
+      name: "윗몸을으키기",
+      set_time: 5,
       rest_time: 5,
       memo: "휴.. 힘들다...",
       default: 1,
@@ -192,8 +182,8 @@ module.exports = {
     },
     {
       userid: 3,
-      category: "유산소운동",
-      name: "런지",
+      category: "웨이트운동",
+      name: "스쿼트",
       set_time: 20,
       rest_time: 5,
       memo: "휴....",
@@ -225,11 +215,11 @@ module.exports = {
     },
     {
       userid: 4,
-      category: "유산소운동",
-      name: "싸이클",
+      category: "나만의운동",
+      name: "짐볼",
       set_time: 30,
       rest_time: 15,
-      memo: "죽겠다....",
+      memo: "시원하군..",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -248,8 +238,8 @@ module.exports = {
     {
       userid: 4,
       category: "나만의운동",
-      name: "발차기",
-      set_time: 15,
+      name: "평행봉",
+      set_time: 10,
       rest_time: 10,
       memo: "힘들어..",
       default: 1,
@@ -258,8 +248,8 @@ module.exports = {
     },
     {
       userid: 4,
-      category: "휴식",
-      name: "휴식(앉아있기)",
+      category: "나만의운동",
+      name: "스트레칭",
       set_time: 20,
       rest_time: 5,
       memo: "휴...",
