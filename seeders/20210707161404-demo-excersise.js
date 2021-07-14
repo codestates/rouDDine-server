@@ -11,6 +11,7 @@ module.exports = {
       rest_time: 5,
       memo: " 내일 145키로 도전! ",
       default: 1,
+      workoutimage: '/exercise/defaultimage.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -77,6 +78,7 @@ module.exports = {
       rest_time: 5,
       memo: "단백질이 필요해..",
       default: 1,
+      workoutimage: '/rest/defaultimage.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },

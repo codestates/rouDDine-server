@@ -27,7 +27,8 @@ module.exports = {
         set_time: req.body.set_time,
         rest_time: req.body.rest_time,
         memo : req.body.memo,
-        default : false
+        default : false,
+        workoutimage : req.body.workoutimage
       });
       
 
@@ -183,7 +184,7 @@ module.exports = {
             routineData.userid = routineCard[i].userid;
             routineData.finished_time = routineCard[i].finished_time;
             routineData.share = routineCard[i].share;
-            routineData.routineimage
+            routineData.routineimage = routineCard[i].routineimage;
             routineData.tasks = [];
 
             
