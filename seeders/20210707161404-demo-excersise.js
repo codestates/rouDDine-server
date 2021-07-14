@@ -5,11 +5,11 @@ module.exports = {
     return queryInterface.bulkInsert('exercises', [
     {
       userid: 1,
-      category: "웨이트운동",
-      name: "벤치프레스",
-      set_time: 10,
+      category: "유산소운동",
+      name: "싸이클",
+      set_time: 30,
       rest_time: 5,
-      memo: " 내일 145키로 도전! ",
+      memo: "내일도 오늘만큼!",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -20,7 +20,7 @@ module.exports = {
       name: "스쿼트",
       set_time: 10,
       rest_time: 5,
-      memo: "내일 165키로 도전!",
+      memo: "내일도 활기차게!",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -28,10 +28,10 @@ module.exports = {
     {
       userid: 1,
       category: "웨이트운동",
-      name: "데드리프트",
-      set_time: 10,
+      name: "푸쉬업",
+      set_time: 3,
       rest_time: 5,
-      memo: "내일 190키로 도전!",
+      memo: "내일은 70개 채우자",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -39,7 +39,7 @@ module.exports = {
     {
       userid: 1,
       category: "유산소운동",
-      name: "싸이클",
+      name: "줄넘기",
       set_time: 30,
       rest_time: 5,
       memo: "내일도 빡쎄게!",
@@ -94,8 +94,8 @@ module.exports = {
     {
       userid: 2,
       category: "웨이트운동",
-      name: "플랭크",
-      set_time: 2,
+      name: "풀업",
+      set_time: 3,
       rest_time: 5,
       memo: "헬린이 탈출 화이팅!",
       default: 1,
@@ -116,7 +116,7 @@ module.exports = {
     {
       userid: 2,
       category: "유산소운동",
-      name: "런닝머신",
+      name: "달리기",
       set_time: 30,
       rest_time: 5,
       memo: "힘들다..",
@@ -126,8 +126,8 @@ module.exports = {
     },
     {
       userid: 2,
-      category: "휴식",
-      name: "휴식(앉아있기)",
+      category: "유산소운동",
+      name: "계단오르기",
       set_time: 20,
       rest_time: 5,
       memo: "힘들다..",
@@ -149,7 +149,7 @@ module.exports = {
     {
       userid: 3,
       category: "나만의운동",
-      name: "요가",
+      name: "스트레칭",
       set_time: 30,
       rest_time: 5,
       memo: "오늘은 어제보다 더 유연해졌다.",
@@ -160,10 +160,10 @@ module.exports = {
     {
       userid: 3,
       category: "나만의운동",
-      name: "데드버그",
+      name: "훌라후프",
       set_time: 10,
       rest_time: 5,
-      memo: "코어운동!",
+      memo: "뱃살 빼자!",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -182,8 +182,8 @@ module.exports = {
     {
       userid: 3,
       category: "유산소운동",
-      name: "런닝머신",
-      set_time: 30,
+      name: "계단오르기",
+      set_time: 15,
       rest_time: 5,
       memo: "휴.. 힘들다...",
       default: 1,
@@ -192,8 +192,8 @@ module.exports = {
     },
     {
       userid: 3,
-      category: "휴식",
-      name: "휴식(매트에 누워있기)",
+      category: "유산소운동",
+      name: "런지",
       set_time: 20,
       rest_time: 5,
       memo: "휴....",
@@ -215,7 +215,7 @@ module.exports = {
     {
       userid: 4,
       category: "유산소운동",
-      name: "에어로빅",
+      name: "댄스",
       set_time: 30,
       rest_time: 10,
       memo: "몸매관리, 다이어트",
@@ -226,7 +226,7 @@ module.exports = {
     {
       userid: 4,
       category: "유산소운동",
-      name: "스피닝",
+      name: "싸이클",
       set_time: 30,
       rest_time: 15,
       memo: "죽겠다....",
@@ -237,18 +237,18 @@ module.exports = {
     {
       userid: 4,
       category: "나만의운동",
-      name: "필라테스",
+      name: "롤러스케이트",
       set_time: 30,
       rest_time: 15,
-      memo: "힘들어..",
+      memo: "신난다!",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
       userid: 4,
-      category: "웨이트운동",
-      name: "버핏",
+      category: "나만의운동",
+      name: "발차기",
       set_time: 15,
       rest_time: 10,
       memo: "힘들어..",
@@ -259,7 +259,7 @@ module.exports = {
     {
       userid: 4,
       category: "휴식",
-      name: "휴식(반신욕)",
+      name: "휴식(앉아있기)",
       set_time: 20,
       rest_time: 5,
       memo: "휴...",
@@ -270,10 +270,10 @@ module.exports = {
     {
       userid: 4,
       category: "휴식",
-      name: "휴식(쥬스마시기)",
+      name: "휴식(긴식)",
       set_time: 20,
       rest_time: 5,
-      memo: "좋다..",
+      memo: "맛있다",
       default: 1,
       createdAt: new Date(),
       updatedAt: new Date()
