@@ -9,6 +9,7 @@ module.exports = {
       finished_time: 0,
       share: false,
       default: 0,
+      routineimage: 'Routine/022-exercise.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -18,6 +19,7 @@ module.exports = {
       finished_time: 0,
       share: false,
       default: 0,
+      routineimage: 'Routine/009-abdominals.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -27,6 +29,7 @@ module.exports = {
       finished_time: 0,
       share: false,
       default: 0,
+      routineimage: 'Routine/011-report.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -35,6 +38,7 @@ module.exports = {
       userid: 2,
       finished_time: 0,
       share: false,
+      routineimage: 'Routine/022-exercise.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -44,6 +48,7 @@ module.exports = {
       finished_time: 0,
       share: false,
       default: 0,
+      routineimage: 'Routine/005-weight.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -53,6 +58,7 @@ module.exports = {
       finished_time: 0,
       share: false,
       default: 0,
+      routineimage: 'Routine/012-pulse.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -62,6 +68,7 @@ module.exports = {
       finished_time: 0,
       share: false,
       default: 0,
+      routineimage: 'Routine/029-body-fat.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -71,6 +78,7 @@ module.exports = {
       finished_time: 0,
       share: false,
       default: 0,
+      routineimage: 'Routine/001-yoga.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -80,6 +88,7 @@ module.exports = {
       finished_time: 0,
       share: false,
       default: 0,
+      routineimage: 'Routine/006-weight-scale.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -89,6 +98,7 @@ module.exports = {
       finished_time: 0,
       share: false,
       default: 0,
+      routineimage: 'Routine/021-fit.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -100,6 +110,7 @@ module.exports = {
       total_time: 0,
       finished_total_time: 0,
       default: 1,
+      routineimage: 'Routine/005-weight.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },	
@@ -108,6 +119,10 @@ module.exports = {
       userid: 5,
       finished_time: 0,
       share: true,
+      total_time: 0,
+      finished_total_time: 0,
+      default: 1,
+      routineimage: 'Routine/014-muscle.png',
       createdAt: new Date(),
       updatedAt: new Date()
     }

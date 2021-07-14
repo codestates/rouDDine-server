@@ -10,6 +10,7 @@ module.exports = {
       rest_time: 5,
       memo: "내일도 오늘만큼!",
       default: 1,
+      workoutimage: 'Exercise/039-cycling.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -21,6 +22,7 @@ module.exports = {
       rest_time: 5,
       memo: "내일도 활기차게!",
       default: 1,
+      workoutimage: 'Exercise/046-fitness.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -32,6 +34,7 @@ module.exports = {
       rest_time: 5,
       memo: "내일은 70개 채우자",
       default: 1,
+      workoutimage: 'Exercise/022-push-up.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -43,6 +46,7 @@ module.exports = {
       rest_time: 5,
       memo: "내일도 빡쎄게!",
       default: 1,
+      workoutimage: 'Exercise/50-jumping-rope.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -54,6 +58,7 @@ module.exports = {
       rest_time: 5,
       memo: "부상방지!",
       default: 1,
+      workoutimage: 'Exercise/044-stretching-1.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -65,6 +70,7 @@ module.exports = {
       rest_time: 5,
       memo: "목말라..",
       default: 1,
+      workoutimage: 'Rest/05-water.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -76,6 +82,7 @@ module.exports = {
       rest_time: 5,
       memo: "단백질이 필요해..",
       default: 1,
+      workoutimage: 'Rest/03-protein.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -87,6 +94,7 @@ module.exports = {
       rest_time: 5,
       memo: "2분에 60개.. 내일은 조금만더..",
       default: 1,
+      workoutimage: 'Exercise/043-fitness-1.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -98,6 +106,7 @@ module.exports = {
       rest_time: 5,
       memo: "헬린이 탈출 화이팅!",
       default: 1,
+      workoutimage: 'Exercise/021-fitness-4.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -109,6 +118,7 @@ module.exports = {
       rest_time: 5,
       memo: "현재 50개 .. 헬린이 탈출 화이팅!",
       default: 1,
+      workoutimage: 'Exercise/022-push-up.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -120,6 +130,7 @@ module.exports = {
       rest_time: 5,
       memo: "힘들다..",
       default: 1,
+      workoutimage: 'Exercise/018-running.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -131,6 +142,7 @@ module.exports = {
       rest_time: 5,
       memo: "힘들다..",
       default: 1,
+      workoutimage: 'Exercise/038-climbing-stairs.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -142,6 +154,7 @@ module.exports = {
       rest_time: 5,
       memo: "목말라..",
       default: 1,
+      workoutimage: 'Exercise/defaultimage.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -153,6 +166,7 @@ module.exports = {
       rest_time: 5,
       memo: "오늘은 어제보다 더 유연해졌다.",
       default: 1,
+      workoutimage: 'Exercise/042-yoga.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -164,6 +178,7 @@ module.exports = {
       rest_time: 5,
       memo: "뱃살 빼자!",
       default: 1,
+      workoutimage: 'Exercise/030-yoga-2.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -175,6 +190,7 @@ module.exports = {
       rest_time: 5,
       memo: "오늘 처음으로 철봉 1개 성공!",
       default: 1,
+      workoutimage: 'Exercise/021-fitness-4.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -186,6 +202,7 @@ module.exports = {
       rest_time: 5,
       memo: "휴.. 힘들다...",
       default: 1,
+      workoutimage: 'Exercise/038-climbing-stairs.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -197,6 +214,7 @@ module.exports = {
       rest_time: 5,
       memo: "휴....",
       default: 1,
+      workoutimage: 'Exercise/025-fitness-3.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -208,6 +226,19 @@ module.exports = {
       rest_time: 5,
       memo: "간식 땡기네..",
       default: 1,
+      workoutimage: 'Rest/06-food.png',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      userid: 3,
+      category: "휴식",
+      name: "휴대폰 보기",
+      set_time: 20,
+      rest_time: 5,
+      memo: "오호 재밋군...",
+      default: 1,
+      workoutimage: 'Rest/04-smartphone.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -219,6 +250,7 @@ module.exports = {
       rest_time: 10,
       memo: "몸매관리, 다이어트",
       default: 1,
+      workoutimage: 'Exercise/019-dancing.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -230,6 +262,7 @@ module.exports = {
       rest_time: 15,
       memo: "죽겠다....",
       default: 1,
+      workoutimage: 'Exercise/039-cycling.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -241,28 +274,31 @@ module.exports = {
       rest_time: 15,
       memo: "신난다!",
       default: 1,
+      workoutimage: 'Exercise/036-yoga-1.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
       userid: 4,
       category: "유산소운동",
-      name: "버핏",
+      name: "빨리 달리기",
       set_time: 15,
       rest_time: 10,
       memo: "힘들어..",
       default: 1,
+      workoutimage: 'Exercise/048-sprint.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
       userid: 4,
       category: "휴식",
-      name: "휴식(앉아있기)",
+      name: "누워있기",
       set_time: 20,
       rest_time: 5,
       memo: "휴...",
       default: 1,
+      workoutimage: 'Rest/07-lyingdown.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -274,6 +310,7 @@ module.exports = {
       rest_time: 5,
       memo: "맛있다",
       default: 1,
+      workoutimage: 'Rest/06-food.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -288,6 +325,7 @@ module.exports = {
       memo: "팔꿈치가 어깨쪽으로 올라가거나 옆구리 쪽으로 떨어지는 것을 주의! 1세트당 12~15, 휴식시간 4분",
       default: 1,
       order:1,
+      workoutimage: 'Excerise/051-bench-press.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -302,20 +340,22 @@ module.exports = {
       memo: "운동사이 휴식 3분",
       default: 1,
       order:2,
+      workoutimage: 'Rest/08-pulse.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
       userid: 5,
       routine_id: 11,
-      category: "웨이트운동",
-      name: "데드리프트(등)",
+      category: "유산소운동",
+      name: "테니스",
       set_time: 45,
       set_number:4,
       rest_time: 180,
       memo: "허리를 너무 아치로 만들지 말고 1자로 유지! 1세트당 12~15회, 휴식시간 3분",
       default: 1,
       order:3,
+      workoutimage: 'Excerise/040-tennis.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -330,6 +370,7 @@ module.exports = {
       memo: "운동사이 휴식 3분",
       default: 1,
       order:4,
+      workoutimage: 'Rest/08-pulse.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -344,6 +385,7 @@ module.exports = {
       memo: "전완을 항상 지면과 수직을 유지해야 팔꿈치와 어깨부상을 방지할 수 있습니다! 1세트당 12~15회, 휴식시간 5분",
       default: 1,
       order:5,
+      workoutimage: 'Excerise/037-weight-lifting.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -358,6 +400,7 @@ module.exports = {
       memo: "운동사이 휴식 3분",
       default: 1,
       order:6,
+      workoutimage: 'Rest/08-pulse.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -372,6 +415,7 @@ module.exports = {
       memo: "스쿼트는 허리가 꺾이지 않도록 주의! 1세트당 12~15회, 휴식시간 5분",
       default: 1,
       order:7,
+      workoutimage: 'Excerise/046-fitness.png',
       createdAt: new Date(),
       updatedAt: new Date()
     }

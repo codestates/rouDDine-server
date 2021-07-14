@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     set_time: DataTypes.INTEGER,
     rest_time: DataTypes.INTEGER,
     default: DataTypes.BOOLEAN,
+    workoutimage: DataTypes.STRING,
     memo: DataTypes.STRING
   }, {
     sequelize,
