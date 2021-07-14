@@ -7,6 +7,8 @@ const { routinepart } = require("../../models");
 const { exercise } = require("../../models");
 const bcrypt = require("bcrypt");
 const salt = process.env.DATABASE_SALT
+const { Op } = require("sequelize");
+
 
 module.exports = {
   // 회원가입
@@ -154,7 +156,7 @@ module.exports = {
       }
     }
   },
-
+// 로그인 토큰
   login : async(req,res)=>{
     if(req.body.social === null){
       const { email, password } = req.body;
@@ -184,7 +186,7 @@ module.exports = {
               social : userInfo.social,
               createdAt:userInfo.createdAt,
             }, process.env.ACCESS_SECRET,
-            {expiresIn:"2hr"});
+            {expiresIn:"12hr"});
 
             const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
             let response = {  
@@ -213,7 +215,7 @@ module.exports = {
           social : userInfo.social,
           createdAt:userInfo.createdAt,
         }, process.env.ACCESS_SECRET,
-        {expiresIn:"2hr"});
+        {expiresIn:"12hr"});
 
         const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
         let response = {  
@@ -240,6 +242,20 @@ module.exports = {
     }
   },
   logout : async(req,res)=>{
+    const token = req.cookies.accessToken
+    const data = jwt.verify(token, process.env.ACCESS_SECRET);
+    const notSave_excard = await exercise.findAll({
+      where : {
+        [Op.and] : [
+          {userid : data.id},
+          {routine_id : null}
+        ]
+      }
+    })
+    for(let i = 0; i<notSave_excard.length; i++){
+      notSave_excard[i].destroy();
+    }
+
     res.cookie("accessToken", "")
     res.status(200).send({message:'logout ok'})
   },

@@ -9,10 +9,11 @@ const signcontroller = require("./controller/signcontroller");
 const excontroller = require("./controller/excontroller");
 const routinecontroller = require("./controller/routinecontroller");
 const sharecontroller = require("./controller/sharecontroller");
+const testcontroller = require("./controller/testcontroller")
 const app = express();
 
 app.use(express.json());
-const port = 8000;
+const port = 3000;
 
 app.use(cookieParser());
 app.use(
@@ -43,6 +44,15 @@ app.delete("/routine", routinecontroller.delete_Routine); //루틴삭제
 app.patch("/routine", routinecontroller.update_Routine); //루틴 수정
 app.post("/finish", routinecontroller.finish_Routine); //루틴완료
 
+app.post("/testexercise", testcontroller.create_exercise);
+app.get("/testexercise", testcontroller.info_exercise);
+app.patch("/testexercise", testcontroller.update_exercise);
+app.delete("/testexercise", testcontroller.delete_exercise);
+
+app.post("/testroutine", testcontroller.create_Routine);
+app.get("/testroutine", testcontroller.info_Routine);
+app.patch("/testroutine", testcontroller.update_Routine);
+app.delete("/testroutine", testcontroller.delete_Routine);
 
 
 app.get("/share", sharecontroller.getSharedRoutines); //공유된 루틴 불러오기

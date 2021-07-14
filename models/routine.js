@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     finished_time: DataTypes.INTEGER,
     total_time: DataTypes.INTEGER,
     finished_total_time:DataTypes.INTEGER,
+    default: DataTypes.BOOLEAN,
     share: DataTypes.BOOLEAN
   }, {
     sequelize,

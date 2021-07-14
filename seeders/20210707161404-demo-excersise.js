@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('exercises', [
@@ -49,8 +48,8 @@ module.exports = {
     },
     {
       userid: 1,
-      category: "위밍업 체조",
-      name: "나만의 운동",
+      category: "유산소운동",
+      name: "위밍업 체조",
       set_time: 20,
       rest_time: 5,
       memo: "부상방지!",
@@ -148,8 +147,8 @@ module.exports = {
     },
     {
       userid: 3,
-      category: "나만의운동",
-      name: "스트레칭",
+      category: "유산소운동",
+      name: "요가",
       set_time: 30,
       rest_time: 5,
       memo: "오늘은 어제보다 더 유연해졌다.",
@@ -159,8 +158,8 @@ module.exports = {
     },
     {
       userid: 3,
-      category: "나만의운동",
-      name: "훌라후프",
+      category: "웨이트운동",
+      name: "데드버그",
       set_time: 10,
       rest_time: 5,
       memo: "뱃살 빼자!",
@@ -236,8 +235,8 @@ module.exports = {
     },
     {
       userid: 4,
-      category: "나만의운동",
-      name: "롤러스케이트",
+      category: "웨이트운동",
+      name: "필라테스",
       set_time: 30,
       rest_time: 15,
       memo: "신난다!",
@@ -247,8 +246,8 @@ module.exports = {
     },
     {
       userid: 4,
-      category: "나만의운동",
-      name: "발차기",
+      category: "유산소운동",
+      name: "버핏",
       set_time: 15,
       rest_time: 10,
       memo: "힘들어..",
@@ -275,6 +274,104 @@ module.exports = {
       rest_time: 5,
       memo: "맛있다",
       default: 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      userid: 5,
+      routine_id: 11,
+      category: "웨이트운동",
+      name: "벤치프레스",
+      set_time: 30,
+      set_number:4,
+      rest_time: 240,
+      memo: "팔꿈치가 어깨쪽으로 올라가거나 옆구리 쪽으로 떨어지는 것을 주의! 1세트당 12~15, 휴식시간 4분",
+      default: 1,
+      order:1,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      userid: 5,
+      routine_id: 11,
+      category: "휴식",
+      name: "휴식",
+      set_time: 180,
+      set_number:1,
+      rest_time: 0,
+      memo: "운동사이 휴식 3분",
+      default: 1,
+      order:2,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      userid: 5,
+      routine_id: 11,
+      category: "웨이트운동",
+      name: "데드리프트(등)",
+      set_time: 45,
+      set_number:4,
+      rest_time: 180,
+      memo: "허리를 너무 아치로 만들지 말고 1자로 유지! 1세트당 12~15회, 휴식시간 3분",
+      default: 1,
+      order:3,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      userid: 5,
+      routine_id: 11,
+      category: "휴식",
+      name: "휴식",
+      set_time: 180,
+      set_number:1,
+      rest_time: 0,
+      memo: "운동사이 휴식 3분",
+      default: 1,
+      order:4,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      userid: 5,
+      routine_id: 11,
+      category: "웨이트운동",
+      name: "숄더프레스(어깨)",
+      set_time: 60,
+      set_number:4,
+      rest_time: 300,
+      memo: "전완을 항상 지면과 수직을 유지해야 팔꿈치와 어깨부상을 방지할 수 있습니다! 1세트당 12~15회, 휴식시간 5분",
+      default: 1,
+      order:5,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      userid: 5,
+      routine_id: 11,
+      category: "휴식",
+      name: "휴식",
+      set_time: 180,
+      set_number:1,
+      rest_time: 0,
+      memo: "운동사이 휴식 3분",
+      default: 1,
+      order:6,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      userid: 5,
+      routine_id: 11,
+      category: "웨이트운동",
+      name: "스쿼트(하체)",
+      set_time: 60,
+      set_number:4,
+      rest_time: 300,
+      memo: "스쿼트는 허리가 꺾이지 않도록 주의! 1세트당 12~15회, 휴식시간 5분",
+      default: 1,
+      order:7,
       createdAt: new Date(),
       updatedAt: new Date()
     }
