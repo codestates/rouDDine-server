@@ -156,7 +156,7 @@ module.exports = {
       }
     }
   },
-
+// 로그인 토큰
   login : async(req,res)=>{
     if(req.body.social === null){
       const { email, password } = req.body;
@@ -186,7 +186,7 @@ module.exports = {
               social : userInfo.social,
               createdAt:userInfo.createdAt,
             }, process.env.ACCESS_SECRET,
-            {expiresIn:"2hr"});
+            {expiresIn:"12hr"});
 
             const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
             let response = {  
@@ -215,7 +215,7 @@ module.exports = {
           social : userInfo.social,
           createdAt:userInfo.createdAt,
         }, process.env.ACCESS_SECRET,
-        {expiresIn:"2hr"});
+        {expiresIn:"12hr"});
 
         const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
         let response = {  
