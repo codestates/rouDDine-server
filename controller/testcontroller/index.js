@@ -144,8 +144,10 @@ module.exports = {
         name : '새 루틴',
         userid : data.id,
         finished_time : 0,
-        share : 'false',
-        finished_total_time :0
+        share : 'true',
+        default : 'true',
+        finished_total_time :0,
+        routineimage: 'defaultroutine'
       })
       
       res.status(201).send({
