@@ -55,7 +55,7 @@ module.exports = {
         }
     }
   },
-  //회원탈퇴 - 프로필이미지 삭제 나중에 추가
+  //회원탈퇴
   WithdrawalConstroller : async (req, res) => {
     if( !(req.cookies.accessToken) ){
       res.status(405).send({
@@ -73,12 +73,14 @@ module.exports = {
           where : { userid : userInfo.id }
         })
         while(card){
+          /*
             const parts = await routinepart.findAll({
               where : { userid : userInfo.id }
             })
             for(let i = 0; i<parts.length; i++){
               parts[i].destroy();
             }
+            */
             card.destroy();
 
             card = await routine.findOne({
