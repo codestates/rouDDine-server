@@ -3,6 +3,30 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('exercises', [
     {
+        userid: 1,
+        category: "웨이트운동",
+        name: "스쿼트",
+        set_time: 10,
+        rest_time: 5,
+        memo: "내일도 활기차게!",
+        default: 1,
+        workoutimage: 'Exercise/046-fitness.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    },
+    {
+        userid: 1,
+        category: "웨이트운동",
+        name: "푸쉬업",
+        set_time: 3,
+        rest_time: 5,
+        memo: "내일은 70개 채우자",
+        default: 1,
+        workoutimage: 'Exercise/022-push-up.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    },
+    {
       userid: 1,
       category: "유산소운동",
       name: "싸이클",
@@ -14,30 +38,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
-    {
-      userid: 1,
-      category: "웨이트운동",
-      name: "스쿼트",
-      set_time: 10,
-      rest_time: 5,
-      memo: "내일도 활기차게!",
-      default: 1,
-      workoutimage: 'Exercise/046-fitness.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 1,
-      category: "웨이트운동",
-      name: "푸쉬업",
-      set_time: 3,
-      rest_time: 5,
-      memo: "내일은 70개 채우자",
-      default: 1,
-      workoutimage: 'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
+
     {
       userid: 1,
       category: "유산소운동",
@@ -47,18 +48,6 @@ module.exports = {
       memo: "내일도 빡쎄게!",
       default: 1,
       workoutimage: 'Exercise/50-jumping-rope.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 1,
-      category: "유산소운동",
-      name: "위밍업 체조",
-      set_time: 20,
-      rest_time: 5,
-      memo: "부상방지!",
-      default: 1,
-      workoutimage: 'Exercise/044-stretching-1.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -112,18 +101,6 @@ module.exports = {
     },
     {
       userid: 2,
-      category: "웨이트운동",
-      name: "푸쉬업",
-      set_time: 2,
-      rest_time: 5,
-      memo: "현재 50개 .. 헬린이 탈출 화이팅!",
-      default: 1,
-      workoutimage: 'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 2,
       category: "유산소운동",
       name: "달리기",
       set_time: 30,
@@ -149,24 +126,12 @@ module.exports = {
     {
       userid: 2,
       category: "휴식",
-      name: "휴식(물마시기)",
-      set_time: 20,
-      rest_time: 5,
-      memo: "목말라..",
+      name: "체중계 재보기",
+      set_time: 5,
+      rest_time: 0,
+      memo: "...흠...",
       default: 1,
-      workoutimage: 'Exercise/defaultimage.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 3,
-      category: "유산소운동",
-      name: "요가",
-      set_time: 30,
-      rest_time: 5,
-      memo: "오늘은 어제보다 더 유연해졌다.",
-      default: 1,
-      workoutimage: 'Exercise/042-yoga.png',
+      workoutimage: 'Exercise/08-scale.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -185,12 +150,12 @@ module.exports = {
     {
       userid: 3,
       category: "웨이트운동",
-      name: "풀업",
-      set_time: 1,
+      name: "철봉 메달리기",
+      set_time: 10,
       rest_time: 5,
-      memo: "오늘 처음으로 철봉 1개 성공!",
+      memo: "내일은 좀만더 버텨보자",
       default: 1,
-      workoutimage: 'Exercise/021-fitness-4.png',
+      workoutimage: 'Exercise/021-fitness-2.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -209,24 +174,24 @@ module.exports = {
     {
       userid: 3,
       category: "유산소운동",
-      name: "런지",
+      name: "점핑",
       set_time: 20,
       rest_time: 5,
       memo: "휴....",
       default: 1,
-      workoutimage: 'Exercise/025-fitness-3.png',
+      workoutimage: 'Exercise/031-jumping.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
       userid: 3,
       category: "휴식",
-      name: "휴식(간식먹기)",
+      name: "휴식(사과)",
       set_time: 20,
       rest_time: 5,
-      memo: "간식 땡기네..",
+      memo: "사과는 맛있어..",
       default: 1,
-      workoutimage: 'Rest/06-food.png',
+      workoutimage: 'Rest/09-food.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -254,39 +219,16 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
-    {
-      userid: 4,
-      category: "유산소운동",
-      name: "싸이클",
-      set_time: 30,
-      rest_time: 15,
-      memo: "죽겠다....",
-      default: 1,
-      workoutimage: 'Exercise/039-cycling.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
+    
     {
       userid: 4,
       category: "웨이트운동",
-      name: "필라테스",
+      name: "짐볼",
       set_time: 30,
-      rest_time: 15,
-      memo: "신난다!",
-      default: 1,
-      workoutimage: 'Exercise/036-yoga-1.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 4,
-      category: "유산소운동",
-      name: "빨리 달리기",
-      set_time: 15,
       rest_time: 10,
-      memo: "힘들어..",
+      memo: "쑤신다.. ",
       default: 1,
-      workoutimage: 'Exercise/048-sprint.png',
+      workoutimage: 'Exercise/031-exercise-ball.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -303,18 +245,6 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      userid: 4,
-      category: "휴식",
-      name: "휴식(긴식)",
-      set_time: 20,
-      rest_time: 5,
-      memo: "맛있다",
-      default: 1,
-      workoutimage: 'Rest/06-food.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
       userid: 5,
       routine_id: 11,
       category: "웨이트운동",
@@ -326,21 +256,6 @@ module.exports = {
       default: 1,
       order:1,
       workoutimage: 'Excerise/051-bench-press.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 5,
-      routine_id: 11,
-      category: "휴식",
-      name: "휴식",
-      set_time: 180,
-      set_number:1,
-      rest_time: 0,
-      memo: "운동사이 휴식 3분",
-      default: 1,
-      order:2,
-      workoutimage: 'Rest/08-pulse.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -374,159 +289,6 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
-    {
-      userid: 5,
-      routine_id: 11,
-      category: "웨이트운동",
-      name: "숄더프레스(어깨)",
-      set_time: 60,
-      set_number:4,
-      rest_time: 300,
-      memo: "전완을 항상 지면과 수직을 유지해야 팔꿈치와 어깨부상을 방지할 수 있습니다! 1세트당 12~15회, 휴식시간 5분",
-      default: 1,
-      order:5,
-      workoutimage: 'Excerise/037-weight-lifting.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 5,
-      routine_id: 11,
-      category: "휴식",
-      name: "휴식",
-      set_time: 180,
-      set_number:1,
-      rest_time: 0,
-      memo: "운동사이 휴식 3분",
-      default: 1,
-      order:6,
-      workoutimage: 'Rest/08-pulse.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 5,
-      routine_id: 11,
-      category: "웨이트운동",
-      name: "스쿼트(하체)",
-      set_time: 60,
-      set_number:4,
-      rest_time: 300,
-      memo: "스쿼트는 허리가 꺾이지 않도록 주의! 1세트당 12~15회, 휴식시간 5분",
-      default: 1,
-      order:7,
-      workoutimage: 'Excerise/046-fitness.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 1,
-      category: "웨이트운동",
-      name: "데드리프트",
-      set_time: 2,
-      rest_time: 5,
-      memo: "3대 500간다!",
-      default: 1,
-      workoutimage: null ,//'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 2,
-      category: "웨이트운동",
-      name: "레그프레스",
-      set_time: 2,
-      rest_time: 5,
-      memo: "알베긴다..ㅠ 내일 어떻게 하지..",
-      default: 1,
-      workoutimage: null, // 'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 1,
-      category: "유산소운동",
-      name: "버핏",
-      set_time: 10,
-      rest_time: 5,
-      memo: "20개는 껌이다..!",
-      default: 1,
-      workoutimage: null, // 'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 2,
-      category: "유산소운동",
-      name: "야외달리기",
-      set_time: 30,
-      rest_time: 15,
-      memo: "내일은 저기까지 쉬지않고 뛰어보자 화이팅!",
-      default: 1,
-      workoutimage: null, // 'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 3,
-      category: "유산소운동",
-      name: "실내자전거",
-      set_time: 30,
-      rest_time: 10,
-      memo: "아이구 골반이야.. 적당히 달렸다",
-      default: 1,
-      workoutimage: null, // 'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 3,
-      category: "유산소운동",
-      name: "걷기",
-      set_time: 40,
-      rest_time: 10,
-      memo: "이거 은근히 힘드네..",
-      default: 1,
-      workoutimage: null, //'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 4,
-      category: "유산소운동",
-      name: "야외 라이딩",
-      set_time: 50,
-      rest_time: 10,
-      memo: "풍경을 보며 라이딩하는것이 최고!",
-      default: 1,
-      workoutimage: null, // 'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 2,
-      category: "휴식",
-      name: "거울보기",
-      set_time: 10,
-      rest_time: 0,
-      memo: "어디 근육이좀 생겼나..",
-      default: 1,
-      workoutimage: null, // 'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      userid: 4,
-      category: "휴식",
-      name: "사진찍기",
-      set_time: 10,
-      rest_time: 0,
-      memo: "오늘도 이쁜 내얼굴",
-      default: 1,
-      workoutimage: null, // 'Exercise/022-push-up.png',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }
   ]);
   },
   down: (queryInterface, Sequelize) => {
