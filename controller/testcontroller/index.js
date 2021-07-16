@@ -144,8 +144,8 @@ module.exports = {
         name : '새 루틴',
         userid : data.id,
         finished_time : 0,
-        share : 'true',
-        default : 'true',
+        share : 'false',
+        default : 'false',
         finished_total_time :0,
         routineimage: 'defaultroutine'
       })
@@ -187,6 +187,7 @@ module.exports = {
             routineData.finished_time = routineCard[i].finished_time;
             routineData.share = routineCard[i].share;
             routineData.routineimage = routineCard[i].routineimage;
+            routineData.default = routineCard[i].default;
             routineData.tasks = [];
 
             

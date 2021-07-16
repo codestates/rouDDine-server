@@ -198,7 +198,13 @@ module.exports = {
               password: userInfo.password
             }
           //res.cookie("refreshToken", refreshToken) 
-            res.cookie("accessToken", accessToken);
+            res.cookie("accessToken", accessToken,  
+            {
+              httpOnly: false,
+              sameSite: "none",
+              secure: true,
+            }
+            );
           res.status(200).send({message:'ok'})
        }
       }
@@ -227,7 +233,7 @@ module.exports = {
           password: userInfo.password
         }
       //res.cookie("refreshToken", refreshToken) 
-        res.cookie("accessToken", accessToken)
+        res.cookie("accessToken", accessToken, { sameSite: "none", secure: true })
       res.status(200).send({message:'ok'})
       }
       else{
