@@ -9,17 +9,17 @@ module.exports = {
       finished_time: 0,
       share: true,
       default: true,
-      routineimage: 'Routine/022-exercise.png',
+      routineimage: 'Routine/009-abdominals.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      name: "전신 운동 루틴",
+      name: "맨몸 홈트 루틴 - 전신",
       userid: 1,
       finished_time: 0,
       share: true,
       default: true,
-      routineimage: 'Routine/009-abdominals.png',
+      routineimage: 'Routine/022-exercise.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -34,7 +34,7 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      name: "헬스초보자",
+      name: "헬린이 루틴",
       userid: 1,
       finished_time: 0,
       share: true,
@@ -46,7 +46,7 @@ module.exports = {
       updatedAt: new Date()
     },	
     {
-      name: "짧고 굵게 지옥루틴",
+      name: "짧고,굵게 지옥 루틴",
       userid: 1,
       finished_time: 0,
       share: true,
@@ -56,7 +56,17 @@ module.exports = {
       routineimage: 'Routine/014-muscle.png',
       createdAt: new Date(),
       updatedAt: new Date()
-    }
+    },
+    {
+      name: "뱃살 폭파 루틴",
+      userid: 1,
+      finished_time: 0,
+      share: true,
+      default: true,
+      routineimage: 'Routine/029-body-fat.png',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
   ]);
   },
   down: (queryInterface, Sequelize) => {
