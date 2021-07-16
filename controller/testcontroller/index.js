@@ -159,14 +159,19 @@ module.exports = {
   info_Routine: async (req, res) => { //루틴 불러오기 - get 방식
     if ( !(req.query.routine_id) ){ //루틴 전체 불러오기
       let finduser = null;
+      let data;
+      console.log('루틴전체 불러오기')
+      
       if(req.cookies.accessToken){ //토큰 있는지 검사
+        console.log("토큰검사")
         const token = req.cookies.accessToken
-        const data = jwt.verify(token, process.env.ACCESS_SECRET);
+        data = jwt.verify(token, process.env.ACCESS_SECRET);
         finduser = await user.findOne({ where : { id : data.id } });
       }
 
       let routineCard= [];
       if(finduser){ //로그인 한 경우
+        console.log("로그인성공")
         
         routineCard = await routine.findAll({ //로그인 한 경우 자기 루틴과 기본루틴 검색
           where : {
@@ -177,6 +182,7 @@ module.exports = {
           }});
         }
         else{ //로그인 안한경우 기본 루틴만 검색
+          console.log('로그인 안함')
           routineCard = await routine.findAll({
             where : {
                 default : true
