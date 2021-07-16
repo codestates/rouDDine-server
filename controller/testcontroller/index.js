@@ -23,10 +23,10 @@ module.exports = {
         userid: data.id,
         routine_id : req.body.routine_id,
         name : tempname,
-        set_number: req.body.set_number,
-        set_time: req.body.set_time,
-        rest_time: req.body.rest_time,
-        memo : req.body.memo,
+        set_number: 0,
+        set_time: 0,
+        rest_time: 0,
+        memo : '',
         default : false,
         workoutimage : req.body.workoutimage
       });
