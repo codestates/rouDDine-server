@@ -19,20 +19,33 @@ module.exports = {
       if(req.body.name){
         tempname = req.body.name;
       }
-      const newCard = await exercise.create({
-        userid: data.id,
-        routine_id : req.body.routine_id,
-        name : tempname,
-        set_number: 0,
-        set_time: 0,
-        rest_time: 0,
-        memo : '',
-        default : false,
-        workoutimage : req.body.workoutimage
-      });
-      
-
-      res.status(201).send(newCard);
+      const routineinfo = routine.findOne({where : {id : req.body.routine_id}})
+      if(routineinfo){
+        if(routineinfo.default === true){
+          res.status(202).send({
+            "message" : "기본루틴입니다."
+          })
+        }
+        else{
+          const newCard = await exercise.create({
+            userid: data.id,
+            routine_id : req.body.routine_id,
+            name : tempname,
+            set_number: 0,
+            set_time: 0,
+            rest_time: 0,
+            memo : '',
+            default : false,
+            workoutimage : req.body.workoutimage
+          });
+          res.status(201).send(newCard);
+        }
+      }
+      else{
+        res.status(409).send({
+          "message" : "없는 루틴입니다.(잘못된 루틴아이디)"
+        })
+      }
     }
   },
   //운동카드 삭제 - delete 방식
@@ -46,13 +59,23 @@ module.exports = {
       const card = await exercise.findOne({ //워크아웃 찾기
         where : { id : req.query.workoutid }
       })
-      if(card){//워크아웃 삭제 전 루틴에서 워크아웃 삭제
-        const remainexercises = await exercise.findAll({ where : { routine_id : card.routine_id } });
-        card.destroy();//운동카드 삭제
-        res.status(200).send({
-          "message" : "delete card",
-          result : remainexercises
-        })
+      if(card){
+        const routineinfo = routine.findOne({where : {id : card.routine_id}})
+        if(routineinfo){
+          if(routineinfo.default === true){
+            res.status(202).send({
+              "message" : "기본루틴입니다."
+            })
+          }
+          else{
+            const remainexercises = await exercise.findAll({ where : { routine_id : card.routine_id } });
+            card.destroy();//운동카드 삭제
+            res.status(200).send({
+              "message" : "delete card",
+              result : remainexercises
+            })
+          }
+        }
       }
       else{
         res.status(409).send({
@@ -63,16 +86,10 @@ module.exports = {
   },
   //운동카드 불러오기 - get방식 - 쿼리로 루틴아이디 - 루틴에 생성한 워크아웃
   info_exercise: async (req, res) => {
-    if(req.cookies.accessToken !== ''){
-      //const token = req.cookies.accessToken
-      //const data = jwt.verify(token, process.env.ACCESS_SECRET);
-      if(!req.query.routine_id){
+      if(!req.query.routine_id){ //루틴 아이디 없이 요청
         let every_card = await exercise.findAll({
           where : {
-            [Op.or] : [
-              //{userid : data.id},
-              {default : true}
-            ]
+              default : true
           }
         })
         res.status(200).send({
@@ -80,7 +97,7 @@ module.exports = {
           "result" : every_card
         })
       }
-      else{
+      else{//루틴 아이디로 요청
         let every_card = await exercise.findAll({
           where : { routine_id : req.query.routine_id }
         })
@@ -96,7 +113,7 @@ module.exports = {
         })
         }
       }
-    }
+    
   },
   //운동카드 수정하기 - patch방식
   update_exercise: async (req, res) => {
@@ -109,19 +126,28 @@ module.exports = {
       const ex_card = await exercise.findOne({
         where : { id : req.body.workoutid }
       })
+      
       if(ex_card){
-        await ex_card.update({
-          name : req.body.name,
-          set_time : req.body.set_time,
-          set_number: req.body.set_number,
-          rest_time : req.body.rest_time,
-          memo : req.body.memo,
-          order: req.body.order
-        });
-        res.status(200).send({
-          "message" : "update exersice card",
-          "result" : ex_card
-        })
+        const routineinfo = routine.findOne({where : {id : ex_card.routine_id}})
+        if(routineinfo.default === true){
+          res.status(202).send({
+            "message" : "기본루틴입니다."
+          })
+        }
+        else{
+          await ex_card.update({
+            name : req.body.name,
+            set_time : req.body.set_time,
+            set_number: req.body.set_number,
+            rest_time : req.body.rest_time,
+            memo : req.body.memo,
+            order: req.body.order
+          });
+          res.status(200).send({
+            "message" : "update exersice card",
+            "result" : ex_card
+          })
+        }
       }
       else{
         res.status(409).send({
@@ -140,19 +166,27 @@ module.exports = {
     else{
       const token = req.cookies.accessToken
       const data = jwt.verify(token, process.env.ACCESS_SECRET);
-      const newRoutine = await routine.create({
-        name : '새 루틴',
-        userid : data.id,
-        finished_time : 0,
-        share : 'false',
-        default : 'false',
-        finished_total_time :0,
-        routineimage: 'defaultroutine'
-      })
-      
-      res.status(201).send({
-        "message" : "created"
-      });
+      const userinfo = user.findOne( { where : { id : data.id } } )
+      if(!userinfo){ //토큰으로 유저 못찾으면 생성불가
+        res.status(405).send({
+          "message" : "invalid request"
+        });
+      }
+      else{
+        const newRoutine = await routine.create({
+          name : '새 루틴',
+          userid : data.id,
+          finished_time : 0,
+          share : 'false',
+          default : 'false',
+          finished_total_time :0,
+          routineimage: 'defaultroutine'
+        })
+        
+        res.status(201).send({
+          "message" : "created"
+        });
+      }
     }
   },
 
@@ -167,7 +201,7 @@ module.exports = {
         const token = req.cookies.accessToken
         data = jwt.verify(token, process.env.ACCESS_SECRET);
         finduser = await user.findOne({ where : { id : data.id } });
-      }
+      } //검사완료 - 있으면 유저 찾아둠
 
       let routineCard= [];
       if(finduser){ //로그인 한 경우
@@ -277,27 +311,34 @@ module.exports = {
         where : { id : req.body.routine_id }
       })
       if( routinecard ){
-        let time = 0;
-        if( req.body.exercise_array ){
-          if( req.body.exercise_array.length !==0 ){ //운동수정하는경우            
-            for(let i = 0; i<req.body.exercise_array.length; i++){
-              let ex = await exercise.findOne( { where : { id : req.body.exercise_array[i].id } } )
-              if(ex.set_time&&ex.set_number){
-                time += (ex.set_time * ex.set_number) //운동 총 시간 계산
+        if(routinecard.default === true){
+          res.status(202).send({
+            "message" : "기본루틴입니다."
+          });
+        }
+        else{
+          let time = 0;
+          if( req.body.exercise_array ){
+            if( req.body.exercise_array.length !==0 ){ //운동수정하는경우            
+              for(let i = 0; i<req.body.exercise_array.length; i++){
+                let ex = await exercise.findOne( { where : { id : req.body.exercise_array[i].id } } )
+                if(ex.set_time&&ex.set_number){
+                  time += (ex.set_time * ex.set_number) //운동 총 시간 계산
+                }
+                await ex.update({order : i+1})
               }
-              await ex.update({order : i+1})
             }
           }
+          
+          await routinecard.update({ share : req.body.share, name : req.body.routine_name, total_time : time});
+          const excards = await exercise.findAll( { where : { routine_id : routinecard.id } } );
+          
+          res.status(200).send({
+            "message" : "success",
+            "result" : routinecard,
+            "exercises" : excards
+          });
         }
-        
-        await routinecard.update({ share : req.body.share, name : req.body.routine_name, total_time : time});
-        const excards = await exercise.findAll( { where : { routine_id : routinecard.id } } );
-        
-        res.status(200).send({
-          "message" : "success",
-          "result" : routinecard,
-          "exercises" : excards
-        });
       }
       else{
         res.status(409).send({
@@ -317,16 +358,24 @@ module.exports = {
         where : { id : req.query.routine_id }
       })
       if( card ){
-        const parts = await exercise.findAll({ //루틴안의 운동들 삭제
-          where : { routine_id : req.query.routine_id }
-        })
-        for(let i = 0; i<parts.length; i++){
-          parts[i].destroy();
+
+        if(card.default === true){
+          res.status(202).send({
+            "message" : "기본루틴입니다."
+          });
         }
-        card.destroy();
-        res.status(200).send({
-          "message" : "delete routine"
-        })
+        else{
+          const parts = await exercise.findAll({ //루틴안의 운동들 삭제
+            where : { routine_id : req.query.routine_id }
+          })
+          for(let i = 0; i<parts.length; i++){
+            parts[i].destroy();
+          }
+          card.destroy();
+          res.status(200).send({
+            "message" : "delete routine"
+          })
+        }
       }
       else{
         res.status(409).send({
