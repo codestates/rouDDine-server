@@ -3,7 +3,6 @@ require("dotenv").config();
 const jwt = require('jsonwebtoken');
 const { user } = require("../../models");
 const { routine } = require("../../models");
-const { routinepart } = require("../../models");
 const { exercise } = require("../../models");
 const bcrypt = require("bcrypt");
 const salt = process.env.DATABASE_SALT
@@ -199,11 +198,11 @@ module.exports = {
             }
           //res.cookie("refreshToken", refreshToken) 
             res.cookie("accessToken", accessToken,  
-            {
-              httpOnly: false,
-              sameSite: "None",
-              secure: true,
-            }
+            //{
+            //  httpOnly: false,
+            //  sameSite: "None",
+            //  secure: true,
+           // }
             );
           res.status(200).send({message:'ok'})
        }

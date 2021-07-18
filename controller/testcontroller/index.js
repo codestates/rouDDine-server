@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const { exercise } = require("../../models")
 const { routine } = require("../../models")
 const { user } = require("../../models")
@@ -200,12 +202,7 @@ module.exports = {
         const data = jwt.verify(token, process.env.ACCESS_SECRET);
         console.log(data.id);
         console.log(data.social);
-        const finduser = await user.findOne({ where : {
-          [Op.and] : [
-            {id : data.id},
-            {social : data.social}
-          ]
-        } });
+        const finduser = user.findOne({ where : { id : data.id } });
         console.log(finduser);
         let routineCard= [];
       if(finduser){ //로그인 한 경우
@@ -268,24 +265,13 @@ module.exports = {
       }
       else{
         let routineCard= [];
-        if(finduser){ //로그인 한 경우
-          console.log("로그인성공")
-          
-          routineCard = await routine.findAll({ //로그인 한 경우 자기 루틴과 기본루틴 검색
-            where : {
-              [Op.or] : [
-                {userid : data.id},
-                {default : true}
-              ]
-            }});
-          }
-          else{ //로그인 안한경우 기본 루틴만 검색
+         //로그인 안한경우 기본 루틴만 검색
             console.log('로그인 안함')
             routineCard = await routine.findAll({
               where : {
                   default : true
               }});
-          }
+          
             
           if(routineCard.length === 0){ //생성된 루틴이 없는 경우
             res.status(200).send({
