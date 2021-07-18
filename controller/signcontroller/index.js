@@ -201,7 +201,7 @@ module.exports = {
             res.cookie("accessToken", accessToken,  
             {
               httpOnly: false,
-              sameSite: "none",
+              sameSite: "Lax",
               secure: true,
             }
             );
@@ -226,14 +226,13 @@ module.exports = {
         {expiresIn:"12hr"});
 
         const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
-        let response = {  
-          id: userInfo.id,
-          username: userInfo.username,
-          email: userInfo.email,
-          password: userInfo.password
-        }
       //res.cookie("refreshToken", refreshToken) 
-        res.cookie("accessToken", accessToken, { sameSite: "none", secure: true })
+        res.cookie("accessToken", accessToken,  
+            {
+              httpOnly: false,
+              sameSite: "Lax",
+              secure: true,
+            });
       res.status(200).send({message:'ok'})
       }
       else{
@@ -244,7 +243,21 @@ module.exports = {
           socialid : req.body.socialid,
           profileimage : req.body.profileimage
         });
-        res.status(201).send({message:'created'})
+        const accessToken = jwt.sign({
+          id:newUser.id,
+          email : newUser.email,
+          social : newUser.social,
+          createdAt:newUser.createdAt,
+        }, process.env.ACCESS_SECRET,
+        {expiresIn:"12hr"});
+
+        res.cookie("accessToken", accessToken,  
+            {
+              httpOnly: false,
+              sameSite: "Lax",
+              secure: true,
+            });
+      res.status(200).send({message:'ok'})
 
       }
     }

@@ -279,8 +279,7 @@ module.exports = {
       else{
         let workout = [];
         for(let i = 0; i<routineparts.length; i++){
-          workout.push({ id: routineparts[i].id, name: routineparts[i].name, set_number:routineparts[i].set_number, set_time : routineparts[i].set_time,
-             rest_time : routineparts[i].rest_time, order : routineparts[i].order})
+          workout.push(routineparts[i])
         }
         workout.sort(function(a, b){
           return a.order - b.order
