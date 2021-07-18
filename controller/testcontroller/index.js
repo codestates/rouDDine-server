@@ -173,6 +173,10 @@ module.exports = {
         });
       }
       else{
+        const defaultimages = ['001-yoga.png','002-working-out.png','003-winner.png','005-weight.png','009-abdominals.png',
+       '014-muscle.png', '020-fitness.png', '022-exercise.png', '024-dumbbells.png', '028-boxing.png']
+        let random = Math.floor((Math.random()*10));
+        let randomimage = defaultimages[random];
         const newRoutine = await routine.create({
           name : '새 루틴',
           userid : data.id,
@@ -180,7 +184,7 @@ module.exports = {
           share : 'false',
           default : 'false',
           finished_total_time :0,
-          routineimage: 'defaultroutine'
+          routineimage: '/Routine/' + randomimage
         })
         
         res.status(201).send({
