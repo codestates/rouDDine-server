@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const { exercise } = require("../../models")
 const { routine } = require("../../models")
 const { user } = require("../../models")
@@ -194,17 +192,18 @@ module.exports = {
 
   info_Routine: async (req, res) => { //루틴 불러오기 - get 방식
     if ( !(req.query.routine_id) ){ //루틴 전체 불러오기
+      let finduser = null;
+      let data;
       console.log('루틴전체 불러오기')
       
       if(req.cookies.accessToken){ //토큰 있는지 검사
         console.log("토큰검사")
         const token = req.cookies.accessToken
-        const data = jwt.verify(token, process.env.ACCESS_SECRET);
-        console.log(data.id);
-        console.log(data.social);
-        const finduser = user.findOne({ where : { id : data.id } });
-        console.log(finduser);
-        let routineCard= [];
+        data = jwt.verify(token, process.env.ACCESS_SECRET);
+        finduser = await user.findOne({ where : { id : data.id } });
+      } //검사완료 - 있으면 유저 찾아둠
+
+      let routineCard= [];
       if(finduser){ //로그인 한 경우
         console.log("로그인성공")
         
@@ -262,56 +261,7 @@ module.exports = {
           }
           res.status(200).send(initialData);
         }
-      }
-      else{
-        let routineCard= [];
-         //로그인 안한경우 기본 루틴만 검색
-            console.log('로그인 안함')
-            routineCard = await routine.findAll({
-              where : {
-                  default : true
-              }});
-          
-            
-          if(routineCard.length === 0){ //생성된 루틴이 없는 경우
-            res.status(200).send({
-              "message" : "please create routine"
-            });
-          }
-          else{//루틴 찾은 경우
-            let initialData = [];
-            for(let i = 0; i<routineCard.length;  i++){
-              const routineparts = await exercise.findAll({ //루틴아이디가 리치하는 운동찾기
-                where : { routine_id : routineCard[i].id}
-              });
-              let routineData = {};
-              routineData.id = routineCard[i].id;
-              routineData.name = routineCard[i].name;
-              routineData.userid = routineCard[i].userid;
-              routineData.finished_time = routineCard[i].finished_time;
-              routineData.share = routineCard[i].share;
-              routineData.routineimage = routineCard[i].routineimage;
-              routineData.default = routineCard[i].default;
-              routineData.tasks = [];
-  
-              
-              for(let j = 0; j<routineparts.length; j++){ //정렬된 순서대로 운동 정보 tasks 에 저장
-                let temp = {
-                  id : String(routineparts[j].id),
-                  name : routineparts[j].name,
-                  set_number : routineparts[j].set_number,
-                  set_time : routineparts[j].set_time,
-                  rest_time : routineparts[j].rest_time,
-                  memo : routineparts[j].memo,
-                  order : routineparts[j].order
-                };
-                routineData.tasks.push(temp);
-              }
-              initialData.push(routineData);
-            }
-            res.status(200).send(initialData);
-          }
-      }
+
     }
     //루틴 이름이 있는 경우 하나를 클릭한 경우 -> 받은 루틴의 id를 검색하여 보냄.
     else{

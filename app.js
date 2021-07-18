@@ -13,7 +13,7 @@ const testcontroller = require("./controller/testcontroller")
 const app = express();
 
 app.use(express.json());
-const port = 8000;
+const port = 3000;
 
 app.use(cookieParser());
 app.use(
