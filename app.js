@@ -13,7 +13,7 @@ const testcontroller = require("./controller/testcontroller")
 const app = express();
 
 app.use(express.json());
-const port = 3000;
+const port = 8000;
 
 app.use(cookieParser());
 app.use(
@@ -27,6 +27,7 @@ app.use(express.static('uploadedFiles'));
 
 app.post("/login",signcontroller.login) // 토큰 로그인
 app.post("/logout",signcontroller.logout) //로그아웃
+app.post("/tempuser", signcontroller.tempsignup); //임시회원가입
 
 app.post("/user", signcontroller.signUpController); //회원가입
 app.delete("/user", signcontroller.WithdrawalConstroller); //회원탈퇴
