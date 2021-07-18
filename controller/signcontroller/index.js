@@ -54,6 +54,36 @@ module.exports = {
         }
     }
   },
+  //비회원 로그인
+  tempsignup : async(req, res) => {
+    if(!req.body.username){
+      res.status(405).send({
+        "message" : "invalid request"
+      });
+    }
+    else{ //바디에 유저 네임이 있으면
+      const userInfo = await user.findOne({
+        where: {
+              username : username,
+              social : 'temp'
+        }
+      })
+      if(userInfo){//이미 있는 닉네임일때
+        res.status(202).send({
+          "message" : "이미 존재하는 닉네임입니다."
+        })
+      }
+      else{//생성가능닉네임
+        const newUser = await user.create({ 
+          username : req.body.username,
+          profileimage : 'default',
+          total_time : 0,
+          social : "temp"
+        });
+        res.status(201).send( newUser );
+      }
+    }
+  },
   //회원탈퇴
   WithdrawalConstroller : async (req, res) => {
     if( !(req.cookies.accessToken) ){
@@ -72,16 +102,7 @@ module.exports = {
           where : { userid : userInfo.id }
         })
         while(card){
-          /*
-            const parts = await routinepart.findAll({
-              where : { userid : userInfo.id }
-            })
-            for(let i = 0; i<parts.length; i++){
-              parts[i].destroy();
-            }
-            */
             card.destroy();
-
             card = await routine.findOne({
               where : { userid : userInfo.id }
             })
@@ -93,7 +114,6 @@ module.exports = {
         for(let i = 0; i<excard.length; i++){
           excard[i].destroy();
         }
-
         userInfo.destroy();
         res.status(200).send({
           "message" : "withdrawal OK"
@@ -209,7 +229,35 @@ module.exports = {
       }
     }
     else if(req.body.social === 'temp'){
+      const userInfo = await user.findOne({
+        where: {
+              social : 'temp',
+              username : req.body.username
+        }
+      });
+      if(userInfo){//로그인성공
+        const accessToken = jwt.sign({
+          id:userInfo.id,
+          social : userInfo.social,
+          username:userInfo.username,
+        }, process.env.ACCESS_SECRET,
+        {expiresIn:"12hr"});
 
+        res.cookie("accessToken", accessToken,  
+            {
+              httpOnly: false,
+              sameSite: "None",
+              secure: true,
+            }
+        );
+
+        res.status(200).send({message:'ok'})
+      }
+      else{ //없는 닉네임
+        res.status(405).send({
+          "message" : "invalid request"
+        });
+      }
     }
     
     else{ //소셜로그인 - 구글
@@ -283,7 +331,4 @@ module.exports = {
     res.status(200).send({message:'logout ok'})
   },
 
-  tempsignup : async(req, res) => {
-    
-  }
 };
