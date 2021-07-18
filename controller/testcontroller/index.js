@@ -199,7 +199,7 @@ module.exports = {
         const token = req.cookies.accessToken
         const data = jwt.verify(token, process.env.ACCESS_SECRET);
         console.log(data.id);
-        const finduser = await user.findOne({ where : { id : data.id } });
+        const finduser = await user.findOne({ where : { id : data.id, social : data.social } });
         console.log(finduser);
         let routineCard= [];
       if(finduser){ //로그인 한 경우
