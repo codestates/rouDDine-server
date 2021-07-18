@@ -3,7 +3,6 @@ require("dotenv").config();
 const jwt = require('jsonwebtoken');
 const { user } = require("../../models");
 const { routine } = require("../../models");
-const { routinepart } = require("../../models");
 const { exercise } = require("../../models");
 const bcrypt = require("bcrypt");
 const salt = process.env.DATABASE_SALT
@@ -209,6 +208,9 @@ module.exports = {
        }
       }
     }
+    else if(req.body.social === 'temp'){
+
+    }
     
     else{ //소셜로그인 - 구글
       const userInfo = await user.findOne({
@@ -230,7 +232,7 @@ module.exports = {
         res.cookie("accessToken", accessToken,  
             {
               httpOnly: false,
-              sameSite: "Lax",
+              sameSite: "None",
               secure: true,
             });
       res.status(200).send({message:'ok'})
@@ -280,4 +282,8 @@ module.exports = {
     res.cookie("accessToken", "")
     res.status(200).send({message:'logout ok'})
   },
+
+  tempsignup : async(req, res) => {
+    
+  }
 };
