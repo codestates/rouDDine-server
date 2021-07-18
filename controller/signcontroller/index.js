@@ -201,7 +201,7 @@ module.exports = {
             res.cookie("accessToken", accessToken,  
             {
               httpOnly: false,
-              sameSite: "Lax",
+              sameSite: "None",
               secure: true,
             }
             );

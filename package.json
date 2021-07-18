@@ -4,7 +4,7 @@
   "description": "only3days-server",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "dev": "nodemon src/app.ts",
     "build": "tsc -p",
     "test": "echo \"Error: no test specified\" && exit 1"
