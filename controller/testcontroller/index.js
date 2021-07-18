@@ -19,7 +19,8 @@ module.exports = {
       if(req.body.name){
         tempname = req.body.name;
       }
-      const routineinfo = routine.findOne({where : {id : req.body.routine_id}})
+      
+      const routineinfo = await routine.findOne({where : {id : req.body.routine_id}})
       if(routineinfo){
         if(routineinfo.default === true){
           res.status(202).send({
@@ -60,7 +61,7 @@ module.exports = {
         where : { id : req.query.workoutid }
       })
       if(card){
-        const routineinfo = routine.findOne({where : {id : card.routine_id}})
+        const routineinfo = await routine.findOne({where : {id : card.routine_id}})
         if(routineinfo){
           if(routineinfo.default === true){
             res.status(202).send({
@@ -69,7 +70,7 @@ module.exports = {
           }
           else{
             const remainexercises = await exercise.findAll({ where : { routine_id : card.routine_id } });
-            card.destroy();//운동카드 삭제
+            await card.destroy();//운동카드 삭제
             res.status(200).send({
               "message" : "delete card",
               result : remainexercises
@@ -126,9 +127,8 @@ module.exports = {
       const ex_card = await exercise.findOne({
         where : { id : req.body.workoutid }
       })
-      
       if(ex_card){
-        const routineinfo = routine.findOne({where : {id : ex_card.routine_id}})
+        const routineinfo = await routine.findOne({where : {id : ex_card.routine_id}})
         if(routineinfo.default === true){
           res.status(202).send({
             "message" : "기본루틴입니다."
@@ -144,7 +144,7 @@ module.exports = {
             order: req.body.order
           });
           res.status(200).send({
-            "message" : "update exersice card",
+            "message" : "update exersice card~!",
             "result" : ex_card
           })
         }
@@ -166,7 +166,7 @@ module.exports = {
     else{
       const token = req.cookies.accessToken
       const data = jwt.verify(token, process.env.ACCESS_SECRET);
-      const userinfo = user.findOne( { where : { id : data.id } } )
+      const userinfo = await user.findOne( { where : { id : data.id } } )
       if(!userinfo){ //토큰으로 유저 못찾으면 생성불가
         res.status(405).send({
           "message" : "invalid request"
@@ -368,9 +368,9 @@ module.exports = {
             where : { routine_id : req.query.routine_id }
           })
           for(let i = 0; i<parts.length; i++){
-            parts[i].destroy();
+            await parts[i].destroy();
           }
-          card.destroy();
+          await card.destroy();
           res.status(200).send({
             "message" : "delete routine"
           })
