@@ -71,9 +71,18 @@ module.exports = {
           else{
             const remainexercises = await exercise.findAll({ where : { routine_id : card.routine_id } });
             await card.destroy();//운동카드 삭제
+
+            let workout = [];
+            for(let i = 0; i<remainexercises.length; i++){
+              workout.push(remainexercises[i])
+            }
+            workout.sort(function(a, b){
+              return a.order - b.order
+            })
+
             res.status(200).send({
               "message" : "delete card",
-              result : remainexercises
+              result : workout
             })
           }
         }
@@ -335,6 +344,14 @@ module.exports = {
           
           await routinecard.update({ share : req.body.share, name : req.body.routine_name, total_time : time});
           const excards = await exercise.findAll( { where : { routine_id : routinecard.id } } );
+
+          let workout = [];
+          for(let i = 0; i<excards.length; i++){
+            workout.push(excards[i])
+          }
+          workout.sort(function(a, b){
+            return a.order - b.order
+          })
           
           res.status(200).send({
             "message" : "success",
