@@ -20,8 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     category: DataTypes.STRING,
     set_number: DataTypes.INTEGER,
-    set_time: DataTypes.INTEGER,
-    rest_time: DataTypes.INTEGER,
+    set_time_min: DataTypes.INTEGER,
+    set_time_sec: DataTypes.INTEGER,
+    rest_time_min: DataTypes.INTEGER,
+    rest_time_sec: DataTypes.INTEGER,
     default: DataTypes.BOOLEAN,
     workoutimage: DataTypes.STRING,
     memo: DataTypes.STRING

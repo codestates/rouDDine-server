@@ -34,8 +34,10 @@ module.exports = {
             routine_id : String(req.body.routine_id),
             name : tempname,
             set_number: 0,
-            set_time: 0,
-            rest_time: 0,
+            set_time_min: 0,
+            set_time_sec: 0,
+            rest_time_min: 0,
+            rest_time_sec: 0,
             memo : '',
             default : false,
             workoutimage : req.body.workoutimage,
@@ -81,9 +83,9 @@ module.exports = {
           //  })
           //}
           //else{
-            const remainexercises = await exercise.findAll({ where : { routine_id : card.routine_id } });
+            
             await card.destroy();//운동카드 삭제
-
+            const remainexercises = await exercise.findAll({ where : { routine_id : card.routine_id } });
             let workout = [];
             for(let i = 0; i<remainexercises.length; i++){
               workout.push(remainexercises[i])
@@ -158,9 +160,11 @@ module.exports = {
         else{*/
           await ex_card.update({
             name : req.body.name,
-            set_time : req.body.set_time,
             set_number: req.body.set_number,
-            rest_time : req.body.rest_time,
+            set_time_min : req.body.set_time_min,
+            set_time_sec : req.body.set_time_sec,
+            rest_time_min : req.body.rest_time_min,
+            rest_time_sec : req.body.rest_time_sec,
             memo : req.body.memo,
             order: req.body.order
           });
@@ -286,8 +290,10 @@ module.exports = {
                 id : String(routineparts[j].id),
                 name : routineparts[j].name,
                 set_number : routineparts[j].set_number,
-                set_time : routineparts[j].set_time,
-                rest_time : routineparts[j].rest_time,
+                set_time_min : routineparts[j].set_time_min,
+                set_time_sec : routineparts[j].set_time_sec,
+                rest_time_min : routineparts[j].rest_time_min,
+                rest_time_sec : routineparts[j].rest_time_sec,
                 memo : routineparts[j].memo,
                 order : routineparts[j].order
               };
@@ -357,8 +363,8 @@ module.exports = {
             if( req.body.exercise_array.length !==0 ){ //운동수정하는경우            
               for(let i = 0; i<req.body.exercise_array.length; i++){
                 let ex = await exercise.findOne( { where : { id : req.body.exercise_array[i].id } } )
-                if(ex.set_time&&ex.set_number){
-                  time += (ex.set_time * ex.set_number) //운동 총 시간 계산
+                if(ex.set_number&&(ex.set_time_min||ex.set_time_sec)){
+                  time += ((ex.set_time_min*60+ex.set_time_sec) * ex.set_number) //운동 총 시간 계산
                 }
                 await ex.update({order : i+1})
               }
