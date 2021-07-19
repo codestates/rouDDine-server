@@ -218,11 +218,11 @@ module.exports = {
             }
           //res.cookie("refreshToken", refreshToken) 
             res.cookie("accessToken", accessToken,  
-            //{
-            //  httpOnly: false,
-            //  sameSite: "None",
-            //  secure: true,
-           // }
+            {
+              httpOnly: false,
+              sameSite: "None",
+              secure: true,
+            }
             );
           res.status(200).send({message:'ok'})
        }

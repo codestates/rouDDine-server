@@ -22,25 +22,37 @@ module.exports = {
       
       const routineinfo = await routine.findOne({where : {id : req.body.routine_id}})
       if(routineinfo){
+        /*
         if(routineinfo.default === true){
           res.status(202).send({
             "message" : "기본루틴입니다."
           })
         }
-        else{
+        else{*/
           const newCard = await exercise.create({
-            userid: data.id,
-            routine_id : req.body.routine_id,
+            userid: String(data.id),
+            routine_id : String(req.body.routine_id),
             name : tempname,
             set_number: 0,
             set_time: 0,
             rest_time: 0,
             memo : '',
             default : false,
-            workoutimage : req.body.workoutimage
+            workoutimage : req.body.workoutimage,
+            order: 0
           });
-          res.status(201).send(newCard);
-        }
+
+          const remainexercises = await exercise.findAll({ where : { routine_id : newCard.routine_id } });
+          let workout = [];
+          for(let i = 0; i<remainexercises.length; i++){
+            workout.push(remainexercises[i])
+          }
+          workout.sort(function(a, b){
+            return a.order - b.order
+          })
+
+          res.status(201).send(workout);
+        //}
       }
       else{
         res.status(409).send({
@@ -63,12 +75,12 @@ module.exports = {
       if(card){
         const routineinfo = await routine.findOne({where : {id : card.routine_id}})
         if(routineinfo){
-          if(routineinfo.default === true){
-            res.status(202).send({
-              "message" : "기본루틴입니다."
-            })
-          }
-          else{
+          //if(routineinfo.default === true){
+           // res.status(202).send({
+          //    "message" : "기본루틴입니다."
+          //  })
+          //}
+          //else{
             const remainexercises = await exercise.findAll({ where : { routine_id : card.routine_id } });
             await card.destroy();//운동카드 삭제
 
@@ -84,7 +96,7 @@ module.exports = {
               "message" : "delete card",
               result : workout
             })
-          }
+          //}
         }
       }
       else{
@@ -138,12 +150,12 @@ module.exports = {
       })
       if(ex_card){
         const routineinfo = await routine.findOne({where : {id : ex_card.routine_id}})
-        if(routineinfo.default === true){
+        /*if(routineinfo.default === true){
           res.status(202).send({
             "message" : "기본루틴입니다."
           })
         }
-        else{
+        else{*/
           await ex_card.update({
             name : req.body.name,
             set_time : req.body.set_time,
@@ -152,11 +164,22 @@ module.exports = {
             memo : req.body.memo,
             order: req.body.order
           });
+
+          const remainexercises = await exercise.findAll({ where : { routine_id : ex_card.routine_id } });
+
+          let workout = [];
+          for(let i = 0; i<remainexercises.length; i++){
+            workout.push(remainexercises[i])
+          }
+          workout.sort(function(a, b){
+            return a.order - b.order
+          })
+
           res.status(200).send({
             "message" : "update exersice card~!",
-            "result" : ex_card
+            "result" : workout
           })
-        }
+        //}
       }
       else{
         res.status(409).send({
@@ -356,7 +379,7 @@ module.exports = {
           res.status(200).send({
             "message" : "success",
             "result" : routinecard,
-            "exercises" : excards
+            "exercises" : workout
           });
         }
       }
@@ -379,12 +402,12 @@ module.exports = {
       })
       if( card ){
 
-        if(card.default === true){
+        /*if(card.default === true){
           res.status(202).send({
             "message" : "기본루틴입니다."
           });
         }
-        else{
+        else{*/
           const parts = await exercise.findAll({ //루틴안의 운동들 삭제
             where : { routine_id : req.query.routine_id }
           })
@@ -395,7 +418,7 @@ module.exports = {
           res.status(200).send({
             "message" : "delete routine"
           })
-        }
+        //}
       }
       else{
         res.status(409).send({
