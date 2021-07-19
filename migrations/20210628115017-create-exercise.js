@@ -26,10 +26,16 @@ module.exports = {
       set_number: {
       	type: Sequelize.INTEGER
       },
-      set_time: {
+      set_time_min: {
         type: Sequelize.INTEGER
       },
-      rest_time: {
+      set_time_sec: {
+        type: Sequelize.INTEGER
+      },
+      rest_time_min: {
+        type: Sequelize.INTEGER
+      },
+      rest_time_sec: {
         type: Sequelize.INTEGER
       },
       memo: {

@@ -54,7 +54,7 @@ module.exports = {
         }
     }
   },
-  //비회원 로그인
+  //비회원 회원가입
   tempsignup : async(req, res) => {
     if(!req.body.username){
       res.status(405).send({
@@ -64,7 +64,7 @@ module.exports = {
     else{ //바디에 유저 네임이 있으면
       const userInfo = await user.findOne({
         where: {
-              username : username,
+              username : req.body.username,
               social : 'temp'
         }
       })
