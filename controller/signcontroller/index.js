@@ -56,32 +56,51 @@ module.exports = {
   },
   //비회원 회원가입
   tempsignup : async(req, res) => {
-    if(!req.body.username){
-      res.status(405).send({
-        "message" : "invalid request"
-      });
-    }
-    else{ //바디에 유저 네임이 있으면
+    if(!req.body.username) {
+      res.status(405).send({message : "항목을 기입하세요."})
+    
+    }else {
+      // const data = {...userInfo.dataValues}
       const userInfo = await user.findOne({
-        where: {
-              username : req.body.username,
-              social : 'temp'
-        }
+        where: { username: req.body.username, social: 'temp'}
       })
-      if(userInfo){//이미 있는 닉네임일때
-        res.status(202).send({
-          "message" : "이미 존재하는 닉네임입니다."
-        })
-      }
-      else{//생성가능닉네임
+      if(userInfo) {
+        const accessToken = jwt.sign({
+          username : userInfo.username,
+          social : userInfo.social,
+          createdAt:userInfo.createdAt,
+        }, process.env.ACCESS_SECRET,
+        {expiresIn:"12hr"});
+        //const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
+      //res.cookie("refreshToken", refreshToken) 
+        res.cookie("accessToken", accessToken,  
+            {
+              httpOnly: false,
+              sameSite: "None",
+              secure: true,
+            });
+      res.status(200).send({message:'login ok'})
+      
+      } else {
         const newUser = await user.create({ 
           username : req.body.username,
-          profileimage : 'default',
-          total_time : 0,
-          social : "temp"
+          social : 'temp',
         });
-        res.status(201).send( newUser );
-      }
+        const accessToken = jwt.sign({
+          username : newUser.username,
+          social : newUser.social,
+          createdAt:newUser.createdAt,
+        }, process.env.ACCESS_SECRET,
+        {expiresIn:"12hr"});
+  
+        res.cookie("accessToken", accessToken,  
+            {
+              httpOnly: false,
+              sameSite: "Lax",
+              secure: true,
+            });
+      res.status(200).send({message:'create ok'})
+      } 
     }
   },
   //회원탈퇴
@@ -178,140 +197,109 @@ module.exports = {
     }
   },
 // 로그인 토큰
-  login : async(req,res)=>{
-    if(req.body.social === null){
-      const { email, password } = req.body;
-      const aa = await bcrypt.hashSync(password, salt)
-      // 해싱해주는것을 추가해줌 . 
-      const userInfo = await user.findOne({
-        where: {
-              email, social : null
-        }
-      });
-      if(!userInfo) {
-        await res.status(400).send({data : null, message : 'not authorized'})
+login : async(req,res)=>{
+  if(req.body.social === null){
+    const { email, password } = req.body;
+    const aa = await bcrypt.hashSync(password, salt)
+    // 해싱해주는것을 추가해줌 . 
+    const userInfo = await user.findOne({
+      where: {
+            email, social : null
       }
-        else {
-            const data = {...userInfo.dataValues}
-            // 해쉬,
-            const bool = bcrypt.compareSync(password, data.password) ;  
-          // 결과값을 저장해주는곳이 없엇음. 비밀번호가 맞는지 틀린지 
-          // 비밀번호 검사코드는 있는데 결과에 따라 나뉘는것이없음. 
-          // 조건문을 해줘야함. 
-          if(bool) {
-            delete data.password
-  
-            const accessToken = jwt.sign({
-              id:userInfo.id,
-              email : userInfo.email,
-              social : userInfo.social,
-              createdAt:userInfo.createdAt,
-            }, process.env.ACCESS_SECRET,
-            {expiresIn:"12hr"});
-
-            const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
-            let response = {  
-              id: userInfo.id,
-              username: userInfo.username,
-              email: userInfo.email,
-              password: userInfo.password
-            }
-          //res.cookie("refreshToken", refreshToken) 
-            res.cookie("accessToken", accessToken,  
-            {
-              httpOnly: false,
-              sameSite: "None",
-              secure: true,
-            }
-            );
-          res.status(200).send({message:'ok'})
-       }
-      }
+    });
+    if(!userInfo) {
+      await res.status(400).send({data : null, message : 'not authorized'})
     }
-    else if(req.body.social === 'temp'){
-      const userInfo = await user.findOne({
-        where: {
-              social : 'temp',
-              username : req.body.username
-        }
-      });
-      if(userInfo){//로그인성공
-        const accessToken = jwt.sign({
-          id:userInfo.id,
-          social : userInfo.social,
-          username:userInfo.username,
-        }, process.env.ACCESS_SECRET,
-        {expiresIn:"12hr"});
+      else {
+          const data = {...userInfo.dataValues}
+          // 해쉬,
+          const bool = bcrypt.compareSync(password, data.password) ;  
+        // 결과값을 저장해주는곳이 없엇음. 비밀번호가 맞는지 틀린지 
+        // 비밀번호 검사코드는 있는데 결과에 따라 나뉘는것이없음. 
+        // 조건문을 해줘야함. 
+        if(bool) {
+          delete data.password
 
-        res.cookie("accessToken", accessToken,  
-            {
-              httpOnly: false,
-              sameSite: "None",
-              secure: true,
-            }
-        );
+          const accessToken = jwt.sign({
+            id:userInfo.id,
+            email : userInfo.email,
+            social : userInfo.social,
+            createdAt:userInfo.createdAt,
+          }, process.env.ACCESS_SECRET,
+          {expiresIn:"12hr"});
 
+          const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
+          let response = {  
+            id: userInfo.id,
+            username: userInfo.username,
+            email: userInfo.email,
+            password: userInfo.password
+          }
+        //res.cookie("refreshToken", refreshToken) 
+          res.cookie("accessToken", accessToken,  
+          {
+            httpOnly: false,
+            sameSite: "Lax",
+            secure: true,
+          }
+          );
         res.status(200).send({message:'ok'})
-      }
-      else{ //없는 닉네임
-        res.status(405).send({
-          "message" : "invalid request"
-        });
-      }
+     }
     }
-    
-    else{ //소셜로그인 - 구글
-      const userInfo = await user.findOne({
-        where: { email: req.body.email, social: 'google'}
-      })
-      if(userInfo){
-        userInfo.update({ profileimage : req.body.profileimage }); //구글 프로필 사진 바뀌었으면 반영
-        const data = {...userInfo.dataValues}
-        const accessToken = jwt.sign({
-          id:userInfo.id,
-          email : userInfo.email,
-          social : userInfo.social,
-          createdAt:userInfo.createdAt,
-        }, process.env.ACCESS_SECRET,
-        {expiresIn:"12hr"});
+  }
+  
+  else{ //소셜로그인 - 구글
+    const userInfo = await user.findOne({
+      where: { email: req.body.email, social: 'google'}
+    })
+    if(userInfo){
+      userInfo.update({ profileimage : req.body.profileimage }); //구글 프로필 사진 바뀌었으면 반영
+      const data = {...userInfo.dataValues}
+      const accessToken = jwt.sign({
+        id:userInfo.id,
+        email : userInfo.email,
+        social : userInfo.social,
+        createdAt:userInfo.createdAt,
+      }, process.env.ACCESS_SECRET,
+      {expiresIn:"12hr"});
 
-        const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
-      //res.cookie("refreshToken", refreshToken) 
-        res.cookie("accessToken", accessToken,  
-            {
-              httpOnly: false,
-              sameSite: "None",
-              secure: true,
-            });
-      res.status(200).send({message:'ok'})
-      }
-      else{
-        const newUser = await user.create({ 
-          username : req.body.username,
-          email : req.body.email,
-          social : 'google',
-          socialid : req.body.socialid,
-          profileimage : req.body.profileimage
-        });
-        const accessToken = jwt.sign({
-          id:newUser.id,
-          email : newUser.email,
-          social : newUser.social,
-          createdAt:newUser.createdAt,
-        }, process.env.ACCESS_SECRET,
-        {expiresIn:"12hr"});
-
-        res.cookie("accessToken", accessToken,  
-            {
-              httpOnly: false,
-              sameSite: "Lax",
-              secure: true,
-            });
-      res.status(200).send({message:'ok'})
-
-      }
+      const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
+    //res.cookie("refreshToken", refreshToken) 
+      res.cookie("accessToken", accessToken,  
+          {
+            httpOnly: false,
+            sameSite: "Lax",
+            secure: true,
+          });
+    res.status(200).send({message:'ok'})
     }
-  },
+    else{
+      const newUser = await user.create({ 
+        username : req.body.username,
+        email : req.body.email,
+        social : 'google',
+        socialid : req.body.socialid,
+        profileimage : req.body.profileimage
+      });
+      const accessToken = jwt.sign({
+        id:newUser.id,
+        email : newUser.email,
+        social : newUser.social,
+        createdAt:newUser.createdAt,
+      }, process.env.ACCESS_SECRET,
+      {expiresIn:"12hr"});
+
+      res.cookie("accessToken", accessToken,  
+          {
+            httpOnly: false,
+            sameSite: "Lax",
+            secure: true,
+          });
+    res.status(200).send({message:'ok'})
+
+    }
+  }
+},
   logout : async(req,res)=>{
     const token = req.cookies.accessToken
     const data = jwt.verify(token, process.env.ACCESS_SECRET);
