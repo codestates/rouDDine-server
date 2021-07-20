@@ -96,7 +96,7 @@ module.exports = {
         res.cookie("accessToken", accessToken,  
             {
               httpOnly: false,
-              sameSite: "Lax",
+              sameSite: "None",
               secure: true,
             });
       res.status(200).send({message:'create ok'})
@@ -239,7 +239,7 @@ login : async(req,res)=>{
           res.cookie("accessToken", accessToken,  
           {
             httpOnly: false,
-            sameSite: "Lax",
+            sameSite: "None",
             secure: true,
           }
           );
@@ -268,7 +268,7 @@ login : async(req,res)=>{
       res.cookie("accessToken", accessToken,  
           {
             httpOnly: false,
-            sameSite: "Lax",
+            sameSite: "None",
             secure: true,
           });
     res.status(200).send({message:'ok'})
@@ -289,13 +289,14 @@ login : async(req,res)=>{
       }, process.env.ACCESS_SECRET,
       {expiresIn:"12hr"});
 
-      res.cookie("accessToken", accessToken,  
-          {
-            httpOnly: false,
-            sameSite: "Lax",
-            secure: true,
-          });
-    res.status(200).send({message:'ok'})
+
+        res.cookie("accessToken", accessToken,  
+            {
+              httpOnly: false,
+              sameSite: "None",
+              secure: true,
+            });
+      res.status(200).send({message:'ok'})
 
     }
   }
