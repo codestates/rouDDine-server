@@ -550,11 +550,27 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
-
-
-
-
-
+    
+    
+    {
+      userid: 1,
+      routine_id: 2,
+      category: "웨이트운동",
+      name: "카드를 편집하세",
+      set_time_min: 0,
+      rest_time_min:0,
+      set_time_sec: 30,
+      set_number:1,
+      rest_time_sec: 0,
+      memo: "기본입니다.",
+      default: 0,
+      order:15,
+      workoutimage: '',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    
+    
     {
       userid: 1,
       routine_id: 3,
@@ -671,6 +687,63 @@ module.exports = {
       default: 0,
       order:7,
       workoutimage: 'Excerise/046-fitness.png',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    
+    
+    {
+      userid: 1,
+      routine_id: 4,
+      category: "웨이트운동",
+      name: "카드를 편집하세요",
+      set_time_min: 0,
+      rest_time_min:0,
+      set_time_sec: 30,
+      set_number:1,드
+      rest_time_sec: 0,
+      memo: "기본카입니다",
+      default: 0,
+      order:15,
+      workoutimage: '',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    
+    
+    {
+      userid: 1,
+      routine_id: 5,
+      category: "웨이트운동",
+      name: "카드를 편집하세요.",
+      set_time_min: 0,
+      rest_time_min:0,
+      set_time_sec: 30,
+      set_number:1,
+      rest_time_sec: 0,
+      memo: "마지막운동입니다",
+      default: 0,
+      order:15,
+      workoutimage: '',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    
+    
+    {
+      userid: 1,
+      routine_id: 6,
+      category: "웨이트운동",
+      name: "카드를 편집하세요.",
+      set_time_min: 0,
+      rest_time_min:0,
+      set_time_sec: 30,
+      set_number:1,
+      rest_time_sec: 0,
+      memo: "마지막운동입니다",
+      default: 0,
+      order:15,
+      workoutimage: '',
       createdAt: new Date(),
       updatedAt: new Date()
     },
