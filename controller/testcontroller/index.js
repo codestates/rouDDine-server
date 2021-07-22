@@ -222,6 +222,21 @@ module.exports = {
           finished_total_time :0,
           routineimage: '/Routine/' + randomimage
         })
+
+        const newExercise = await exercise.create({
+          name : '카드를 편집하세요',
+          userid : String(newRoutine.userid),
+          routine_id : String(newRoutine.id),
+          set_number: 1,
+          set_time_min: 1,
+          set_time_sec: 0,
+          rest_time_min: 1,
+          rest_time_sec: 0,
+          memo : '',
+          default : false,
+          workoutimage : req.body.workoutimage,
+          order: 0
+        })
         
         res.status(201).send({
           "message" : "created"
