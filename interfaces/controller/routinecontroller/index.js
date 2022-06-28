@@ -1,7 +1,7 @@
-const { routinepart } = require("../../models");
-const { routine } = require("../../models");
-const { exercise } = require("../../models");
-const { user } = require("../../models");
+const { routinepart } = require("../../../models");
+const { routine } = require("../../../models");
+const { exercise } = require("../../../models");
+const { user } = require("../../../models");
 const jwt = require('jsonwebtoken');
 
 module.exports = { //루틴 생성 - post

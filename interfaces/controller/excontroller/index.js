@@ -1,5 +1,5 @@
-const { exercise } = require("../../models")
-const { routineparts } = require("../../models")
+const { exercise } = require("../../../models")
+const { routineparts } = require("../../../models")
 const jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
 
