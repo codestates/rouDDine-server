@@ -1,5 +1,5 @@
-const { routinepart } = require("../../entities/models/");
-const { routine } = require("../../entities/models/")
+const { routinepart } = require("../../entities/models/routinepart");
+const { routine } = require("../../entities/models/routine")
 
 
 module.exports = { //루틴 생성 - post

@@ -1,4 +1,4 @@
-const { exercise } = require("../../entities/models/")
+const { exercise } = require("../../entities/models/exercise")
 
 module.exports = {
  //운동카드 수정하기 - patch방식

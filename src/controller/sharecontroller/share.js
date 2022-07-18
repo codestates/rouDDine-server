@@ -1,4 +1,4 @@
-const { routine } = require("../../entities/models/")
+const { routine } = require("../../entities/models/routine")
 
 module.exports = {
   //공유된 루틴들 가져오기 - get방식

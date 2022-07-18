@@ -1,5 +1,5 @@
-const { exercise } = require("../../entities/models/")
-const { routineparts } = require("../../entities/models/")
+const { exercise } = require("../../entities/models/exercise")
+const { routineparts } = require("../../entities/models/routinepart")
 const jwt = require('jsonwebtoken');
 
 module.exports = {

@@ -5,18 +5,24 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
 const https = require('https');
 const http = require('http');
-const signcontroller = require("./interfaces/controller/signcontroller");
+const signcontroller = require("./controller/signcontroller");
 
 // 운동 컨트롤러 
-const createEx = require("./interfaces/controller/excontroller/create");
-const deleteEx = require("./interfaces/controller/excontroller/delete");
-const infoEx = require("./interfaces/controller/excontroller/infomation");
-const updateEx = require("./interfaces/controller/excontroller/update");
+const createEx = require("./controller/excontroller/create");
+const deleteEx = require("./controller/excontroller/delete");
+const infoEx = require("./controller/excontroller/information");
+const updateEx = require("./controller/excontroller/update");
 
+// 루틴 컨트롤러
+const createRoutine = require("./controller/routinecontroller/create");
+const deleteRoutine = require("./controller/routinecontroller/delete");
+const doneRoutine = require("./controller/routinecontroller/finishRouddine");
+const infoRoutine = require("./controller/routinecontroller/information");
+const updateRoutine = require("./controller/routinecontroller/update");
 
-const routinecontroller = require("./interfaces/controller/routinecontroller");
-const sharecontroller = require("./interfaces/controller/sharecontroller");
-const testcontroller = require("./interfaces/controller/testcontroller")
+// 루틴 공유 
+const sharecontroller = require("./controller/sharecontroller/share");
+const testcontroller = require("./controller/testcontroller/index")
 const app = express();
 
 app.use(express.json());
@@ -46,11 +52,11 @@ app.get("/exercise", infoEx.info_exercise); //운동카드 불러오기
 app.delete("/exercise", deleteEx.delete_exercise); //운동카드 삭제
 app.patch("/exercise", updateEx.update_exercise); //운동카드 수정
 
-app.post("/routine", routinecontroller.create_Routine); //루틴 생성
-app.get("/routine", routinecontroller.info_Routine); //루틴 불러오기 - routine_id가 없으면 모든루틴의 간단한 정보들을, 있으면 루틴 하나의 상세 정보를 반환
-app.delete("/routine", routinecontroller.delete_Routine); //루틴삭제
-app.patch("/routine", routinecontroller.update_Routine); //루틴 수정
-app.post("/finish", routinecontroller.finish_Routine); //루틴완료
+app.post("/routine", createRoutine.create_Routine); //루틴 생성
+app.get("/routine", infoRoutine.info_Routine); //루틴 불러오기 - routine_id가 없으면 모든루틴의 간단한 정보들을, 있으면 루틴 하나의 상세 정보를 반환
+app.delete("/routine", deleteRoutine.delete_Routine); //루틴삭제
+app.patch("/routine", updateRoutine.update_Routine); //루틴 수정
+app.post("/finish", doneRoutine.finish_Routine); //루틴완료
 
 app.post("/testexercise", testcontroller.create_exercise);
 app.get("/testexercise", testcontroller.info_exercise);
@@ -68,6 +74,11 @@ app.get("/share", sharecontroller.getSharedRoutines); //공유된 루틴 불러�
 app.get('/', (req, res) => {
   res.status(201).send('Hello World 🇰🇷');
 });
+
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
 });
+
+
+
+

@@ -1,4 +1,4 @@
-const { routine } = require("../../entities/models/")
+const { routine } = require("../../entities/models/routine")
 const jwt = require('jsonwebtoken');
 // 새로운 루틴 생성
 module.exports = {

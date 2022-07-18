@@ -1,6 +1,6 @@
-const { exercise } = require("../../../models")
-const { routine } = require("../../../models")
-const { user } = require("../../../models")
+const { exercise } = require("../../entities/models/exercise")
+const { routine } = require("../../entities/models/routine")
+const { user } = require("../../entities/models/user")
 const jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
 

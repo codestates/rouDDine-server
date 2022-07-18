@@ -1,6 +1,6 @@
-const { routinepart } = require("../../entities/models/");
-const { routine } = require("../../entities/models/");
-const { exercise } = require("../../entities/models/");
+const { routinepart } = require("../../entities/models/routinepart");
+const { routine } = require("../../entities/models/routine");
+const { exercise } = require("../../entities/models/exercise");
 
 module.exports = {
     update_Routine: async (req, res) => { //루틴 수정하기 - patch

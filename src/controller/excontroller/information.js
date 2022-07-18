@@ -1,4 +1,4 @@
-const { exercise } = require("../../entities/models/")
+const { exercise } = require("../../entities/models/exercise")
 const jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
 

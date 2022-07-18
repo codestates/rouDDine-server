@@ -1,5 +1,5 @@
-const { routine } = require("../../entities/models/");
-const { user } = require("../../entities/models/");
+const { routine } = require("../../entities/models/routine");
+const { user } = require("../../entities/models/user");
 
 
 module.exports ={

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { users } = require('../../models'); //db 내 테이블.
+const { users } = require('../../entities/models/user'); //db 내 테이블.
 
 module.exports = async (req, res) => {
   // TODO: urclass의 가이드를 참고하여 GET /refreshtokenrequest 구현에 필요한 로직을 작성하세요.
