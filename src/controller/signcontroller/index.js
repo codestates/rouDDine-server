@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const jwt = require('jsonwebtoken');
-const { user } = require("../../entities/models/user");
+const  { user }      = require("../../entities/models/user");
 const { routine } = require("../../entities/models/routine");
 const { exercise } = require("../../entities/models/exercise");
 const bcrypt = require("bcrypt");
@@ -202,11 +202,13 @@ login : async(req,res)=>{
     const { email, password } = req.body;
     const aa = await bcrypt.hashSync(password, salt)
     // 해싱해주는것을 추가해줌 . 
+    
     const userInfo = await user.findOne({
       where: {
             email, social : null
       }
     });
+    console.log('user :', user)
     if(!userInfo) {
       await res.status(400).send({data : null, message : 'not authorized'})
     }
@@ -249,6 +251,7 @@ login : async(req,res)=>{
   }
   
   else{ //소셜로그인 - 구글
+    console.log('login 2:',user)
     const userInfo = await user.findOne({
       where: { email: req.body.email, social: 'google'}
     })
@@ -289,7 +292,6 @@ login : async(req,res)=>{
       }, process.env.ACCESS_SECRET,
       {expiresIn:"12hr"});
 
-
         res.cookie("accessToken", accessToken,  
             {
               httpOnly: false,
@@ -301,6 +303,8 @@ login : async(req,res)=>{
     }
   }
 },
+
+
   logout : async(req,res)=>{
     const token = req.cookies.accessToken
     const data = jwt.verify(token, process.env.ACCESS_SECRET);
