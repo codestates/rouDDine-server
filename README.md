@@ -11,8 +11,8 @@
 			- share.js
 		- signcontroller // 유저(회원가입, 로그인 등..) 컨트롤러
 			- accessToken.js
-			- index.js  // 회원가입, 탈퇴, 로그인,로그아웃, 소셜로그인
-			- oauth.js 
+			- index.js  // 회원가입, 탈퇴, 로그인,로그아웃
+			- oauth.js  // 소셜 로그인 (네이버, 구글)
 			- refreshToken.js
 		- testcontroller // 테스트 컨트롤러 (테스트 케이스 아님..)
 			- index.js
