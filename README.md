@@ -1,32 +1,37 @@
-## 현재 아키텍처 구조
+## 현재 아키텍처 구조 (08.02)
 
 ```
 - src 
 	- controller
 		- excontroller // 운동기능 추가 컨트롤러 CRUD
+			-create.js ..
 		- routinecontroller // 루틴 추가 컨트롤러 CRUD
+			- create.js ..
 		- sharecontroller // 공유 컨트롤러 
+			- share.js
 		- signcontroller // 유저(회원가입, 로그인 등..) 컨트롤러
 			- accessToken.js
 			- index.js  // 회원가입, 탈퇴, 로그인,로그아웃, 소셜로그인
-			- oauth.js
+			- oauth.js 
 			- refreshToken.js
 		- testcontroller // 테스트 컨트롤러 (테스트 케이스 아님..)
-	- entities
-		- models  // 모델 저장
-			- user.js
-			- routinepart.js
-			- routine.js
-			- exercise.js
+			- index.js
 	- orm
-		- config
-		- migrations
-		- models
-		- seeders
+		- sequelize
+			- config
+			- migrations
+			- models
+				-index.js
+				-user.js
+				-routinepart.js
+				-routine.js
+				-exercise.js
+			- seeders
 	- public
 		- image		
 	app.js 
-
+- tests
+	- test.js // jest test 
 ```
 
 ## 실행 방법
@@ -47,22 +52,12 @@
 
    
 
-## 오류 재현 방법
+## 리팩토링 방향
 
-1. `npm start`를 입력후 서버를 실행함.
-2. postman 에서 `post` 설정후, 다음과 같이 주소 입력 `http://localhost:3000/login`
-3. body 값에 다음과 같은 값을 기입
-
-```
- {
-    "email" : "admin1@naver.com",
-    "password" : "12345"
-}
-```
-
-4. 다음과 같은 에러를 내보냄. 
-
-   ![스크린샷, 2022-07-24 01-23-07](https://user-images.githubusercontent.com/71261997/181493130-4fb75b2d-4efd-44d3-a62d-5885d081f435.png)
-
-`app.js`에 모든 기능의 엔드포인트가 있습니다. 
+1. 에러와 버그 상황에 잘 대처가 가능하도록 SRP 원칙에 충실히 할것
+	- 의존방향이 꼬이지않게 해야함.
+	- 명확한 네이밍.
+	- 추가 확장 및 수정사항에 용이한 구조를 가질것
+2. 커밋 메세지에 신경쓸것 (이슈와 연동)
+3. 객체 지향적으로 리팩토링하기
 
