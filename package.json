@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codestates/only3days-server.git"
+    "url": "git+https://github.com/LeeGeonwoo22/rouDDine-refactorServer/tree/dev#readme"
   },
   "author": "ex-routine",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/codestates/only3days-server/issues"
+    "url": "https://github.com/LeeGeonwoo22/rouDDine-refactorServer/issues"
   },
-  "homepage": "https://github.com/codestates/only3days-server#readme",
+  "homepage": "https://github.com/LeeGeonwoo22/rouDDine-refactorServer/tree/dev#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",

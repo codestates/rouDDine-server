@@ -29,9 +29,3 @@ module.exports = async (req, res) => {
     res.status(200).send({ data: { userInfo: data }, message: "ok" }); // 이 부분 확인 필요.
   }
 };
-
-// function aaa (req,res) {
-//     console.log('req :', req)
-// }
-
-// aaa();

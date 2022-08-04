@@ -3,6 +3,7 @@ const { routine } = require("../../orm/sequelize/models");
 const { exercise } = require("../../orm/sequelize/models");
 
 module.exports = {
+  
   update_Routine: async (req, res) => {
     //루틴 수정하기 - patch
     if (!req.body.routine_id) {
