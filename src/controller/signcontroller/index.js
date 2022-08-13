@@ -17,8 +17,10 @@ router.post('/user', (req,res)=>{
       email: email,
       username: username,
       social: req.body.social,
-    },
+    }
   });
+  try{
+  }
 })
 
 

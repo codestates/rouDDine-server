@@ -42,10 +42,10 @@ app.post("/login",signcontroller.login) // 토큰 로그인
 app.post("/logout",signcontroller.logout) //로그아웃
 app.post("/tempuser", signcontroller.tempsignup); //임시회원가입
 
-app.post("/user", signcontroller.signUpController); //회원가입
-app.delete("/user", signcontroller.WithdrawalConstroller); //회원탈퇴
-app.get("/user", signcontroller.userInfo); //유저 정보 불러오기
-app.patch("/user", signcontroller.updateUser); //유저 정보 수정하기
+// app.post("/user", signcontroller.signUpController); //회원가입
+// app.delete("/user", signcontroller.WithdrawalConstroller); //회원탈퇴
+// app.get("/user", signcontroller.userInfo); //유저 정보 불러오기
+// app.patch("/user", signcontroller.updateUser); //유저 정보 수정하기
 
 app.post("/exercise", createEx.create_exercise); //운동카드 생성
 app.get("/exercise", infoEx.info_exercise); //운동카드 불러오기
