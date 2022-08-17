@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config")[env];
 const db = {};
 
-console.log('비밀번호 index.js:',process.env.DATABASE_PASSWORD)
+// console.log('비밀번호 index.js:',process.env.DATABASE_PASSWORD)
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
