@@ -25,11 +25,11 @@ const share = require("./routes/share")
 const trying = require("./routes/try")
 const users = require("./routes/users")
 
-app.use('/api/exercise', exercise)
-app.use('/api/routine', routine)
-app.use('/api/share', share)
-app.use('/api/test', trying)
-app.use('/api/users', users)
+app.use('/api', exercise)
+app.use('/api', routine)
+app.use('/api', share)
+app.use('/api', trying)
+app.use('/api', users)
 
 // 고정 이미지 폴더
 app.use(express.static('/public/image'));
