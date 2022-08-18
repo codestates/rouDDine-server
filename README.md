@@ -14,8 +14,14 @@
 			- index.js  // 회원가입, 탈퇴, 로그인,로그아웃
 			- oauth.js  // 소셜 로그인 (네이버, 구글)
 			- refreshToken.js
-		- testcontroller // 테스트 컨트롤러 (테스트 케이스 아님..)
-			- index.js
+		- testcontroller // 운동 부가기능 컨트롤러
+			- tryFunctions.js
+	- routes // 라우트 
+		- exercise.js
+		- routines.js
+		- share.js
+		- try.js
+		- users.js
 	- orm
 		- sequelize
 			- config
