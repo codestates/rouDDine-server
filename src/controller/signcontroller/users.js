@@ -13,30 +13,35 @@ module.exports = {
   signUpController: async (req, res) => {
     const { username, email, password, social } = req.body
     const userInfo = await user.findOne({
-      where: {
-        email: email,
-        username: username,
-        social: social
-      },
+        where: {
+            email: email,
+            username: username,
+            social: social
+        },
     });
-    try{
-        if(userInfo === null){
-          const newUser = await user.create({
+    try {
+
+        if (userInfo) {
+            // early exit
+            return res.status(401).json({ message: "already exist" });
+        }
+
+        // you don't need else here
+        const newUser = await user.create({
             username,
             email,
-            social : null,
+            social: null,
             password: bcrypt.hashSync(password, salt),
             profileimage: "default",
             total_time: 0,
-          });
-          return res.status(200).json(newUser);
-        }
-      }catch(err){
-        return res.status(400).json({message : "invalid access"});
-      }
-      finally{
-        return res.status(401).json({ message : "already exist"});
-      }    
+        });
+        return res.status(200).json(newUser);
+    }
+    catch (err) {
+        return res.status(400).json({ message: "invalid access" });
+    }
+    
+    // you don't need the finally block 
 },
   //비회원 회원가입
   tempsignup: async (req, res) => {
