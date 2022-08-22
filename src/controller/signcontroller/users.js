@@ -6,49 +6,38 @@ const { exercise } = require("../../orm/sequelize/models");
 const bcrypt = require("bcrypt");
 const salt = process.env.DATABASE_SALT;
 const { Op } = require("sequelize");
-
+// const auth = require("../../middleware/auth")
 
 module.exports = {
   // 회원가입
   signUpController: async (req, res) => {
-    const { username, email, password } = req.body;
-    //console.log('salt :', salt)
-    if (!(username && email && password)) {
-      res.status(405).send({
-        message: "invalid request",
-      });
-    } else {
-      const userInfo = await user.findOne({
-        where: {
-          email: email,
-          username: username,
-          social: req.body.social,
-        },
-      });
-
-      if (userInfo === null) {
-        const newUser = await user.create({
-          username,
-          email,
-          password: bcrypt.hashSync(password, salt),
-          profileimage: "default",
-          total_time: 0,
-        });
-
-        let response = {
-          username: newUser.username,
-          email: newUser.email,
-          password: newUser.password,
-        };
-
-        res.status(201).json(newUser);
-      } else {
-        res.status(409).send({
-          message: "email already exist",
-        });
+    const { username, email, password, social } = req.body
+    const userInfo = await user.findOne({
+      where: {
+        email: email,
+        username: username,
+        social: social
+      },
+    });
+    try{
+        if(userInfo === null){
+          const newUser = await user.create({
+            username,
+            email,
+            social : null,
+            password: bcrypt.hashSync(password, salt),
+            profileimage: "default",
+            total_time: 0,
+          });
+          return res.status(200).json(newUser);
+        }
+      }catch(err){
+        return res.status(400).json({message : "invalid access"});
       }
-    }
-  },
+      finally{
+        return res.status(401).json({ message : "already exist"});
+      }    
+},
   //비회원 회원가입
   tempsignup: async (req, res) => {
     if (!req.body.username) {
