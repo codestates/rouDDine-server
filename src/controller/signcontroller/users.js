@@ -6,7 +6,6 @@ const { exercise } = require("../../orm/sequelize/models");
 const bcrypt = require("bcrypt");
 const salt = process.env.DATABASE_SALT;
 const { Op } = require("sequelize");
-// const auth = require("../../middleware/auth")
 
 module.exports = {
   // 회원가입
@@ -19,14 +18,11 @@ module.exports = {
             social: social
         },
     });
-    try {
 
+    try {
         if (userInfo) {
-            // early exit
             return res.status(401).json({ message: "already exist" });
         }
-
-        // you don't need else here
         const newUser = await user.create({
             username,
             email,
@@ -40,17 +36,20 @@ module.exports = {
     catch (err) {
         return res.status(400).json({ message: "invalid access" });
     }
-    
-    // you don't need the finally block 
 },
+
   //비회원 회원가입
   tempsignup: async (req, res) => {
-    if (!req.body.username) {
-      res.status(405).send({ message: "항목을 기입하세요." });
-    } else {
-      // const data = {...userInfo.dataValues}
+
+    const { username, social } = req.body
+
+    try{
+      
+      if (!username) {
+        return  res.status(405).send({ message: "항목을 기입하세요." });
+      } 
       const userInfo = await user.findOne({
-        where: { username: req.body.username, social: "temp" },
+        where: { username: username, social: "temp" },
       });
       if (userInfo) {
         const accessToken = jwt.sign(
@@ -62,38 +61,37 @@ module.exports = {
           process.env.ACCESS_SECRET,
           { expiresIn: "12hr" }
         );
-        //const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {expiresIn : '1h'}) //  save in cookie .
-        //res.cookie("refreshToken", refreshToken)
-        res.cookie("accessToken", accessToken, {
-          httpOnly: false,
-          sameSite: "None",
-          secure: true,
-        });
-        res.status(200).send({ message: "login ok" });
-      } else {
-        const newUser = await user.create({
-          username: req.body.username,
-          social: "temp",
-        });
-        const accessToken = jwt.sign(
-          {
-            username: newUser.username,
-            social: newUser.social,
-            createdAt: newUser.createdAt,
-          },
-          process.env.ACCESS_SECRET,
-          { expiresIn: "12hr" }
-        );
 
         res.cookie("accessToken", accessToken, {
           httpOnly: false,
           sameSite: "None",
           secure: true,
         });
-        res.status(200).send({ message: "create ok" });
-      }
+        return res.status(200).send({ message: "login ok" });
     }
-  },
+  }catch {
+      const newUser = await user.create({
+        username: username,
+        social: "temp",
+      });
+      const accessToken = jwt.sign(
+        {
+          username: newUser.username,
+          social: newUser.social,
+          createdAt: newUser.createdAt,
+        },
+        process.env.ACCESS_SECRET,
+        { expiresIn: "12hr" }
+      );
+
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+      });
+      return res.status(200).send({ message: "create ok" });
+    }
+  },    
   //회원탈퇴
   WithdrawalConstroller: async (req, res) => {
     if (!req.cookies.accessToken) {
