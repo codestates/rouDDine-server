@@ -44,54 +44,61 @@ module.exports = {
     const { username, social } = req.body
 
     try{
-      
-      if (!username) {
-        return  res.status(405).send({ message: "항목을 기입하세요." });
-      } 
-      const userInfo = await user.findOne({
-        where: { username: username, social: "temp" },
-      });
-      if (userInfo) {
+      // 유저 네임이 입력되어 있더라면, 
+      if (username) {
+        const userInfo = await user.findOne({
+          where: { username: username, social: "temp" },
+        });
+        try{
+          // 등록된 유저가 있다면, 토큰을 주고 로그인을 시킨다. 
+          if(userInfo){
+            const accessToken = jwt.sign(
+              {
+                username: userInfo.username,
+                social: userInfo.social,
+                createdAt: userInfo.createdAt,
+              },
+              process.env.ACCESS_SECRET,
+              { expiresIn: "12hr" }
+            );
+    
+            res.cookie("accessToken", accessToken, {
+              httpOnly: false,
+              sameSite: "None",
+              secure: true,
+            });
+            
+          }
+          return res.status(200).send({ message: "login ok" });
+      } catch {
+        // 등록된 유저가 없는 경우 유저를 생성한다. 
+        const newUser = await user.create({
+          username: username,
+          social: "temp",
+        });
         const accessToken = jwt.sign(
           {
-            username: userInfo.username,
-            social: userInfo.social,
-            createdAt: userInfo.createdAt,
+            username: newUser.username,
+            social: newUser.social,
+            createdAt: newUser.createdAt,
           },
           process.env.ACCESS_SECRET,
           { expiresIn: "12hr" }
         );
-
+          // 쿠키에 접근가능한 토큰을 넣어준다.
         res.cookie("accessToken", accessToken, {
           httpOnly: false,
           sameSite: "None",
           secure: true,
         });
-        return res.status(200).send({ message: "login ok" });
+        return res.status(200).send({ message: "create ok" });
+      }
     }
   }catch {
-      const newUser = await user.create({
-        username: username,
-        social: "temp",
-      });
-      const accessToken = jwt.sign(
-        {
-          username: newUser.username,
-          social: newUser.social,
-          createdAt: newUser.createdAt,
-        },
-        process.env.ACCESS_SECRET,
-        { expiresIn: "12hr" }
-      );
+    return  res.status(405).send({ message: "항목을 기입하세요." });
+  }
+},
 
-      res.cookie("accessToken", accessToken, {
-        httpOnly: false,
-        sameSite: "None",
-        secure: true,
-      });
-      return res.status(200).send({ message: "create ok" });
-    }
-  },    
   //회원탈퇴
   WithdrawalConstroller: async (req, res) => {
     if (!req.cookies.accessToken) {
