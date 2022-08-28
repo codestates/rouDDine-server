@@ -41,37 +41,17 @@ module.exports = {
   //비회원 회원가입
   tempsignup: async (req, res) => {
 
-    const { username, social } = req.body
+    const { username, social} = req.body
+    const userInfo = await user.findOne({
+      where: {
+          username: username
+      },
+  });
 
     try{
-      // 유저 네임이 입력되어 있더라면, 
-      if (username) {
-        const userInfo = await user.findOne({
-          where: { username: username, social: "temp" },
-        });
-        try{
-          // 등록된 유저가 있다면, 토큰을 주고 로그인을 시킨다. 
-          if(userInfo){
-            const accessToken = jwt.sign(
-              {
-                username: userInfo.username,
-                social: userInfo.social,
-                createdAt: userInfo.createdAt,
-              },
-              process.env.ACCESS_SECRET,
-              { expiresIn: "12hr" }
-            );
-    
-            res.cookie("accessToken", accessToken, {
-              httpOnly: false,
-              sameSite: "None",
-              secure: true,
-            });
-            
-          }
-          return res.status(200).send({ message: "login ok" });
-      } catch {
-        // 등록된 유저가 없는 경우 유저를 생성한다. 
+      if (userInfo) {
+        return res.status(200).json({ message: "로그인 되었습니다." });
+    }
         const newUser = await user.create({
           username: username,
           social: "temp",
@@ -83,7 +63,7 @@ module.exports = {
             createdAt: newUser.createdAt,
           },
           process.env.ACCESS_SECRET,
-          { expiresIn: "12hr" }
+          { expiresIn: "6hr" }
         );
           // 쿠키에 접근가능한 토큰을 넣어준다.
         res.cookie("accessToken", accessToken, {
@@ -91,12 +71,10 @@ module.exports = {
           sameSite: "None",
           secure: true,
         });
-        return res.status(200).send({ message: "create ok" });
-      }
+        return res.status(200).json(newUser);
+    }catch(err){
+      return res.status(400).json({ message: "invalid access" });
     }
-  }catch {
-    return  res.status(405).send({ message: "항목을 기입하세요." });
-  }
 },
 
   //회원탈퇴
