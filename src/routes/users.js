@@ -11,7 +11,7 @@ router.post("/tempuser", signcontroller.tempsignup); //임시회원가입
 
 // 회원
 router.post('/users', signcontroller.signUpController);
-router.get('/users', signcontroller.WithdrawalConstroller);
+router.get('/users', signcontroller.WithdrawalController);
 router.delete('/users', signcontroller.userInfo);
 router.patch('/users', signcontroller.updateUser);
 

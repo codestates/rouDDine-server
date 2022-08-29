@@ -41,7 +41,7 @@ module.exports = {
   //비회원 회원가입
   tempsignup: async (req, res) => {
 
-    const { username, social} = req.body
+    const { username}  = req.body
     const userInfo = await user.findOne({
       where: {
           username: username
@@ -78,16 +78,13 @@ module.exports = {
 },
 
   //회원탈퇴
-  WithdrawalConstroller: async (req, res) => {
-    if (!req.cookies.accessToken) {
-      res.status(405).send({
-        message: "invalid request",
-      });
-    } else {
+  WithdrawalController: async (req, res) => {
+
+    try{
+      // 회원 탈퇴가 될 경우 
       const token = req.cookies.accessToken;
       const data = jwt.verify(token, process.env.ACCESS_SECRET);
       const userInfo = await user.findOne({ where: { id: data.id } });
-
       if (userInfo) {
         //루틴 삭제하기
         let card = await routine.findOne({
@@ -115,46 +112,40 @@ module.exports = {
           message: "cannot find user. please check email and password",
         });
       }
+    }catch(err){
+      res.status(405).send({
+        message: "invalid request",
+      });
     }
   },
 
   userInfo: async (req, res) => {
     //유저정보
-    if (!req.cookies.accessToken) {
-      res.status(405).send({
-        message: "invalid request",
-      });
-    } else {
+    try{
       const token = req.cookies.accessToken;
       const data = jwt.verify(token, process.env.ACCESS_SECRET);
-      const userinfo = await user.findOne({ where: { id: data.id } });
-      if (!userinfo) {
-        res.status(409).send({
-          message: "not exist user",
-        });
-      } else {
-        res.status(200).send(userinfo);
+      const userInfo = await user.findOne({ where: { id: data.id } });
+      if(userInfo) {
+        return res.status(200).json(userInfo)
       }
+    }catch(err){
+      console.log(err)
+      return res.status(409).json({
+        message: "not exist user",
+      })
     }
   },
   
   updateUser: async (req, res) => {
-    //유저정보수정
+    
     console.log(req.cookies);
-    if (!req.cookies.accessToken) {
-      res.status(405).send({
-        message: "invalid request",
-      });
-    } else {
+    try{
+      // 유저 정보 수정
       const token = req.cookies.accessToken;
       const data = jwt.verify(token, process.env.ACCESS_SECRET);
-      const userinfo = await user.findOne({ where: { id: data.id } });
-      if (!userinfo) {
-        res.status(409).send({
-          message: "not exist user",
-        });
-      } else {
-        await userinfo.update({
+      const userInfo = await user.findOne({ where: { id: data.id } });
+      if(userInfo) {
+        await userInfo.update({
           username: req.body.username,
           gender: req.body.gender,
           age: req.body.age,
@@ -162,9 +153,13 @@ module.exports = {
           weigt: req.body.weigt,
           profileimage: req.body.profileimage,
         });
-        res.status(200).send(userinfo);
+        return res.status(200).send(userInfo);
       }
-    }
+      }catch(err){
+      // 수정이 되지 않음.
+      console.log("err :", err)
+      return res.status(405).json({message : "invalid request"})
+      }
   },
   // 로그인 토큰
   login: async (req, res) => {
