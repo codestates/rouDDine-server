@@ -163,61 +163,48 @@ module.exports = {
   },
   // 로그인 토큰
   login: async (req, res) => {
-    console.log(user);
-    if (req.body.social === null) {
-      const { email, password } = req.body;
-      const aa = await bcrypt.hashSync(password, salt);
-      // 해싱해주는것을 추가해줌 .
-
+    // 1. 이중으로 try/catch 문을 쓸 생각을 해본다. 경우가 두가지 이기 때문!
+      // 오류 사항
+      // 1. 해당 이메일이 없습니다.
+      // 2. 비밀번호가 틀립니다.
+      const { email, password} = req.body
       const userInfo = await user.findOne({
         where: {
           email,
           social: null,
         },
       });
-      console.log("user :", user);
-      if (!userInfo) {
-        await res.status(400).send({ data: null, message: "not authorized" });
-      } else {
-        const data = { ...userInfo.dataValues };
-        // 해쉬,
-        const bool = bcrypt.compareSync(password, data.password);
-        // 결과값을 저장해주는곳이 없엇음. 비밀번호가 맞는지 틀린지
-        // 비밀번호 검사코드는 있는데 결과에 따라 나뉘는것이없음.
-        // 조건문을 해줘야함.
-        if (bool) {
-          delete data.password;
-
-          const accessToken = jwt.sign(
-            {
-              id: userInfo.id,
-              email: userInfo.email,
-              social: userInfo.social,
-              createdAt: userInfo.createdAt,
-            },
-            process.env.ACCESS_SECRET,
-            { expiresIn: "12hr" }
-          );
-
-          const refreshToken = jwt.sign(data, process.env.REFRESH_SECRET, {
-            expiresIn: "1h",
-          }); //  save in cookie .
-          let response = {
-            id: userInfo.id,
-            username: userInfo.username,
-            email: userInfo.email,
-            password: userInfo.password,
-          };
-          //res.cookie("refreshToken", refreshToken)
-          res.cookie("accessToken", accessToken, {
-            httpOnly: false,
-            sameSite: "None",
-            secure: true,
-          });
-          res.status(200).send({ message: "ok" });
-        }
+      console.log('userInfo :', userInfo.dataValues)
+      console.log('hashed :', userInfo.dataValues.password)
+      try{
+      // 유저 정보를 찾는다. 정보가 있다면 ? 바로 비밀번호를 비교해준다
+      const hashed = userInfo.dataValues.password
+        if(userInfo){
+          const hash = bcrypt.compareSync(password, hashed);
+          if(hash){
+            const accessToken = jwt.sign(
+              {
+                id: userInfo.id,
+                email: userInfo.email,
+                social: userInfo.social,
+                createdAt: userInfo.createdAt,
+              },
+              process.env.ACCESS_SECRET,
+              { expiresIn: "12hr" }
+            );
+              res.cookie("accessToken", accessToken, {
+                httpOnly: false,
+                sameSite: "None",
+                secure: true,
+              });
+              res.status(200).json({ message: "ok" });
+            }
+          }
+    }catch{
+      
+      res.status(400).json({data : null, message : "not authorized"});
+      // 해당 이메일이 없습니다. 
       }
-    }
   },
 
   logout: async (req, res) => {
