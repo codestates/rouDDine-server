@@ -161,12 +161,8 @@ module.exports = {
       return res.status(405).json({message : "invalid request"})
       }
   },
-  // 로그인 토큰
   login: async (req, res) => {
-    // 1. 이중으로 try/catch 문을 쓸 생각을 해본다. 경우가 두가지 이기 때문!
-      // 오류 사항
-      // 1. 해당 이메일이 없습니다.
-      // 2. 비밀번호가 틀립니다.
+  
       const { email, password} = req.body
       const userInfo = await user.findOne({
         where: {
@@ -178,6 +174,7 @@ module.exports = {
       console.log('hashed :', userInfo.dataValues.password)
       try{
       // 유저 정보를 찾는다. 정보가 있다면 ? 바로 비밀번호를 비교해준다
+      // 그리고 토큰을 준다. 
       const hashed = userInfo.dataValues.password
         if(userInfo){
           const hash = bcrypt.compareSync(password, hashed);
@@ -201,9 +198,9 @@ module.exports = {
             }
           }
     }catch{
-      
-      res.status(400).json({data : null, message : "not authorized"});
-      // 해당 이메일이 없습니다. 
+      // 하지만 토큰이 없거나 비밀번호가 틀리다면 ?
+      // 해당 유저에게 권한이 없습니다. 
+      res.status(400).json({data : null, message : "not authorized"})
       }
   },
 
@@ -215,11 +212,14 @@ module.exports = {
         [Op.and]: [{ userid: data.id }, { routine_id: null }],
       },
     });
-    for (let i = 0; i < notSave_excard.length; i++) {
-      notSave_excard[i].destroy();
-    }
-
-    res.cookie("accessToken", "");
-    res.status(200).send({ message: "logout ok" });
+    try {
+      for (let i = 0; i < notSave_excard.length; i++) {
+        notSave_excard[i].destroy();
+      }
+      res.cookie("accessToken", "");
+      res.status(200).json({ message: "logout ok" });
+    }catch(err){
+      res.status(400).json({ message : `${err} , 로그아웃에 실패하였습니다.`})
+    }      
   },
 };
