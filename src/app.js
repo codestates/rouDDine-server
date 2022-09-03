@@ -22,13 +22,13 @@ app.use(
 const exercise = require("./routes/exercise")
 const routine = require("./routes/routines")
 const share = require("./routes/share")
-const trying = require("./routes/try")
+// const trying = require("./routes/try")
 const users = require("./routes/users")
 
 app.use('/', exercise)
 app.use('/', routine)
 app.use('/', share)
-app.use('/', trying)
+// app.use('/', trying)
 app.use('/', users)
 
 // 고정 이미지 폴더
