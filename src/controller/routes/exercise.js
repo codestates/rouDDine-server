@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const create = require("../controller/excontroller/create");
-const remove = require("../controller/excontroller/delete");
-const information = require("../controller/excontroller/information");
-const update = require("../controller/excontroller/update");
+const create = require("../excontroller/create");
+const remove = require("../excontroller/delete");
+const information = require("../excontroller/information");
+const update = require("../excontroller/update");
 
 // 운동카드 CRUD
 

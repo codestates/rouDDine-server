@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const signcontroller = require("../controller/signcontroller/users");
+const signcontroller = require("../signcontroller/users");
 
 // 로그인/로그아웃/임시로그인
 
