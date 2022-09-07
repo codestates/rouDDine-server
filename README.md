@@ -14,14 +14,12 @@
 			- users.js  // 회원가입, 탈퇴, 로그인,로그아웃
 			- oauth.js  // 소셜 로그인 (네이버, 구글)
 			- refreshToken.js
-		- testcontroller // 운동 부가기능 컨트롤러
-			- tryFunctions.js
-	- routes // 라우트 
-		- exercise.js
-		- routines.js
-		- share.js
-		- try.js
-		- users.js
+		- routes // 라우트 
+			- exercise.js
+			- routines.js
+			- share.js
+			- users.js
+		app.js // 각종 라우트, 미들웨어 관리 
 	- orm
 		- sequelize
 			- config
@@ -35,7 +33,7 @@
 			- seeders
 	- public
 		- image		
-	app.js 
+	server.js // 서버 실행 분리 
 - tests
 	- test.js // jest test 
 ```
