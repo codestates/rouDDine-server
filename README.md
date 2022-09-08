@@ -1,4 +1,4 @@
-## 현재 아키텍처 구조 (08.17)
+## 현재 아키텍처 구조 (09.08)
 
 ```
 - src 
@@ -42,19 +42,19 @@
 
 1. `npm i` // 인스톨
 
-2. `npm start` // app.js 실행됨. 
+2. `npm start` // server.js 실행됨. 
 
-   ![스크린샷, 2022-07-28 20-31-12](https://user-images.githubusercontent.com/71261997/181495125-b0b7b3e8-ab0f-4a95-bdc4-65e3eed35916.png)
+   ![스크린샷, 2022-07-28 20-31-12]((https://velog.velcdn.com/images/corepen_/post/ac70276c-ad58-442b-82af-3f574ce94888/image.png)
+
+## 테스트 케이스 실행
+
+1. `npm test`
 
 ## 데이터베이스 마이그레이션
 
 1. `npx sequelize db:migrate`
 
 2. `npx sequelize-cli db:seed:all`
-
-3. `npm start`
-
-   
 
 ## 리팩토링 방향
 
@@ -67,10 +67,10 @@
 
 ## 현황
 
-1. test케이스 만들어보기 
+1. test케이스 만들어보기
 
 ## 해야할것
 
-1. supertest를 이용하여 가상 접근을 통해 테스트 위해 서버접속
+1. supertest를 이용하여 내부적으로 익스프레스 서버를 구동시켜 가상의 요청,접근을 통해 테스트 위해 서버접속
 2. 기능이 제대로 작동하는지에 대한 테스트케이스 확인
 

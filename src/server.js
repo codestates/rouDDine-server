@@ -1,7 +1,6 @@
 const app = require('./controller/app')
 const PORT = 3000;
 
-
 app.get('/', (req, res) => {
   res.status(201).send('Hello World 🇰🇷');
 });
