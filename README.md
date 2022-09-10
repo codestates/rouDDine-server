@@ -52,9 +52,11 @@
 
 ## 데이터베이스 마이그레이션
 
-1. `npx sequelize db:migrate`
+1. `npx sequelize db:create`
 
-2. `npx sequelize-cli db:seed:all`
+2. `npx sequelize db:migrate`
+
+3. `npx sequelize-cli db:seed:all`
 
 ## 리팩토링 방향
 

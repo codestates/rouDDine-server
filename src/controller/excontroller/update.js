@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { exercise } = require("../../orm/sequelize/models");
 
 module.exports = {

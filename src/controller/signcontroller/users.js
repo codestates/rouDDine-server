@@ -1,8 +1,8 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { user } = require("../../orm/sequelize/models");
-const { routine } = require("../../orm/sequelize/models");
-const { exercise } = require("../../orm/sequelize/models");
+const { user } = require("../../orm/sequelize/models/");
+const { routine } = require("../../orm/sequelize/models/");
+const { exercise } = require("../../orm/sequelize/models/");
 const bcrypt = require("bcrypt");
 const salt = process.env.DATABASE_SALT;
 const { Op } = require("sequelize");
