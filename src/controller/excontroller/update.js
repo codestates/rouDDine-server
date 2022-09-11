@@ -31,7 +31,7 @@ module.exports = {
           return res.status(400).send({ "message" : "기본 운동은 수정 불가입니다.", "result" : ex_card })
         }
         case 409: {
-          res.status(409).send({
+          return res.status(409).send({
             "message" : "update fail"
           })
         }
