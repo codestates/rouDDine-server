@@ -1,9 +1,20 @@
-const app = require('../src/controller/app')
 const https = require('https') 
-// 
 const request = require('supertest');
-const agent = requrest(app)
+const assert = require('assert');
+const app = require('../src/controller/app')
+const agent = request(app)
 const users = require('../src/controller/signcontroller/users');
+
+
+request(app)
+    .get('/')
+    .expect('Content-Type', /json/)
+    .expect('Content-Length', '15')
+    .expect(200)
+    .end(function(err, res) {
+        if (err) throw err;
+    });
+
 
 // 1. 서버접속 테스트
 

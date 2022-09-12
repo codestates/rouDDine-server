@@ -15,10 +15,6 @@ module.exports = {
     });
 
     try{
-      // 워크아웃 아이디는 논외로 .. 409로 내보내주자
-      // 기본 운동카드를 수정하려 할 경우 ?  기본 운동카드는 수정 불가입니다
-      // 운동카드가 수정되었습니다
-      // 운동카드 수정을 실패하였습니다. 
         if(!ex_card.default) {
           return res.status(200).send({
             "message" : "update exersice card",
