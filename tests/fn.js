@@ -1,9 +1,10 @@
 module.exports = {
         add : (num1, num2) => num1 + num2,
-        createUser :  name => {
+        createUser :  (name, email) => {
             console.log("실제 유저가 생성되었습니다.")
             return {
-                name,
+                name, 
+                email
             };
         },
         connectUserDb : () =>{
