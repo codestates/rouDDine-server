@@ -26,7 +26,7 @@ Naver : (req,res)=>{
       })
     },
 
-Google : (req,res)=>{
+Google : async (req,res)=>{
   //소셜로그인 - 구글
   const userInfo = await user.findOne({
     where: { email: req.body.email, social: "google" },
