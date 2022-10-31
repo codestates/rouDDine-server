@@ -9,10 +9,10 @@ const finish = require("../routinecontroller/finishRouddine")
 
 // 루틴 
 
-router.post("/create", create.create_Routine);
-router.get("/info", information.info_Routine);
-router.delete("/delete", remove.delete_Routine);
-router.patch("/update", update.update_Routine);
-router.post("/finished", finish.finish_Routine);
+router.post("/routines", create.create_Routine);
+router.get("/routines", information.info_Routine);
+router.delete("/routines", remove.delete_Routine);
+router.patch("/routines", update.update_Routine);
+router.post("/routines/finished", finish.finish_Routine);
 
 module.exports = router

@@ -10,10 +10,10 @@ router.post("/logout",signcontroller.logout) //로그아웃
 router.post("/tempuser", signcontroller.tempsignup); //임시회원가입
 
 // 회원
-router.post('/signup', signcontroller.signUpController);
-router.get('/withdrawl', signcontroller.WithdrawalController);
-router.delete('/info', signcontroller.userInfo);
-router.patch('/update', signcontroller.updateUser);
+router.post('/users', signcontroller.signUpController);
+router.get('/users', signcontroller.WithdrawalController);
+router.delete(`/users/:id`, signcontroller.userInfo);
+router.patch(`/users/:id`, signcontroller.updateUser);
 
 
 module.exports = router;
