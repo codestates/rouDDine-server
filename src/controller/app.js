@@ -29,10 +29,6 @@ app.use('/users', users)
 // 고정 이미지 폴더
 app.use(express.static('/public/image'));
 
-// app.get('/', (req, res) => {
-//   res.status(201).send('Hello World 🇰🇷');
-// });
-
 
 module.exports = app; 
 
